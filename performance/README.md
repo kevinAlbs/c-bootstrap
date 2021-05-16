@@ -1,0 +1,1 @@
+- On macOS: use `sample` or Instruments with the Time Profiler to sample stack traces.
