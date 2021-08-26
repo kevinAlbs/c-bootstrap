@@ -1,6 +1,6 @@
 /* Conversation in:
  * Compile with:
- * clang -o long_runner long_runner.c $(pkg-config --cflags --libs libmongoc-1.0) -pthread
+ * clang -o long_runner.out long_runner.c $(pkg-config --cflags --libs libmongoc-1.0) -pthread
  */
 
 #include <mongoc/mongoc.h>
