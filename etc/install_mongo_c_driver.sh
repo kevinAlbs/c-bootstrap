@@ -11,7 +11,13 @@ GITREF=${GITREF:-master}
 PREFIX=${PREFIX:-$(pwd)/install/mongo-c-driver-$GITREF}
 TMPDIR=$(pwd)/tmp
 
-. ./etc/find-cmake.sh
+. ./etc/find_os.sh
+. ./etc/find_cmake.sh
+
+if [[ $OS == "WINDOWS" ]]; then
+    MONGOCRYPT_PATH=$(cygpath -w $MONGOCRYPT_PATH)
+    PREFIX=$(cygpath -w $PREFIX)
+fi
 
 mkdir -p $PREFIX
 rm -rf $TMPDIR

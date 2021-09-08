@@ -10,14 +10,19 @@ GITREF=${GITREF:-master}
 PREFIX=${PREFIX:-$(pwd)/install/libbson-$GITREF}
 TMPDIR=$(pwd)/tmp
 
-. ./etc/find-cmake.sh
+. ./etc/find_os.sh
+. ./etc/find_cmake.sh
+
+if [[ $OS == "WINDOWS" ]]; then
+    PREFIX=$(cygpath -w $PREFIX)
+fi
 
 mkdir -p $PREFIX
 rm -rf $TMPDIR
 mkdir -p $TMPDIR
 
 cd $TMPDIR
-git clone git@github.com:mongodb/mongo-c-driver.git --depth=1
+git clone git@github.com:mongodb/mongo-c-driver.git
 cd mongo-c-driver
 git checkout $GITREF
 mkdir cmake-build

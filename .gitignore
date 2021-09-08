@@ -1,3 +1,5 @@
 .DS_STORE
 performance/long_runner
 *.out
+install/*
+tmp/*
