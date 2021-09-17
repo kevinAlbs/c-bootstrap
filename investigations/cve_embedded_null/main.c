@@ -11,6 +11,7 @@ int main () {
     bson_t *opts;
     bool ok;
     bson_t reply;
+    bson_iter_t iter;
 
     mongoc_init ();
 
@@ -50,6 +51,21 @@ int main () {
     mongoc_client_destroy (client);
 
     bson_destroy (embedded_null_json);
+    
+    /* Test a real-ish exploit. */
+    embedded_null_key = bson_new ();
+    bson_append_bool (embedded_null_key, "key\x00\x01\x08isAdmin\x00\x01", 15, true);
+    str = bin_to_hex (bson_get_data(embedded_null_key), embedded_null_key->len);
+    printf ("embedded_null_key =%s\n", str);
+    bson_free (str);
+
+    if (bson_iter_init_find (&iter, embedded_null_key, "isAdmin") && BSON_ITER_HOLDS_BOOL (&iter)) {
+        printf ("isAdmin=%d\n", bson_iter_bool (&iter));
+    } else {
+        printf ("isAdmin not found\n");
+    }
+
+    bson_destroy (embedded_null_key);
 
     mongoc_cleanup ();
 }
