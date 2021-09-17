@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(cxx_include_c.4158 LANGUAGES CXX)
+find_package(mongoc-1.0 REQUIRED)
+add_executable (main.out main.cpp)
+target_link_libraries(main.out mongo::mongoc_static)
