@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(kmip_dump.sh LANGUAGES C)
+find_package(mongoc-1.0 REQUIRED)
+file(GLOB KMS_MSG_VENDOR_SOURCES vendor_kms_message/*.c)
+add_executable (kmip_dump.out main.c ${KMS_MSG_VENDOR_SOURCES})
+target_link_libraries(kmip_dump.out mongo::mongoc_shared)

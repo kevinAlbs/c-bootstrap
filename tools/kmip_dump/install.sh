@@ -1,0 +1,1 @@
+cp ./cmake-build/kmip_dump.out /usr/local/bin/kmip_dump
