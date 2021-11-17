@@ -82,7 +82,10 @@ void *thread_find (void *arg) {
          return NULL;
       }
       /* iterate once */
-      mongoc_cursor_next(cursor, &doc);
+      if (mongoc_cursor_next(cursor, &doc)) {
+         MONGOC_ERROR ("unexpected document returned. %s.%s must be an empty collection", DB, COLL);
+         return NULL;
+      }
       if (mongoc_cursor_error (cursor, &error)) {
          MONGOC_ERROR ("[tid=%d] next returned error: %s", args->tid, error.message);
          return NULL;
