@@ -171,6 +171,7 @@ main (int argc, char *argv[])
    MONGOC_INFO ("running with %d threads", n);
    MONGOC_INFO ("testing with explicit session? %d", (int) flag_isset(ENV_FLAG_EXPLICIT_SESSION));
    MONGOC_INFO ("testing with single threaded? %d", (int) flag_isset(ENV_FLAG_SINGLE_THREADED));
+   MONGOC_INFO ("running with C driver version: %s", mongoc_get_version ());
 
    for (i = 0; i < n; i++) {
       pthread_join (threads[i], NULL);
