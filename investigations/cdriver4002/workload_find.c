@@ -3,6 +3,7 @@
  * Use environment variables to test flags:
  * FLAG_EXPLICIT_SESSION=ON tests passing a single explicit session to each thread.
  * FLAG_SINGLE_THREADED=ON tests using a separate single-threaded mongoc_client_t per thread.
+ * VERBOSE=ON prints operation counts on each thread.
  */
 
 #include <mongoc/mongoc.h>
@@ -15,8 +16,10 @@
 #define COLL "coll"
 #define ENV_FLAG_EXPLICIT_SESSION "FLAG_EXPLICIT_SESSION"
 #define ENV_FLAG_SINGLE_THREADED "FLAG_SINGLE_THREADED"
+#define ENV_VERBOSE "VERBOSE"
 typedef struct {
    int tid;
+   int thread_count;
    mongoc_client_pool_t *pool;
 } thread_args_t;
 
@@ -38,6 +41,7 @@ void *thread_find (void *arg) {
    int64_t start_time;
    mongoc_client_session_t *session = NULL;
    bson_t opts;
+   bool verbose = false;
 
    pool = args->pool;
 
@@ -69,6 +73,10 @@ void *thread_find (void *arg) {
          return NULL;
       }
    }
+
+   if (flag_isset (ENV_VERBOSE)) {
+      verbose = true;
+   }
    
    while (true) {
       mongoc_collection_t *coll;
@@ -99,7 +107,12 @@ void *thread_find (void *arg) {
          current_time = bson_get_monotonic_time ();
          ops_s = (double) running_ops / (((double)(current_time - start_time)) / (1000 * 1000));
          ops = 0;
-         MONGOC_INFO ("[tid=%d] ran %" PRId64 " ops, ops/s=%f", args->tid, running_ops, ops_s);
+         if (verbose) {
+            MONGOC_INFO ("  [tid=%d] ran %" PRId64 " ops, ops/s=%f", args->tid, running_ops, ops_s);
+         }
+         if (args->tid == 0) {
+            MONGOC_INFO ("Estimated total ops/s for all threads: %f", ops_s * args->thread_count);
+         }
       }
 
       mongoc_cursor_destroy (cursor);
@@ -151,6 +164,7 @@ main (int argc, char *argv[])
    for (i = 0; i < n; i++) {
       thread_args[i].pool = pool;
       thread_args[i].tid = i;
+      thread_args[i].thread_count = n;
       pthread_create(threads + i, NULL /* pthread_attr_t */, thread_find, thread_args + i);
    }
 
