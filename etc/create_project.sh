@@ -1,9 +1,17 @@
-PROJECT_NAME=$1
+PROJECT_NAME=${PROJECT_NAME:-}
 
 if [ -z "$PROJECT_NAME" ]; then
-    echo "required argument PROJECT_NAME not supplied"
+    echo "required environment variable NAME not supplied"
     exit 1
 fi
+
+if [[ -d "investigations/$PROJECT_NAME" ]]; then
+    echo "investigations/$PROJECT_NAME already exists"
+    exit 1
+fi
+
+mkdir -p investigations/$PROJECT_NAME
+pushd investigations/$PROJECT_NAME
 
 cat <<EOF > CMakeLists.txt
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
@@ -15,13 +23,13 @@ EOF
 
 cat <<EOF > configure.sh
 cmake \\
-    -DCMAKE_PREFIX_PATH=/Users/kevin.albertson/install/mongo-c-driver-master \\
+    -DCMAKE_PREFIX_PATH=../../install/mongo-c-driver-master \\
     -DCMAKE_BUILD_TYPE="Debug" \\
     -DCMAKE_C_COMPILER="/Users/kevin.albertson/bin/llvm-11.0.0/bin/clang" \\
     -DCMAKE_C_COMPILER_LAUNCHER="ccache" \\
     -DCMAKE_C_FLAGS="-fsanitize=address" \\
-    -S$(pwd) \\
-    -B$(pwd)/cmake-build
+    -S./ \\
+    -B./cmake-build
 EOF
 
 chmod u+x configure.sh
@@ -52,3 +60,5 @@ cat <<EOF > setenv.sh
 export DYLD_LIBRARY_PATH=/Users/kevin.albertson/install/mongo-c-driver-master/lib
 export PKG_CONFIG_PATH=/Users/kevin.albertson/install/mongo-c-driver-master/lib/pkgconfig
 EOF
+
+popd
