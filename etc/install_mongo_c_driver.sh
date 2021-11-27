@@ -10,6 +10,11 @@ MONGOCRYPT_PATH=${MONGOCRYPT_PATH:-$(pwd)/install/libmongocrypt-master}
 GITREF=${GITREF:-master}
 PREFIX=${PREFIX:-$(pwd)/install/mongo-c-driver-$GITREF}
 TMPDIR=$(pwd)/tmp
+CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Debug}
+
+if [[ "$CMAKE_BUILD_TYPE" == "Release" ]]; then
+    PREFIX="$PREFIX-release"
+fi
 
 . ./etc/find_os.sh
 . ./etc/find_cmake.sh
@@ -40,6 +45,7 @@ $CMAKE \
     -DENABLE_STATIC=ON \
     -DCMAKE_MACOSX_RPATH=ON \
     -DENABLE_CLIENT_SIDE_ENCRYPTION=ON \
+    -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_PREFIX_PATH=$MONGOCRYPT_PATH ..
 

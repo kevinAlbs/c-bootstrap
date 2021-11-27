@@ -10,6 +10,11 @@ LIBBSON_PATH=${LIBBSON_PATH:-$(pwd)/install/libbson-master}
 GITREF=${GITREF:-master}
 PREFIX=${PREFIX:-$(pwd)/install/libmongocrypt-$GITREF}
 TMPDIR=$(pwd)/tmp
+CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Debug}
+
+if [[ "$CMAKE_BUILD_TYPE" == "Release" ]]; then
+    PREFIX="$PREFIX-release"
+fi
 
 . ./etc/find_os.sh
 . ./etc/find_cmake.sh
