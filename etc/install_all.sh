@@ -8,4 +8,4 @@ fi
 
 ./etc/install_libbson.sh
 ./etc/install_libmongocrypt.sh
-./etc/install_libmongocrypt.sh
+./etc/install_mongo_c_driver.sh
