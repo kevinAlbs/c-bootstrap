@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(cdriver4283 LANGUAGES C)
+find_package(mongoc-1.0 REQUIRED)
+add_executable (main.out main.c)
+target_link_libraries(main.out mongo::mongoc_shared)
+add_executable (run_sequence.out run_sequence.c)
+target_link_libraries(run_sequence.out mongo::mongoc_shared)

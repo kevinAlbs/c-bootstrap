@@ -1,0 +1,75 @@
+diff --git a/src/libmongoc/src/mongoc/mongoc-cluster.c b/src/libmongoc/src/mongoc/mongoc-cluster.c
+index 1e0837573..21ed888c9 100644
+--- a/src/libmongoc/src/mongoc/mongoc-cluster.c
++++ b/src/libmongoc/src/mongoc/mongoc-cluster.c
+@@ -3595,8 +3595,68 @@ mongoc_cluster_run_opmsg (mongoc_cluster_t *cluster,
+       bson_init_static (
+          &reply_local, rpc.msg.sections[0].payload.bson_document, msg_len);
+ 
+-      _mongoc_topology_update_cluster_time (cluster->client->topology,
+-                                            &reply_local);
++      static bool first_ping = true;
++
++      if (first_ping && 0 == strcmp(cmd->command_name, "ping")) {
++         /* Mock $clusterTime in reply.
++          * Only apply to the first outgoing "ping" command.
++          * Use a higher timestamp and a keyId: 0. */
++         bson_t* mock_cluster_time = bson_new ();
++         bson_iter_t cluster_time_iter;
++
++         first_ping = false;
++
++         if (!bson_iter_init_find (&cluster_time_iter, &reply_local, "$clusterTime")) {
++            MONGOC_ERROR ("$clusterTime not found in reply: %s", bson_as_json (&reply_local, NULL));
++            abort ();
++         }
++
++         /* Copy the existing $clusterTime */
++         {
++            const uint8_t *data;
++            uint32_t len;
++            bson_t tmp;
++
++            bson_iter_document (&cluster_time_iter, &len, &data);
++            bson_init_static (&tmp, data, len);
++            BSON_APPEND_DOCUMENT (mock_cluster_time, "$clusterTime", &tmp);
++         }
++
++         /* Increment the timestamp */
++         {
++            uint32_t timestamp, increment;
++
++            bson_iter_init (&cluster_time_iter, mock_cluster_time);
++            if (!bson_iter_find_descendant (&cluster_time_iter, "$clusterTime.clusterTime", &cluster_time_iter)) {
++               MONGOC_ERROR ("$clusterTime.clusterTime not found in reply: %s", bson_as_json (&reply_local, NULL));
++               abort ();
++            }
++            bson_iter_timestamp (&cluster_time_iter, &timestamp, &increment);
++            bson_iter_overwrite_timestamp (&cluster_time_iter, timestamp + 1, increment);
++         }
++
++         /* Set keyId to 0 */
++         {
++            bson_iter_init (&cluster_time_iter, mock_cluster_time);
++            if (!bson_iter_find_descendant (&cluster_time_iter, "$clusterTime.signature.keyId", &cluster_time_iter)) {
++               MONGOC_ERROR ("$clusterTime.signature.keyId not found in reply: %s", bson_as_json (&reply_local, NULL));
++               abort ();
++            }
++            bson_iter_overwrite_int64 (&cluster_time_iter, 0);
++         }
++
++         {
++            char *str = bson_as_json (mock_cluster_time, NULL);
++            MONGOC_DEBUG ("overwriting $clusterTime to: %s", str);
++            bson_free (str);
++         }
++
++         _mongoc_topology_update_cluster_time (cluster->client->topology, mock_cluster_time);
++         bson_destroy (mock_cluster_time);
++      } else {
++         _mongoc_topology_update_cluster_time (cluster->client->topology,
++                                               &reply_local);
++      }
+       ok = _mongoc_cmd_check_ok (
+          &reply_local, cluster->client->error_api_version, error);
+ 
