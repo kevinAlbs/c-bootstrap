@@ -8,7 +8,7 @@ fi
 
 GITREF=${GITREF:-master}
 PREFIX=${PREFIX:-$(pwd)/install/libbson-$GITREF}
-TMPDIR=$(pwd)/tmp
+SRCDIR=$PREFIX-src
 CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Debug}
 
 if [[ "$CMAKE_BUILD_TYPE" == "Release" ]]; then
@@ -23,10 +23,10 @@ if [[ $OS == "WINDOWS" ]]; then
 fi
 
 mkdir -p $PREFIX
-rm -rf $TMPDIR
-mkdir -p $TMPDIR
+rm -rf $SRCDIR
+mkdir -p $SRCDIR
 
-cd $TMPDIR
+cd $SRCDIR
 git clone git@github.com:mongodb/mongo-c-driver.git
 cd mongo-c-driver
 git checkout $GITREF
