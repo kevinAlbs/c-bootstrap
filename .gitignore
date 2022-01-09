@@ -3,3 +3,5 @@ performance/long_runner
 *.out
 install/*
 tmp/*
+cmake-build
+.vscode
