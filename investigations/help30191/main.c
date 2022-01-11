@@ -1,30 +1,34 @@
-// #include <mongoc/mongoc.h>
+#include <mongoc/mongoc.h>
 
 #include <openssl/ssl.h>
 #include <openssl/opensslv.h>
 
-void
-_mongoc_openssl_init (void)
-{
-   SSL_CTX *ctx;
+#include <pthread.h>
 
-   SSL_library_init ();
-   SSL_load_error_strings ();
-   ERR_load_BIO_strings ();
-   OpenSSL_add_all_algorithms ();
-
-   ctx = SSL_CTX_new (SSLv23_method ());
-   if (!ctx) {
-      fprintf (stderr, "Failed to initialize OpenSSL.");
-   }
-
-   SSL_CTX_free (ctx);
+void* calls_SSL_library_init (void* arg) {
+    SSL_library_init ();
+    return NULL;
 }
 
 int main () {
     printf ("Using OpenSSL: %s\n", OPENSSL_VERSION_TEXT);
-    _mongoc_openssl_init ();
-    _mongoc_openssl_init ();
+
+    // Try calling SSL_library_init twice
+    // SSL_library_init ();
+    // SSL_library_init ();
+
+    // Try calling SSL_library_init before mongoc_init:
+    SSL_library_init ();
+    mongoc_init();
+    printf ("mongoc %s\n", mongoc_get_version ());
+
+    // Try calling mongoc_init while another thread is calling SSL_library_init.
+    // {
+    //     pthread_t thread;
+    //     pthread_create (&thread, NULL /* attr */, calls_SSL_library_init_and_cleanup_in_loop, NULL /* arg */);
+    //     mongoc_init ();
+    //     pthread_join (thread, NULL /* return */);
+    // }
     printf ("Finished initializing\n");
 }
 
