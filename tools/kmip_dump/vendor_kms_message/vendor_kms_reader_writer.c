@@ -1237,7 +1237,7 @@ kmip_dump_recursive_xml (kms_request_str_t *str, kmip_reader_t *reader, uint32_t
          time = (time_t) u64;
          tmtime = *gmtime (&time);
 
-         strftime (timestr, 100, "%FT%D%z", &tmtime);
+         strftime (timestr, 100, "%FT%T%z", &tmtime);
          kms_request_str_appendf (str, " value=\"%s\"/>", timestr);
       } else if (type == KMIP_ITEM_TYPE_Interval) {
          kms_request_str_appendf (str, " value=\"(TODO)\"");

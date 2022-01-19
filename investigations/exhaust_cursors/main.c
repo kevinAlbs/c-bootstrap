@@ -26,8 +26,8 @@ int main () {
         /* drop db.coll and insert 8 documents. */
         coll = mongoc_client_get_collection (client, "db", "coll");
         mongoc_collection_drop (coll, &error); /* ignore error from 'ns not found'. */
-        for (i = 0; i < 16; i++) {
-            bson_t * to_insert = BCON_NEW ("x", BCON_INT32(i));
+        for (i = 0; i < 8; i++) {
+            bson_t * to_insert = BCON_NEW ("_id", BCON_INT32(i));
             if (!mongoc_collection_insert_one (coll, to_insert, NULL /* opts */, NULL /* reply */, &error)) {
                 MONGOC_ERROR ("error on insert: %s", error.message);
                 return EXIT_FAILURE;

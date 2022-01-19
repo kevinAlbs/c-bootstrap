@@ -36,11 +36,19 @@ static BSON_INLINE void
 command_failed (const mongoc_apm_command_failed_t *event)
 {
    bson_error_t error;
+   const bson_t *reply;
 
    mongoc_apm_command_failed_get_error (event, &error);
    MONGOC_DEBUG ("Command %s failed: %s",
            mongoc_apm_command_failed_get_command_name (event),
            error.message);
+   reply = mongoc_apm_command_failed_get_reply (event);
+   if (reply) {
+      char *str = bson_as_relaxed_extended_json (reply, NULL);
+      MONGOC_DEBUG ("failed reply: %s", str);
+      bson_free (str);
+   }
+   
 }
 
 static BSON_INLINE void set_command_monitors (mongoc_apm_callbacks_t *cbs, bool started_only) {
@@ -83,7 +91,31 @@ server_closed (const mongoc_apm_server_closed_t *event)
 static BSON_INLINE void
 topology_changed (const mongoc_apm_topology_changed_t *event)
 {
-    MONGOC_DEBUG ("topology_changed");
+   const mongoc_topology_description_t *td;
+   mongoc_server_description_t **sds;
+   size_t i, n;
+
+   MONGOC_DEBUG ("topology_changed");
+   MONGOC_DEBUG ("old topology description:");
+   td = mongoc_apm_topology_changed_get_previous_description (event);
+   sds = mongoc_topology_description_get_servers (td, &n);
+   for (i = 0; i < n; i++) {
+      mongoc_server_description_t *sd = sds[i];
+      MONGOC_DEBUG ("- %s : %s",
+         mongoc_server_description_host (sd)->host_and_port,
+         mongoc_server_description_type (sd));
+   }
+   mongoc_server_descriptions_destroy_all (sds, n);
+   MONGOC_DEBUG ("new topology description:");
+   td = mongoc_apm_topology_changed_get_new_description (event);
+   sds = mongoc_topology_description_get_servers (td, &n);
+   for (i = 0; i < n; i++) {
+      mongoc_server_description_t *sd = sds[i];
+      MONGOC_DEBUG ("- %s : %s",
+         mongoc_server_description_host (sd)->host_and_port,
+         mongoc_server_description_type (sd));
+   }
+   mongoc_server_descriptions_destroy_all (sds, n);
 }
 
 

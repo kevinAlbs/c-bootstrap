@@ -1,7 +1,7 @@
 PROJECT_NAME=${PROJECT_NAME:-}
 
 if [ -z "$PROJECT_NAME" ]; then
-    echo "required environment variable NAME not supplied"
+    echo "required environment variable PROJECT_NAME not supplied"
     exit 1
 fi
 
@@ -50,6 +50,12 @@ cat <<EOF > main.c
 #include <mongoc/mongoc.h>
 
 int main () {
+    char *uristr;
+
+    uristr = getenv ("MONGODB_URI");
+    if (!uristr) {
+        uristr = "mongodb://localhost:27017";
+    }
     mongoc_init ();
 
     mongoc_cleanup ();
