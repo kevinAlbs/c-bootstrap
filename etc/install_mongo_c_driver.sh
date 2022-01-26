@@ -6,36 +6,36 @@ if [[ "$(basename $(pwd))" != "c-bootstrap" ]]; then
     exit 1
 fi
 
-MONGOCRYPT_PATH=${MONGOCRYPT_PATH:-$(pwd)/install/libmongocrypt-master}
-GITREF=${GITREF:-master}
-PREFIX=${PREFIX:-$(pwd)/install/mongo-c-driver-$GITREF$SUFFIX}
-SRCDIR=$PREFIX-src
-CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE:-Debug}
+LIBMONGOCRYPT_INSTALL_PREFIX=${LIBMONGOCRYPT_INSTALL_PREFIX:-$(pwd)/install/libmongocrypt-master}
+export MONGO_C_DRIVER_GITREF=${MONGO_C_DRIVER_GITREF:-master}
+export MONGO_C_DRIVER_PREFIX=${MONGO_C_DRIVER_PREFIX:-$(pwd)/install/mongo-c-driver-$MONGO_C_DRIVER_GITREF$SUFFIX}
+export MONGO_C_DRIVER_SRCDIR=$MONGO_C_DRIVER_PREFIX-src
+export MONGO_C_DRIVER_CMAKE_BUILD_TYPE=${MONGO_C_DRIVER_CMAKE_BUILD_TYPE:-Debug}
 
-if [[ "$CMAKE_BUILD_TYPE" == "Release" ]]; then
-    PREFIX="$PREFIX-release"
+if [[ "$MONGO_C_DRIVER_CMAKE_BUILD_TYPE" == "Release" ]]; then
+    MONGO_C_DRIVER_PREFIX="$MONGO_C_DRIVER_PREFIX-release"
 fi
 
 . ./etc/find_os.sh
 . ./etc/find_cmake.sh
 
 if [[ $OS == "WINDOWS" ]]; then
-    MONGOCRYPT_PATH=$(cygpath -w $MONGOCRYPT_PATH)
-    PREFIX=$(cygpath -w $PREFIX)
+    LIBMONGOCRYPT_INSTALL_PREFIX=$(cygpath -w $LIBMONGOCRYPT_INSTALL_PREFIX)
+    MONGO_C_DRIVER_PREFIX=$(cygpath -w $MONGO_C_DRIVER_PREFIX)
 fi
 
-mkdir -p $PREFIX
-rm -rf $SRCDIR
-mkdir -p $SRCDIR
+mkdir -p $MONGO_C_DRIVER_PREFIX
+rm -rf $MONGO_C_DRIVER_SRCDIR
+mkdir -p $MONGO_C_DRIVER_SRCDIR
 
-cd $SRCDIR
+cd $MONGO_C_DRIVER_SRCDIR
 git clone git@github.com:mongodb/mongo-c-driver.git
 cd mongo-c-driver
-git checkout $GITREF
+git checkout $MONGO_C_DRIVER_GITREF
 mkdir cmake-build
 cd cmake-build
 
-echo "About to install C driver ($GITREF) into $PREFIX"
+echo "About to install C driver ($MONGO_C_DRIVER_GITREF) into $MONGO_C_DRIVER_PREFIX"
 
 $CMAKE $EXTRA_CMAKE_ARGS \
     -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF \
@@ -45,8 +45,8 @@ $CMAKE $EXTRA_CMAKE_ARGS \
     -DENABLE_STATIC=ON \
     -DCMAKE_MACOSX_RPATH=ON \
     -DENABLE_CLIENT_SIDE_ENCRYPTION=ON \
-    -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_PREFIX_PATH=$MONGOCRYPT_PATH ..
+    -DCMAKE_BUILD_TYPE=$MONGO_C_DRIVER_CMAKE_BUILD_TYPE \
+    -DCMAKE_INSTALL_PREFIX=$MONGO_C_DRIVER_PREFIX \
+    -DCMAKE_PREFIX_PATH=$LIBMONGOCRYPT_INSTALL_PREFIX ..
 
 $CMAKE --build . --target install

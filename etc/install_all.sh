@@ -6,6 +6,6 @@ if [[ "$(basename $(pwd))" != "c-bootstrap" ]]; then
     exit 1
 fi
 
-./etc/install_libbson.sh
-./etc/install_libmongocrypt.sh
-./etc/install_mongo_c_driver.sh
+. ./etc/install_libbson.sh
+. ./etc/install_libmongocrypt.sh
+. ./etc/install_mongo_c_driver.sh
