@@ -36,4 +36,4 @@ grep CrudActor gdb.stacks >CrudActor.stacks
 python ../t2/scripts/calltree.py --reverse <CrudActor.stacks >CrudActor.html
 ```
 
-My first attempt was run with a local one node replica set on an ubuntu1804-large host. 2356 of 2500 samples are in mongoc_socket_recv. I interpret that to mean the server is the bottleneck.
+My first attempt was run with a local one node replica set on an ubuntu1804-large host. 2356 of 2500 samples are in mongoc_socket_recv. I interpret that to mean the server is the bottleneck. Results are in CrudActor-1.html.
