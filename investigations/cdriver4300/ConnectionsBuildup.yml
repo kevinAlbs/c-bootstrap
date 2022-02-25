@@ -15,43 +15,43 @@ Clients:
       maxPoolSize: 1000
 
 Actors:
-- Name: EnableSharding
-  Type: AdminCommand
-  Threads: 1
-  Phases:
-  - Repeat: 1
-    Database: admin
-    Operations:
-    - OperationMetricsName: EnableSharding
-      OperationName: AdminCommand
-      OperationCommand:
-        enableSharding: &db test
-  - &Nop {Nop: true}
-  - *Nop
-  - *Nop
+# - Name: EnableSharding
+#   Type: AdminCommand
+#   Threads: 1
+#   Phases:
+#   - Repeat: 1
+#     Database: admin
+#     Operations:
+#     - OperationMetricsName: EnableSharding
+#       OperationName: AdminCommand
+#       OperationCommand:
+#         enableSharding: &db test
+#   - &Nop {Nop: true}
+#   - *Nop
+#   - *Nop
 
-- Name: ShardCollection
-  Type: AdminCommand
-  Threads: 1
-  Phases:
-  - *Nop
-  - Repeat: 1
-    Database: admin
-    Operations:
-    - OperationMetricsName: ShardCollection
-      OperationName: AdminCommand
-      OperationCommand:
-        shardCollection: test.Collection0  # Collection0 is the default collection populated by the Loader.
-        key:
-          _id: 1
-  - *Nop
-  - *Nop
+# - Name: ShardCollection
+#   Type: AdminCommand
+#   Threads: 1
+#   Phases:
+#   - *Nop
+#   - Repeat: 1
+#     Database: admin
+#     Operations:
+#     - OperationMetricsName: ShardCollection
+#       OperationName: AdminCommand
+#       OperationCommand:
+#         shardCollection: test.Collection0  # Collection0 is the default collection populated by the Loader.
+#         key:
+#           _id: 1
+#   - *Nop
+#   - *Nop
 
 - Name: InsertData
   Type: Loader
   Threads: 1
   Phases:
-  - *Nop
+  - &Nop {Nop: true}
   - *Nop
   - Repeat: 1
     Threads: 1
