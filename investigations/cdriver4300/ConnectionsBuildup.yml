@@ -55,7 +55,7 @@ Actors:
   - *Nop
   - Repeat: 1
     Threads: 1
-    Database: *db
+    Database: &db test
     CollectionCount: 1
     DocumentCount: 50000
     BatchSize: 10000
