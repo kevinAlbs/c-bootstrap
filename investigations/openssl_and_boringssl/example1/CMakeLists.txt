@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(openssl_and_boringssl LANGUAGES C)
+find_package(mongoc-1.0 REQUIRED)
+add_executable (main.out main.c anotherfile.c)
+target_link_libraries(main.out)
