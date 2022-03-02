@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(openssl_and_boringssl LANGUAGES C)
 add_library(poc_boringssl.out STATIC poc_boringssl.c)
+# Pass --default-symver to opt into versioning symbols from SONAME.
+target_link_options(poc_boringssl.out PRIVATE LINKER:--default-symver)
+# Set SOVERSION.
+set_target_properties(poc_boringssl.out PROPERTIES SOVERSION 1 )
 add_library(poc_tensorflow.out SHARED poc_tensorflow.c)
 target_link_libraries (poc_tensorflow.out poc_boringssl.out)
 
