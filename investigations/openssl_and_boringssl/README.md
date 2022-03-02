@@ -1,6 +1,9 @@
 # Example 4
 Q: Does passing --default-symver resolve the conflict in Example 2?
-    A:
+    A: Yes. Under some conditions.
+    My experiment only resolved when:
+        - poc_boringssl.out was dynamically linked.
+        - poc_boringssl.out and poc_openssl.out were built with the linker flag `--default-symver`.
 
 # Example 3
 Q: What does -fvisibility=hidden do?
