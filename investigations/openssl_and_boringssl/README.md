@@ -1,3 +1,10 @@
+# Example 4
+Q: Does passing --default-symver resolve the conflict in Example 2?
+    A:
+
+# Example 3
+Q: What does -fvisibility=hidden do?
+    A: Sets the default symbol visibility for all global declarations.
 # Example 2
 Q: What is the error when attempting to link to Tensorflow with BoringSSL and libmongoc with OpenSSL?
     A: When we try to use mongocxx driver to make a ssl call, we get this
@@ -61,3 +68,7 @@ poc_mongoc_fn... begin
  poc_boringssl.c :: poc_ssl_fn ... end
 poc_mongoc_fn... end
 ```
+
+# Example 1
+Q: What happens if two files in the same executable have the same static symbol?
+    A: nm reports two symbols with "t". "t" indicates a local symbol.
