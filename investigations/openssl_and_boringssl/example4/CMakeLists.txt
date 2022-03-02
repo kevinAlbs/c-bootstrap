@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(openssl_and_boringssl LANGUAGES C)
-add_library(poc_boringssl.out STATIC poc_boringssl.c)
+add_library(poc_boringssl.out SHARED poc_boringssl.c)
 # Pass --default-symver to opt into versioning symbols from SONAME.
 target_link_options(poc_boringssl.out PRIVATE LINKER:--default-symver)
 # Set SOVERSION.
