@@ -8,7 +8,6 @@ set (BORINGSSL_INCLUDE "/Users/kevin.albertson/code/c-bootstrap/install/boringss
 set (BORINGSSL_SSL_SHARED_LIB "/Users/kevin.albertson/code/c-bootstrap/install/boringssl-src/build/ssl/libssl.dylib")
 set (BORINGSSL_CRYPTO_SHARED_LIB "/Users/kevin.albertson/code/c-bootstrap/install/boringssl-src/build/crypto/libcrypto.dylib")
 
-message ("got ${BORINGSSL_SHARED_LIB}")
 target_include_directories (main.out PRIVATE "${BORINGSSL_INCLUDE}")
 target_link_libraries (main.out "${BORINGSSL_SSL_SHARED_LIB}")
 target_link_libraries (main.out "${BORINGSSL_CRYPTO_SHARED_LIB}")
