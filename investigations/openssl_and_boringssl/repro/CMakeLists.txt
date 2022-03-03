@@ -13,3 +13,7 @@ target_include_directories (main.out PRIVATE "${BORINGSSL_INCLUDE}")
 target_link_libraries (main.out "${BORINGSSL_SSL_SHARED_LIB}")
 target_link_libraries (main.out "${BORINGSSL_CRYPTO_SHARED_LIB}")
 
+add_executable (boringssl_only.out boringssl_only.c)
+target_include_directories (boringssl_only.out PRIVATE "${BORINGSSL_INCLUDE}")
+target_link_libraries (boringssl_only.out "${BORINGSSL_SSL_SHARED_LIB}")
+target_link_libraries (boringssl_only.out "${BORINGSSL_CRYPTO_SHARED_LIB}")
