@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(openssl_and_boringssl LANGUAGES C)
+find_package(mongoc-1.0 REQUIRED)
+add_executable (main.out main.c)
+target_link_libraries(main.out mongo::mongoc_shared)
+
+set (BORINGSSL_INCLUDE "/Users/kevin.albertson/code/c-bootstrap/install/boringssl-src-with-default-symver/include")
+set (BORINGSSL_SSL_SHARED_LIB "/Users/kevin.albertson/code/c-bootstrap/install/boringssl-src-with-default-symver/build/ssl/libssl.dylib")
+set (BORINGSSL_CRYPTO_SHARED_LIB "/Users/kevin.albertson/code/c-bootstrap/install/boringssl-src-with-default-symver/build/crypto/libcrypto.dylib")
+
+target_include_directories (main.out PRIVATE "${BORINGSSL_INCLUDE}")
+target_link_libraries (main.out "${BORINGSSL_SSL_SHARED_LIB}")
+target_link_libraries (main.out "${BORINGSSL_CRYPTO_SHARED_LIB}")
