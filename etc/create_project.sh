@@ -18,7 +18,7 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project($PROJECT_NAME LANGUAGES C)
 find_package(mongoc-1.0 REQUIRED)
 add_executable (main.out main.c)
-target_link_libraries(main.out mongo::mongoc_static)
+target_link_libraries(main.out mongo::mongoc_shared)
 EOF
 
 cat <<EOF > configure.sh
@@ -50,6 +50,7 @@ cat <<EOF > main.c
 #include <mongoc/mongoc.h>
 
 int main () {
+    mongoc_client_t *client;
     char *uristr;
 
     uristr = getenv ("MONGODB_URI");
@@ -58,6 +59,12 @@ int main () {
     }
     mongoc_init ();
 
+    MONGOC_DEBUG ("mongoc_get_version=%s", mongoc_get_version ());
+    client = mongoc_client_new (uristr);
+
+    /* TODO */
+    
+    mongoc_client_destroy (client);
     mongoc_cleanup ();
 }
 EOF
