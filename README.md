@@ -1,7 +1,7 @@
 # C Driver Q&A
 ## Q4: What is the difference between the bson_t flags: BSON_FLAG_INLINE, BSON_FLAG_STATIC, BSON_FLAG_RDONLY, BSON_FLAG_NO_FREE?
 
-BSON_FLAG_STATIC means the bson_t struct is freed on bson_destroy. It is independent of whether the data is heap allocated.
+BSON_FLAG_STATIC means the bson_t struct is not freed on bson_destroy. It is independent of whether the data is heap allocated.
 bson_destroy will destroy the bson_t if BSON_FLAG_STATIC is not set. bson_init sets BSON_FLAG_INLINE | BSON_FLAG_STATIC.
 
 BSON_FLAG_INLINE means the underlying data is embedded in the bson_t. bson_impl_inline_t is used. bson_new sets BSON_FLAG_INLINE.
