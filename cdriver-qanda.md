@@ -1,4 +1,15 @@
 # C Driver Q&A
+## Q4: What is the difference between the bson_t flags: BSON_FLAG_INLINE, BSON_FLAG_STATIC, BSON_FLAG_RDONLY, BSON_FLAG_NO_FREE?
+
+BSON_FLAG_STATIC means the bson_t struct is freed on bson_destroy. It is independent of whether the data is heap allocated.
+bson_destroy will destroy the bson_t if BSON_FLAG_STATIC is not set. bson_init sets BSON_FLAG_INLINE | BSON_FLAG_STATIC.
+
+BSON_FLAG_INLINE means the underlying data is embedded in the bson_t. bson_impl_inline_t is used. bson_new sets BSON_FLAG_INLINE.
+
+BSON_FLAG_RDONLY means the underlying data is not owned by the bson_t. The data should not be modified or freed. bson_init_static sets BSON_FLAG_STATIC | BSON_FLAG_RDONLY.
+
+BSON_FLAG_NO_FREE means not to free the underlying data. BSON_FLAG_NO_FREE is used for appending a child bson_t. The child points to the parent buffer. It is not read only. bson_new_from_buffer sets BSON_FLAG_NO_FREE.
+
 ## Q3: When did libbson and libmongoc merge?
 In CDRIVER-2416. C driver 1.10.0. See NEWS.
 
