@@ -1,4 +1,14 @@
 # C Driver Q&A
+
+## Q5: How can CI tasks be run?
+
+Creating a Draft PR on GitHub will run a larger subset of tasks to run test-* tests against live servers. This can be done with the Evergreen CLI using the required alias. Here is an example command I use:
+```
+evergreen patch --project=mongo-c-driver --description="CDRIVER-1234 my ticket $(git log --oneline HEAD~1..HEAD)" \
+    --yes --finalize \
+    --alias required
+```
+
 ## Q4: What is the difference between the bson_t flags: BSON_FLAG_INLINE, BSON_FLAG_STATIC, BSON_FLAG_RDONLY, BSON_FLAG_NO_FREE?
 
 BSON_FLAG_STATIC means the bson_t struct is not freed on bson_destroy. It is independent of whether the data is heap allocated.

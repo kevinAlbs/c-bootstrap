@@ -6,3 +6,4 @@ tmp/*
 cmake-build
 .vscode
 .venv
+double2bits
