@@ -1,5 +1,8 @@
 # C Driver Q&A
 
+## Q6: What is the process for adding evergreen environment variables?
+
+They can be added to https://spruce.mongodb.com/project/drivers-atlas-testing-dev/settings/variables. Evergreen variables are referenced as expansions in the config.yml. One gotcha is that an expansion (unlike shell variables) require curly braces `${foo}`. See also: https://wiki.corp.mongodb.com/pages/viewpage.action?pageId=143705019
 ## Q5: How can CI tasks be run?
 
 Creating a Draft PR on GitHub will run a larger subset of tasks to run test-* tests against live servers. This can be done with the Evergreen CLI using the required alias. Here is an example command I use:
