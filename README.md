@@ -1,5 +1,53 @@
 # C Driver Q&A
 
+## Q9: How do I install C and C++ driver from source?
+
+Replace directories as needed.
+
+```
+# Exit on first error.
+set -o errexit
+# Print each line.
+set -o xtrace
+
+# Download C driver source
+wget https://github.com/mongodb/mongo-c-driver/releases/download/1.23.1/mongo-c-driver-1.23.1.tar.gz
+tar xzf mongo-c-driver-1.23.1.tar.gz
+cd mongo-c-driver-1.23.1
+mkdir cmake-build
+cd cmake-build
+
+# Configure C driver
+cmake \
+    -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF \
+    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-c-driver-1.23.1" \
+    ..
+
+# Install C driver
+cmake --build . --target install
+
+# Download the C++ driver source
+curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.7.0/mongo-cxx-driver-r3.7.0.tar.gz
+tar -xzf mongo-cxx-driver-r3.7.0.tar.gz
+cd mongo-cxx-driver-r3.7.0/build
+
+# Configure
+cmake                                \
+    -DCMAKE_BUILD_TYPE=Release          \
+    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-cxx-driver-3.7.0"   \
+    -DCMAKE_PREFIX_PATH="/Users/kevin.albertson/install/mongo-c-driver-1.23.1" \
+    ..
+
+# Install C++ driver
+cmake --build . --target install
+```
+
+## Q8: What version of C driver is in Ubuntu repositories?
+See https://packages.ubuntu.com/search?keywords=libmongoc-dev
+
+## Q7: What is the request rate for AWS KMS operations?
+See https://docs.aws.amazon.com/kms/latest/developerguide/requests-per-second.html
+
 ## Q6: What is the process for adding evergreen environment variables?
 
 They can be added to https://spruce.mongodb.com/project/drivers-atlas-testing-dev/settings/variables. Evergreen variables are referenced as expansions in the config.yml. One gotcha is that an expansion (unlike shell variables) require curly braces `${foo}`. See also: https://wiki.corp.mongodb.com/pages/viewpage.action?pageId=143705019
