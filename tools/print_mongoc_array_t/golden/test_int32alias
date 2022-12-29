@@ -1,0 +1,5 @@
+print_mongoc_arr has been imported. Try `print_mongoc_arr <varname> <type>`.
+(i32alias *) $0 = 0x00005555555593c0 {
+  (i32alias) [0] = 1
+  (i32alias) [1] = 2
+}
