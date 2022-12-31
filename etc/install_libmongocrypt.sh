@@ -20,16 +20,11 @@ if [[ "$LIBMONGOCRYPT_CMAKE_BUILD_TYPE" == "Release" ]]; then
 fi
 
 . ./etc/find_os.sh
-# Get latest cmake using C driver scripts.
-. $HOME/code/mongo-c-driver/.evergreen/scripts/find-cmake-latest.sh
-CMAKE=$(find_cmake_latest)
+. ./etc/find_cmake.sh
 
 if [[ $OS == "WINDOWS" ]]; then
     LIBBSON_INSTALL_PREFIX=$(cygpath -w $LIBBSON_INSTALL_PREFIX)
     LIBMONGOCRYPT_INSTALL_PREFIX=$(cygpath -w $LIBMONGOCRYPT_INSTALL_PREFIX)
-    # Tell Windows to build x64
-    export CMAKE_GENERATOR="Visual Studio 15 2017"
-    export CMAKE_GENERATOR_PLATFORM=x64
 fi
 
 mkdir -p $LIBMONGOCRYPT_INSTALL_PREFIX
@@ -50,4 +45,4 @@ $CMAKE $LIBMONGOCRYPT_EXTRA_CMAKE_OPTIONS \
     -DCMAKE_BUILD_TYPE=$LIBMONGOCRYPT_CMAKE_BUILD_TYPE \
     -DCMAKE_PREFIX_PATH=$LIBBSON_INSTALL_PREFIX ..
 
-$CMAKE --build . --target install --parallel
+$CMAKE --build . --target install -j8
