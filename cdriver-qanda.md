@@ -11,16 +11,16 @@ set -o errexit
 set -o xtrace
 
 # Download C driver source
-wget https://github.com/mongodb/mongo-c-driver/releases/download/1.23.1/mongo-c-driver-1.23.1.tar.gz
-tar xzf mongo-c-driver-1.23.1.tar.gz
-cd mongo-c-driver-1.23.1
+wget https://github.com/mongodb/mongo-c-driver/releases/download/1.23.2/mongo-c-driver-1.23.2.tar.gz
+tar xzf mongo-c-driver-1.23.2.tar.gz
+cd mongo-c-driver-1.23.2
 mkdir cmake-build
 cd cmake-build
 
 # Configure C driver
 cmake \
     -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF \
-    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-c-driver-1.23.1" \
+    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-c-driver-1.23.2" \
     ..
 
 # Install C driver
@@ -35,7 +35,7 @@ cd mongo-cxx-driver-r3.7.0/build
 cmake                                \
     -DCMAKE_BUILD_TYPE=Release          \
     -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-cxx-driver-3.7.0"   \
-    -DCMAKE_PREFIX_PATH="/Users/kevin.albertson/install/mongo-c-driver-1.23.1" \
+    -DCMAKE_PREFIX_PATH="/Users/kevin.albertson/install/mongo-c-driver-1.23.2" \
     ..
 
 # Install C++ driver
