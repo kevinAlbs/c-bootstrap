@@ -10,36 +10,44 @@ set -o errexit
 # Print each line.
 set -o xtrace
 
-# Download C driver source
+INSTALL_DIR="/Users/kevin.albertson/install"
+
+echo "Download C driver source ... begin"
 wget https://github.com/mongodb/mongo-c-driver/releases/download/1.23.2/mongo-c-driver-1.23.2.tar.gz
 tar xzf mongo-c-driver-1.23.2.tar.gz
 cd mongo-c-driver-1.23.2
 mkdir cmake-build
 cd cmake-build
+echo "Download C driver source ... end"
 
-# Configure C driver
+echo "Configure C driver ... begin"
 cmake \
     -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF \
-    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-c-driver-1.23.2" \
+    -DCMAKE_INSTALL_PREFIX="$INSTALL_DIR/mongo-c-driver-1.23.2" \
     ..
+echo "Configure C driver ... end"
 
-# Install C driver
+echo "Install C driver ... begin"
 cmake --build . --target install
+echo "Install C driver ... end"
 
-# Download the C++ driver source
+echo "Download the C++ driver source ... begin"
 curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.7.0/mongo-cxx-driver-r3.7.0.tar.gz
 tar -xzf mongo-cxx-driver-r3.7.0.tar.gz
 cd mongo-cxx-driver-r3.7.0/build
+echo "Download the C++ driver source ... end"
 
-# Configure
+echo "Configure the C++ driver source ... begin"
 cmake                                \
     -DCMAKE_BUILD_TYPE=Release          \
-    -DCMAKE_INSTALL_PREFIX="/Users/kevin.albertson/install/mongo-cxx-driver-3.7.0"   \
-    -DCMAKE_PREFIX_PATH="/Users/kevin.albertson/install/mongo-c-driver-1.23.2" \
+    -DCMAKE_INSTALL_PREFIX="$INSTALL_DIR/mongo-cxx-driver-3.7.0"   \
+    -DCMAKE_PREFIX_PATH="$INSTALL_DIR/mongo-c-driver-1.23.2" \
     ..
+echo "Configure the C++ driver source ... end"
 
-# Install C++ driver
+echo "Install C++ driver ... begin"
 cmake --build . --target install
+echo "Install C++ driver ... end"
 ```
 
 ## Q8: What version of C driver is in Ubuntu repositories?
