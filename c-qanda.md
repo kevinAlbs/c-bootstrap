@@ -1,5 +1,9 @@
 # C Q&A
 
+# Q4: How do you safely cast a `double` to `int64_t`?
+If double > INT64_MAX, is that undefined behavior?
+A:
+
 # Q3: Why doesn't ASAN show line numbers in stack trace?
 A: Note that on macOS you may need to run `dsymutil` on your binary to have the file:line info in the AddressSanitizer reports. See https://clang.llvm.org/docs/AddressSanitizer.html#symbolizing-the-reports
 
