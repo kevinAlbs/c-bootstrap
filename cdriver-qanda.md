@@ -31,6 +31,8 @@ echo "Install C driver ... begin"
 cmake --build . --target install
 echo "Install C driver ... end"
 
+cd ../..
+
 echo "Download the C++ driver source ... begin"
 curl -OL https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.7.0/mongo-cxx-driver-r3.7.0.tar.gz
 tar -xzf mongo-cxx-driver-r3.7.0.tar.gz
