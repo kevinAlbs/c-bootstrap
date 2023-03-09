@@ -23,9 +23,9 @@ EOF
 
 cat <<EOF > configure.sh
 cmake \\
-    -DCMAKE_PREFIX_PATH=../../install/mongo-c-driver-master \\
+    -DCMAKE_PREFIX_PATH=../../install/mongo-c-driver-1.23.2 \\
     -DCMAKE_BUILD_TYPE="Debug" \\
-    -DCMAKE_C_COMPILER="/Users/kevin.albertson/bin/llvm-11.0.0/bin/clang" \\
+    -DCMAKE_C_COMPILER="/opt/homebrew/opt/llvm/bin/clang" \\
     -DCMAKE_C_COMPILER_LAUNCHER="ccache" \\
     -DCMAKE_C_FLAGS="-fsanitize=address" \\
     -S./ \\
