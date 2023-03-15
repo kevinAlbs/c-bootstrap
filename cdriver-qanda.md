@@ -1,5 +1,8 @@
 # C Driver Q&A
 
+## Q10: What version of the C driver is packaged on platform X?
+A: See https://repology.org/project/mongo-c-driver/versions
+
 ## Q9: How do I install C and C++ driver from source?
 
 Replace directories as needed.
