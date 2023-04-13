@@ -1,5 +1,18 @@
 # C Driver Q&A
 
+## Q11: How many connections are expected?
+A:
+
+A single-threaded `mongoc_client_t` creates one connection per server. These connections are used both for monitoring and application operations.
+
+https://mongoc.org/libmongoc/current/connection-pooling.html#single-mode
+
+> A single client opens one connection per server in your topology: these connections are used both for scanning the topology and performing normal operations.
+
+A `mongoc_client_pool_t` creates one or two connections per server for monitoring depending on the server version. For server version < 4.4, one monitoring connection per server is created. For server version >= 4.4, two monitoring connections per server are created. Each `mongoc_client_t` opens its own connection to each server it uses for application operations. Connections for application operations are created on-demand. E.g. if the application has not performed any application operations, only the monitoring connections are created.
+
+The maximum number of `mongoc_client_t` that can be checked out at a given time is bounded by the URI option `maxPoolSize`. `maxPoolSize` is default 100.
+
 ## Q10: What version of the C driver is packaged on platform X?
 A: See https://repology.org/project/mongo-c-driver/versions
 
