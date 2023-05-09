@@ -1,5 +1,9 @@
 # C Driver Q&A
 
+## Q12: What version of POSIX does the C driver confirm to?
+A: POSIX.1-2008 plus the XSI extension and BSD-derived definitions. See https://github.com/mongodb/mongo-c-driver/blob/2a24fef34e985770abbe30794edb243079ea0cc8/CMakeLists.txt#L267
+
+
 ## Q11: How many connections are expected?
 A:
 
