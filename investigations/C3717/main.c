@@ -1,4 +1,4 @@
-#include <mongoc/mongoc.h>
+#include <mongoc.h>
 
 int main () {
     mongoc_init ();

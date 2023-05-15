@@ -42,8 +42,21 @@ function cleanup () {
 {
     cleanup
     captured=$((
-        sudo apt install libmongoc-1.0-0
+        sudo apt install libmongoc-1.0-0 -y
+        # pkg-config fails
         gcc -o main.out main.c $(pkg-config --libs --cflags libmongoc-1.0)
     )2>&1)
-    assert_contains "$captured" "foobar"
+    assert_contains "$captured" "No package 'libmongoc-1.0' found"
+}
+
+# Test attempting to develop with libmongoc-dev succeeds.
+{
+    cleanup
+    captured=$((
+        sudo apt install libmongoc-dev -y
+        # pkg-config fails
+        gcc -o main.out main.c $(pkg-config --libs --cflags libmongoc-1.0)
+        ./main.out
+    )2>&1)
+    assert_contains "$captured" "mongoc_get_version"
 }
