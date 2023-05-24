@@ -6,6 +6,7 @@ A:
 
 # Q3: Why doesn't ASAN show line numbers in stack trace?
 A: Note that on macOS you may need to run `dsymutil` on your binary to have the file:line info in the AddressSanitizer reports. See https://clang.llvm.org/docs/AddressSanitizer.html#symbolizing-the-reports
+Try: `dsymutil ./cmake-build/src/libmongoc/test-libmongoc`
 
 # Q2: What is the type of `a << b`
 A: The type of `a` after integer promotion. Note, `b` may be a different integer type than `a`.
