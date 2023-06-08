@@ -1,5 +1,130 @@
 # C Driver Q&A
 
+## Q16: How do I run the `/client_side_encryption/*` tests?
+A:
+
+Running the `/client_side_encryption/*` tests in `test-libmongoc` requires additional steps. The C driver evergreen configuration may be the best reference. But here are proposed steps for testing locally:
+
+### Build
+
+The C driver requires `libmongocrypt` to enable In-Use Encryption. Install libmongocrypt:
+
+```sh
+# Install version 1.8.1
+git clone git@github.com:mongodb/libmongocrypt.git --branch 1.8.1
+cd libmongocrypt
+cmake -DCMAKE_INSTALL_PREFIX=/Users/kevin.albertson/install/libmongocrypt-1.8.1 -S. -Bcmake-build
+cmake --build cmake-build --target install
+```
+
+Configure the C driver with `-DENABLE_CLIENT_SIDE_ENCRYPTION=ON` to require `libmongocrypt` be found:
+```
+cd mongo-c-driver
+cmake \
+    -DCMAKE_PREFIX_PATH=/Users/kevin.albertson/install/libmongocrypt-1.8.1 \
+    -DENABLE_CLIENT_SIDE_ENCRYPTION=ON \
+    -S. -Bcmake-build
+```
+
+Build `test-libmongoc`:
+
+```
+cmake --build cmake-build --target test-libmongoc -- -j16
+```
+
+### Set Environment Variables
+
+Tests require credentials to AWS, GCP, and Azure test instances. These credentials are sensitive. Copy them from the C driver Evergreen Project Variables page: https://spruce.mongodb.com/project/mongo-c-driver/settings/variables. The variables start with `client_side_encryption_*`. To make setting the environment variables easy, I suggest creating a `kms_providers.json` file in a local directory. Here is the redacted contents of my `~/.csfle/kms_provider.json`:
+
+```json
+{
+    "aws": {
+        "accessKeyId": "(sensitive - copy from Evergreen Project Variables)",
+        "secretAccessKey": "(sensitive - copy from Evergreen Project Variables)"
+    },
+    "azure": {
+        "tenantId": "(sensitive - copy from Evergreen Project Variables)",
+        "clientId": "(sensitive - copy from Evergreen Project Variables)",
+        "clientSecret": "(sensitive - copy from Evergreen Project Variables)"
+    },
+    "gcp": {
+        "email": "(sensitive - copy from Evergreen Project Variables)",
+        "privateKey": "(sensitive - copy from Evergreen Project Variables)"
+    }
+}
+```
+
+Set environment variables from the kms_providers.json with a script:
+
+```sh
+#!/bin/bash
+export AWS_ACCESS_KEY_ID=$(cat ~/.csfle/kms_providers.json | jq .aws.accessKeyId -r)
+export AWS_SECRET_ACCESS_KEY=$(cat ~/.csfle/kms_providers.json | jq .aws.secretAccessKey -r)
+
+# Set DRIVERS_TOOLS to a local checkout of: https://github.com/mongodb-labs/drivers-evergreen-tools
+DRIVERS_TOOLS=~/code/drivers-evergreen-tools
+# set-temp-creds.sh requires boto3 installed. Create a virtual environment and install with: `pip install boto3`.
+. ${DRIVERS_TOOLS}/.evergreen/csfle/set-temp-creds.sh
+
+# Export variables for testing the C driver.
+export MONGOC_TEST_AWS_TEMP_SECRET_ACCESS_KEY="$CSFLE_AWS_TEMP_ACCESS_KEY_ID"
+export MONGOC_TEST_AWS_TEMP_ACCESS_KEY_ID="$CSFLE_AWS_TEMP_SECRET_ACCESS_KEY"
+export MONGOC_TEST_AWS_TEMP_SESSION_TOKEN="$CSFLE_AWS_TEMP_SESSION_TOKEN"
+export MONGOC_TEST_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+export MONGOC_TEST_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export MONGOC_TEST_AZURE_TENANT_ID=$(cat ~/.csfle/kms_providers.json | jq .azure.tenantId -r)
+export MONGOC_TEST_AZURE_CLIENT_ID=$(cat ~/.csfle/kms_providers.json | jq .azure.clientId -r)
+export MONGOC_TEST_AZURE_CLIENT_SECRET=$(cat ~/.csfle/kms_providers.json | jq .azure.clientSecret -r)
+export MONGOC_TEST_GCP_EMAIL=$(cat ~/.csfle/kms_providers.json | jq .gcp.email -r)
+export MONGOC_TEST_GCP_PRIVATEKEY=$(cat ~/.csfle/kms_providers.json | jq .gcp.privateKey -r)
+export MONGOC_TEST_CSFLE_TLS_CA_FILE="$DRIVERS_TOOLS/.evergreen/x509gen/ca.pem"
+export MONGOC_TEST_CSFLE_TLS_CERTIFICATE_KEY_FILE="$DRIVERS_TOOLS/.evergreen/x509gen/client.pem"
+```
+
+If libmongocrypt was installed to a non-standard directory (as shown above), the runtime loader needs to be informed where to find the libmongocrypt shared library. On macOS: set `DYLD_LIBRARY_PATH` to the installed `lib` directory:
+```sh
+export DYLD_LIBRARY_PATH="/Users/kevin.albertson/install/libmongocrypt-1.8.1/lib" 
+```
+On Linux, set `LD_LIBRARY_PATH` to the path of libmongocrypt.so.
+
+Tests require the use of a Query Analysis component. The Query Analysis component is either the `crypt_shared` library or `mongocryptd` process.
+Testing with `crypt_shared` is [recommended in the specifications](https://github.com/mongodb/specifications/tree/840e6d49c354656bff11b2622f0d3001b39d9403/source/client-side-encryption/tests#using-crypt-shared).
+Download `crypt_shared` from the "Crypt Shared" links of https://www.mongodb.com/download-center/enterprise/releases
+Export the variable of the path to `crypt_shared`. Example:
+```sh
+export MONGOC_TEST_CRYPT_SHARED_LIB_PATH=/Users/kevin.albertson/bin/mongodl/crypt_shared/7.0.0-rc0/lib/mongo_crypt_v1.dylib
+```
+
+### Test
+
+Run mongod version 4.2 or newer.
+
+Run one test:
+```sh
+./cmake-build/src/libmongoc/test-libmongoc -d --no-fork --match "/client_side_encryption/legacy/basic"
+```
+
+Expect output to resemble:
+```
+Begin /client_side_encryption/legacy/basic, seed 1221838283
+  - Insert with deterministic encryption, then find it
+  - Insert with randomized encryption, then find it
+    { "status": "pass", "test_file": "/client_side_encryption/legacy/basic", "seed": "1221838283", "start": 2647.612546, "end": 2654.986624, "elapsed": 7.374078  }
+```
+
+
+## Q15: What is the difference between `mongoc_client{_,_read,_write,_read_write}_with_opts` and `mongoc_client_command_simple`?
+A: (Open)
+
+## Q14: Do retryable writes and retryable reads apply to `mongoc_client{_,_read,_write,_read_write}_with_opts`?
+
+A:
+Retryable writes do not apply.
+Retryable reads apply to `mongoc_client_read_with_opts`
+
+## Q13: What is the difference between `mongoc_client_write_command_with_opts` and `mongoc_client_read_command_with_opts`?
+A: (Open)
+
 ## Q12: What version of POSIX does the C driver confirm to?
 A: POSIX.1-2008 plus the XSI extension and BSD-derived definitions. See https://github.com/mongodb/mongo-c-driver/blob/2a24fef34e985770abbe30794edb243079ea0cc8/CMakeLists.txt#L267
 
