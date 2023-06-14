@@ -1,5 +1,15 @@
 # C Driver Q&A
 
+
+## Q17: What do I put for the fixVersion when closing a ticket?
+
+A: If this is a bug fix, consider backporting to the most recent release branch
+To backport, cherry pick the commit onto the minor version branch. Example: a fix planned for the `1.23.6` patch release would be cherry-picked onto the branch `r1.23`.
+
+Otherwise, put the fixVersion of the next upcoming minor release. Fix versions are listed on the project Releases pages in Jira: [CDRIVER](https://jira.mongodb.org/projects/CDRIVER?selectedItem=com.atlassian.jira.jira-projects-plugin%3Arelease-page&status=unreleased_).
+
+When in doubt, ask in #dbx-c-cxx.
+
 ## Q16: How do I run the `/client_side_encryption/*` tests?
 A:
 
