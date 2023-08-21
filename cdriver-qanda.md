@@ -1,5 +1,19 @@
 # C Driver Q&A
 
+## Q18: When is it preferable to create a ticket, rather than submit a PR?
+A:
+
+Create a ticket for any change that may impact downstream users.
+
+Changes impacting downstream users may include:
+- Build changes that may result in the PHP driver needing to update their autotools build.
+- Any non-test code change. This may result in an unexpected build or behavior change.
+
+Rationale:
+- A ticket includes a "Fix Version/s". The "Fix Version/s" may help identify which C driver version a change is applied.
+- A ticket may help to group all related commits. If the ticket identifier (e.g. "CDRIVER-????") is in the commit message, the "Githook User" will automatically add a comment linking to the commit ([example](https://jira.mongodb.org/browse/CDRIVER-4691?focusedCommentId=5641449&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-5641449)). This is helpful to identify commits that have been cherry-picked on to release branches.
+
+When in doubt, err towards creating a ticket. The ticket can be minimal with the description: `Tracks PR <PR link>`. Example: https://jira.mongodb.org/browse/CDRIVER-4709
 
 ## Q17: What do I put for the fixVersion when closing a ticket?
 
