@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(use-deprecated-targets LANGUAGES C)
+find_package(libmongoc-1.0 1.11.0 REQUIRED )
+add_executable (main.out main.c)
+include_directories(${MONGOC_INCLUDE_DIRS})
+target_link_libraries(main.out ${MONGOC_LIBRARIES})
