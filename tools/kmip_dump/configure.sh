@@ -3,6 +3,6 @@ cmake \
     -DCMAKE_BUILD_TYPE="Debug" \
     -DCMAKE_C_COMPILER="clang" \
     -DCMAKE_C_COMPILER_LAUNCHER="ccache" \
-    -DCMAKE_C_FLAGS="-fsanitize=address" \
+    -DCMAKE_C_FLAGS="" \
     -S/Users/kevin.albertson/code/c-bootstrap/tools/kmip_dump \
     -B/Users/kevin.albertson/code/c-bootstrap/tools/kmip_dump/cmake-build
