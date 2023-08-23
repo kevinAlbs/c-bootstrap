@@ -1,3 +1,9 @@
+Develop with `-Werror`. Do not require consumers to build with `-Werror`.
+
+Rationale: Be strict on development, lenient on consumption. This may improve portability on untested compilers or environments.
+
+---
+
 Use `#include <...>` instead of `#include "..."`, even within internal files.
 
 Rationale: will use consistent search paths. The consistent use of `<>` also ensures include directories are being specified correctly via the build system, rather than bypassing valid include directory specifications through relative path lookup.
