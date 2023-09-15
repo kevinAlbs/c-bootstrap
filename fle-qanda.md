@@ -1,3 +1,13 @@
+# Q3: How much size increase is IntelDFP?
+A: IntelDFP was introduced in libmongocrypt 1.7.0 as part of https://jira.mongodb.org/browse/MONGOCRYPT-483. The size increase is about 3.5 MB. It can be disabled with the CMake option `-DMONGOCRYPT_ENABLE_DECIMAL128=OFF`.
+
+```
+% ls -lh ./.install-1.7.2-RelWithDebInfo/lib/libmongocrypt.0.0.0.dylib
+-rwxr-xr-x  1 kevin.albertson  staff   4.3M Sep 15 10:54 ./.install-1.7.2-RelWithDebInfo/lib/libmongocrypt.0.0.0.dylib
+% ls -lh ./.install-1.7.2-RelWithDebInfo-nodecimal/lib/libmongocrypt.0.0.0.dylib
+-rwxr-xr-x  1 kevin.albertson  staff   595K Sep 15 10:49 ./.install-1.7.2-RelWithDebInfo-nodecimal/lib/libmongocrypt.0.0.0.dylib
+```
+
 # Q2: What is the feature called?
 
 The umbrella term is "In-Use" encryption. It consists of "Client-Side Field Level Encryption" and "Queryable Encryption". 
