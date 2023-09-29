@@ -14,7 +14,7 @@ mkdir -p investigations/$PROJECT_NAME
 pushd investigations/$PROJECT_NAME
 
 cat <<EOF > CMakeLists.txt
-cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 project($PROJECT_NAME LANGUAGES C)
 find_package(mongoc-1.0 REQUIRED)
 add_executable (main.out main.c)
