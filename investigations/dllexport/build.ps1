@@ -1,0 +1,1 @@
+cmake --build cmake-build --config Debug --target ALL_BUILD

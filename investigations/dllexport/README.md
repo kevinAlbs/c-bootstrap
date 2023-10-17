@@ -1,0 +1,1 @@
+Builds two libraries intended to test combinations of static/shared libraries linking to symbols with `dllexport`, `dllimport` and no attribute on Windows.
