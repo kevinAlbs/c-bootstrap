@@ -1,3 +1,6 @@
+# Q4: How long are data encryption keys (DEKs) cached?
+A: The DEK is cached one minute after fetching. The time is not configurable. Using the key does not extend the lifetime.
+
 # Q3: How much size increase is IntelDFP?
 A: IntelDFP was introduced in libmongocrypt 1.7.0 as part of https://jira.mongodb.org/browse/MONGOCRYPT-483. The size increase is about 3.5 MB. It can be disabled with the CMake option `-DMONGOCRYPT_ENABLE_DECIMAL128=OFF`.
 
