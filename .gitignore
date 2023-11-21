@@ -7,3 +7,5 @@ cmake-build
 .vscode
 .venv
 double2bits
+vcpkg_installed
+investigations/parse_auth_mechanisms/parse_auth_mechanisms
