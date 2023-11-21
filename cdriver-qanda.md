@@ -137,14 +137,14 @@ Begin /client_side_encryption/legacy/basic, seed 1221838283
 ```
 
 
-## Q15: What is the difference between `mongoc_client{_,_read,_write,_read_write}_with_opts` and `mongoc_client_command_simple`?
+## Q15: What is the difference between `mongoc_client{_,_read,_write,_read_write}_command_with_opts` and `mongoc_client_command_simple`?
 A: (Open)
 
-## Q14: Do retryable writes and retryable reads apply to `mongoc_client{_,_read,_write,_read_write}_with_opts`?
+## Q14: Do retryable writes and retryable reads apply to `mongoc_client{_,_read,_write,_read_write}_command_with_opts`?
 
 A:
 Retryable writes do not apply.
-Retryable reads apply to `mongoc_client_read_with_opts`
+Retryable reads apply to `mongoc_client_read_command_with_opts`
 
 ## Q13: What is the difference between `mongoc_client_write_command_with_opts` and `mongoc_client_read_command_with_opts`?
 A: (Open)
