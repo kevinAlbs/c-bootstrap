@@ -1,6 +1,6 @@
 # C Q&A
 
-# Q6: Why is assigning a "const struct with pointer" to a "non-const struct with pointer" not a warning?
+# Q7: Why is assigning a "const struct with pointer" to a "non-const struct with pointer" not a warning?
 
 ```c
 int i = 123;
@@ -20,7 +20,7 @@ S s = cs; // Not a warning.
 ```
 A:
 
-# Q5: Why is passing a "non-const pointer pointer" to a "const pointer pointer" a warning?
+# Q6: Why is passing a "non-const pointer pointer" to a "const pointer pointer" a warning?
 
 ```c
 void fn(const int **ppi)
@@ -38,6 +38,34 @@ int main(void)
 ```
 
 A:
+
+# Q5: Is changing a pointed value in a `const` struct permitted?
+
+This test suggests "yes":
+
+```c
+typedef struct {
+    int *pi;
+} foo;
+
+int i = 0, j = 0;
+const foo cf = {.pi = &i};
+// cf.pi = &j;                   // Error: 'cannot assign'.
+*cf.pi = 123;                    // Q: Why is this not a compiler error? A:
+ASSERT(*cf.pi == 123 && j == 0); // Silence unused warning.
+```
+
+A:
+
+I expect `const` is applied to each field in `foo` as follows:
+
+```c
+// `const foo` is equivalent to:
+typedef struct {
+    int * const pi; // `pi` cannot be changed. `*pi` can be changed.
+} const_foo
+```
+
 
 # Q4: How do you safely cast a `double` to `int64_t`?
 If double > INT64_MAX, is that undefined behavior?
