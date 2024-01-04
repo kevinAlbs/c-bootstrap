@@ -1145,6 +1145,47 @@ static void prefix_level (kms_request_str_t *str, uint32_t level) {
    }
 }
 
+static void add_comment_describing_enum_value (kms_request_str_t *str, kmip_tag_type_t tag, uint32_t value) {
+   switch (tag) {
+      case KMIP_TAG_Operation: {
+         switch (value) {
+            // Refer to section 9.1.3.2.26 of KMIP 1.0 specification for the Operation values.
+            case 0x01: kms_request_str_appendf (str, "<!-- Create -->"); break;
+            case 0x02: kms_request_str_appendf (str, "<!-- Create_Key_Pair -->"); break;
+            case 0x03: kms_request_str_appendf (str, "<!-- Register -->"); break;
+            case 0x04: kms_request_str_appendf (str, "<!-- Rekey -->"); break;
+            case 0x05: kms_request_str_appendf (str, "<!-- Derive_Key -->"); break;
+            case 0x06: kms_request_str_appendf (str, "<!-- Certify -->"); break;
+            case 0x07: kms_request_str_appendf (str, "<!-- Recertify -->"); break;
+            case 0x08: kms_request_str_appendf (str, "<!-- Locate -->"); break;
+            case 0x09: kms_request_str_appendf (str, "<!-- Check -->"); break;
+            case 0x0A: kms_request_str_appendf (str, "<!-- Get -->"); break;
+            case 0x0B: kms_request_str_appendf (str, "<!-- Get_Attributes -->"); break;
+            case 0x0C: kms_request_str_appendf (str, "<!-- Get_Attribute_List -->"); break;
+            case 0x0D: kms_request_str_appendf (str, "<!-- Add_Attribute -->"); break;
+            case 0x0E: kms_request_str_appendf (str, "<!-- Modify_Attribute -->"); break;
+            case 0x0F: kms_request_str_appendf (str, "<!-- Delete_Attribute -->"); break;
+            case 0x10: kms_request_str_appendf (str, "<!-- Obtain_Lease -->"); break;
+            case 0x11: kms_request_str_appendf (str, "<!-- Get_Usage_Allocation -->"); break;
+            case 0x12: kms_request_str_appendf (str, "<!-- Activate -->"); break;
+            case 0x13: kms_request_str_appendf (str, "<!-- Revoke -->"); break;
+            case 0x14: kms_request_str_appendf (str, "<!-- Destroy -->"); break;
+            case 0x15: kms_request_str_appendf (str, "<!-- Archive -->"); break;
+            case 0x16: kms_request_str_appendf (str, "<!-- Recover -->"); break;
+            case 0x17: kms_request_str_appendf (str, "<!-- Validate -->"); break;
+            case 0x18: kms_request_str_appendf (str, "<!-- Query -->"); break;
+            case 0x19: kms_request_str_appendf (str, "<!-- Cancel -->"); break;
+            case 0x1A: kms_request_str_appendf (str, "<!-- Poll -->"); break;
+            case 0x1B: kms_request_str_appendf (str, "<!-- Notify -->"); break;
+            case 0x1C: kms_request_str_appendf (str, "<!-- Put -->"); break;
+            default: kms_request_str_appendf (str, "<!-- Unknown -->"); break;
+         }
+         break;
+      }
+      default: break;
+   }
+}
+
 static bool
 kmip_dump_recursive_xml (kms_request_str_t *str, kmip_reader_t *reader, uint32_t level)
 {
@@ -1198,6 +1239,11 @@ kmip_dump_recursive_xml (kms_request_str_t *str, kmip_reader_t *reader, uint32_t
          uint32_t value;
          kmip_reader_read_enumeration (reader, &value);
          kms_request_str_appendf (str, " value=\"%" PRIu32 "\"/>", value);
+
+         add_comment_describing_enum_value (str, tag, value);
+         if (tag == KMIP_TAG_Operation) {
+
+         }
       } else if (type == KMIP_ITEM_TYPE_Boolean) {
          uint64_t u64;
 
