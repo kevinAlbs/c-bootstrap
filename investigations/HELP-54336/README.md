@@ -2,10 +2,12 @@ mongo-c-driver-rhel7.spec is an unsupported spec file to build an RPM on RHEL 7.
 
 # Building the RPM
 
-Downloaded cmake separately and add to the PATH (RHEL 7 packaged cmake is too old).
+Download cmake separately and add to the PATH (RHEL 7 packaged cmake is too old).
 Then build with:
 ```bash
-# rpmdev-setuptree creates ~/rpmbuild
+#!/usr/bin/env bash
+
+# Create ~/rpmbuild with `rpmdev-setuptree`. Refer: https://www.redhat.com/sysadmin/create-rpm-package
 rpmdev-setuptree
 cp mongo-c-driver-rhel7.spec ~/rpmbuild/SPECS/
 wget https://github.com/mongodb/mongo-c-driver/archive/refs/tags/1.25.4.tar.gz -O ~/rpmbuild/SOURCES/1.25.4.tar.gz
