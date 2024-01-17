@@ -17,11 +17,15 @@ export MONGO_CXX_DRIVER_CMAKE_BUILD_TYPE=${MONGO_CXX_DRIVER_CMAKE_BUILD_TYPE:-De
 TMPDIR=$(pwd)/tmp
 
 . ./etc/find_os.sh
-. ./etc/find_cmake.sh
+# Get latest cmake using C driver scripts.
+. $HOME/code/mongo-c-driver/.evergreen/scripts/find-cmake-latest.sh
+CMAKE=$(find_cmake_latest)
 
 if [[ $OS == "WINDOWS" ]]; then
     MONGO_C_DRIVER_INSTALL_PREFIX=$(cygpath -w $MONGO_C_DRIVER_INSTALL_PREFIX)
     MONGO_CXX_DRIVER_INSTALL_PREFIX=$(cygpath -w $MONGO_CXX_DRIVER_INSTALL_PREFIX)
+    # Tell Windows to build x64
+    export CMAKE_GENERATOR_PLATFORM=x64
 fi
 
 mkdir -p $MONGO_CXX_DRIVER_INSTALL_PREFIX
