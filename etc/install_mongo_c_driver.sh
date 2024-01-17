@@ -55,4 +55,4 @@ $CMAKE $MONGO_C_DRIVER_EXTRA_CMAKE_OPTIONS \
     -DCMAKE_INSTALL_PREFIX=$MONGO_C_DRIVER_PREFIX \
     -DCMAKE_PREFIX_PATH=$LIBMONGOCRYPT_INSTALL_PREFIX ..
 
-$CMAKE --build . --target install -- -j8
+$CMAKE --build . --target install --parallel

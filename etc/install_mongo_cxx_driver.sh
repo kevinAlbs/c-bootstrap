@@ -48,4 +48,4 @@ $CMAKE \
     -DENABLE_TESTS=OFF \
     -DCMAKE_PREFIX_PATH="$MONGO_C_DRIVER_INSTALL_PREFIX" ..
 
-$CMAKE --build . --target install -- -j16
+$CMAKE --build . --target install --parallel

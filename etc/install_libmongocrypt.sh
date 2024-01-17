@@ -49,4 +49,4 @@ $CMAKE $LIBMONGOCRYPT_EXTRA_CMAKE_OPTIONS \
     -DCMAKE_BUILD_TYPE=$LIBMONGOCRYPT_CMAKE_BUILD_TYPE \
     -DCMAKE_PREFIX_PATH=$LIBBSON_INSTALL_PREFIX ..
 
-$CMAKE --build . --target install -- -j8
+$CMAKE --build . --target install --parallel
