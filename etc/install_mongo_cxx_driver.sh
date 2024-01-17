@@ -7,6 +7,15 @@ if [[ "$(basename $(pwd))" != "c-bootstrap" ]]; then
 fi
 
 MONGO_C_DRIVER_INSTALL_PREFIX=${MONGO_C_DRIVER_INSTALL_PREFIX:-$(pwd)/install/mongo-c-driver-master}
+if [[ -n "$MONGO_C_DRIVER_GITREF" ]]; then
+    # Check that libmongocrypt was previously installed.
+    MONGO_C_DRIVER_INSTALL_PREFIX="$(pwd)/install/mongo-c-driver-$MONGO_C_DRIVER_GITREF"
+    if [[ ! -d "$MONGO_C_DRIVER_INSTALL_PREFIX" ]]; then
+        echo "Did not detect directory: $MONGO_C_DRIVER_INSTALL_PREFIX. Is C driver installed?"
+        echo "Try running: MONGO_C_DRIVER_GITREF=$MONGO_C_DRIVER_GITREF ./etc/install_mongo_c_driver.sh"
+        exit 1
+    fi
+fi
 export MONGO_CXX_DRIVER_EXTRA_CMAKE_OPTIONS=${MONGO_CXX_DRIVER_EXTRA_CMAKE_OPTIONS}
 export MONGO_CXX_DRIVER_SUFFIX=$MONGO_CXX_DRIVER_SUFFIX;
 export MONGO_CXX_DRIVER_GITREF=${MONGO_CXX_DRIVER_GITREF:-master}
@@ -25,6 +34,7 @@ if [[ $OS == "WINDOWS" ]]; then
     MONGO_C_DRIVER_INSTALL_PREFIX=$(cygpath -w $MONGO_C_DRIVER_INSTALL_PREFIX)
     MONGO_CXX_DRIVER_INSTALL_PREFIX=$(cygpath -w $MONGO_CXX_DRIVER_INSTALL_PREFIX)
     # Tell Windows to build x64
+    export CMAKE_GENERATOR="Visual Studio 15 2017"
     export CMAKE_GENERATOR_PLATFORM=x64
 fi
 

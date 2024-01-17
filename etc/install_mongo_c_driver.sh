@@ -7,6 +7,15 @@ if [[ "$(basename $(pwd))" != "c-bootstrap" ]]; then
 fi
 
 LIBMONGOCRYPT_INSTALL_PREFIX=${LIBMONGOCRYPT_INSTALL_PREFIX:-$(pwd)/install/libmongocrypt-master}
+if [[ -n "$LIBMONGOCRYPT_GITREF" ]]; then
+    # Check that libmongocrypt was previously installed.
+    LIBMONGOCRYPT_INSTALL_PREFIX="$(pwd)/install/libmongocrypt-$LIBMONGOCRYPT_GITREF"
+    if [[ ! -d "$LIBMONGOCRYPT_INSTALL_PREFIX" ]]; then
+        echo "Did not detect directory: $LIBMONGOCRYPT_INSTALL_PREFIX. Is libmongocrypt installed?"
+        echo "Try running: LIBMONGOCRYPT_GITREF=$LIBMONGOCRYPT_GITREF ./etc/install_libmongocrypt.sh"
+        exit 1
+    fi
+fi
 export MONGO_C_DRIVER_EXTRA_CMAKE_OPTIONS=${MONGO_C_DRIVER_EXTRA_CMAKE_OPTIONS}
 export MONGO_C_DRIVER_SUFFIX=$MONGO_C_DRIVER_SUFFIX;
 export MONGO_C_DRIVER_GITREF=${MONGO_C_DRIVER_GITREF:-master}
@@ -27,6 +36,7 @@ if [[ $OS == "WINDOWS" ]]; then
     LIBMONGOCRYPT_INSTALL_PREFIX=$(cygpath -w $LIBMONGOCRYPT_INSTALL_PREFIX)
     MONGO_C_DRIVER_PREFIX=$(cygpath -w $MONGO_C_DRIVER_PREFIX)
     # Tell Windows to build x64
+    export CMAKE_GENERATOR="Visual Studio 15 2017"
     export CMAKE_GENERATOR_PLATFORM=x64
 fi
 
