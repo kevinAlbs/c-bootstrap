@@ -1,5 +1,6 @@
 ```bash
 docker run --rm -it debian:12
+$ apt update
 $ apt install apt-rdepends
 $ apt-rdepends libmongoc-1.0-0
 ```
