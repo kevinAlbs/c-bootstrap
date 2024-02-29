@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.15)
+project(foo LANGUAGES CXX)
+add_executable(foo foo.cpp)
+message("CMAKE_GENERATOR=${CMAKE_GENERATOR}")
+message("MSVC=${MSVC}")
+get_target_property(runtime foo MSVC_RUNTIME_LIBRARY)
+message("runtime=${runtime}")
