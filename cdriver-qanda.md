@@ -164,6 +164,17 @@ A `mongoc_client_pool_t` pools many `mongoc_client_t` and shares connections for
 
 Configuring `maxPoolSize` can be done in the URI. See [mongoc_uri_t](https://mongoc.org/libmongoc/current/mongoc_uri_t.html#connection-pool-options) documentation.
 
+In Python
+```python
+servers = 60  # How many mongos servers
+maxPoolSize = 100  # Default `maxPoolSize` in C driver
+monitoring = 2 # Number of monitoring connections per server for a single `mongoc_client_pool_t`
+pools = 3  # Number of `mongoc_client_pool_t` per app
+apps = 1  # Number of application instances
+total = servers * (monitoring + maxPoolSize) * pools * apps
+print(f"maximum total connections = {total}")
+```
+
 ## Q10: What version of the C driver is packaged on platform X?
 A: See https://repology.org/project/mongo-c-driver/versions
 
