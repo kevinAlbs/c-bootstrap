@@ -1,5 +1,22 @@
 # C Q&A
 
+# Q8: Are fields not referenced in designated initializers zero-initialized?
+Example:
+
+```c
+typedef struct {
+    int bar;
+    int baz;
+} foo;
+
+foo f = { .bar = 123 }; // Is `baz` guaranteed to be 0?
+```
+
+A: Yes. See https://stackoverflow.com/a/3374468/774658
+
+
+A: (Open)
+
 # Q7: Why is assigning a "const struct with pointer" to a "non-const struct with pointer" not a warning?
 
 ```c
