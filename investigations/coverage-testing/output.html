@@ -1,0 +1,144 @@
+<!doctype html><html><head><meta name='viewport' content='width=device-width,initial-scale=1'><meta charset='UTF-8'><style>.red {
+  background-color: #ffd0d0;
+}
+.cyan {
+  background-color: cyan;
+}
+body {
+  font-family: -apple-system, sans-serif;
+}
+pre {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+.source-name-title {
+  padding: 5px 10px;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #eee;
+  line-height: 35px;
+}
+.centered {
+  display: table;
+  margin-left: left;
+  margin-right: auto;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+.expansion-view {
+  background-color: rgba(0, 0, 0, 0);
+  margin-left: 0px;
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+}
+table {
+  border-collapse: collapse;
+}
+.light-row {
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+}
+.light-row-bold {
+  background: #ffffff;
+  border: 1px solid #dbdbdb;
+  font-weight: bold;
+}
+.column-entry {
+  text-align: left;
+}
+.column-entry-bold {
+  font-weight: bold;
+  text-align: left;
+}
+.column-entry-yellow {
+  text-align: left;
+  background-color: #ffffd0;
+}
+.column-entry-yellow:hover {
+  background-color: #fffff0;
+}
+.column-entry-red {
+  text-align: left;
+  background-color: #ffd0d0;
+}
+.column-entry-red:hover {
+  background-color: #fff0f0;
+}
+.column-entry-green {
+  text-align: left;
+  background-color: #d0ffd0;
+}
+.column-entry-green:hover {
+  background-color: #f0fff0;
+}
+.line-number {
+  text-align: right;
+  color: #aaa;
+}
+.covered-line {
+  text-align: right;
+  color: #0080ff;
+}
+.uncovered-line {
+  text-align: right;
+  color: #ff3300;
+}
+.tooltip {
+  position: relative;
+  display: inline;
+  background-color: #b3e6ff;
+  text-decoration: none;
+}
+.tooltip span.tooltip-content {
+  position: absolute;
+  width: 100px;
+  margin-left: -50px;
+  color: #FFFFFF;
+  background: #000000;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  visibility: hidden;
+  border-radius: 6px;
+}
+.tooltip span.tooltip-content:after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -8px;
+  width: 0; height: 0;
+  border-top: 8px solid #000000;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+:hover.tooltip span.tooltip-content {
+  visibility: visible;
+  opacity: 0.8;
+  bottom: 30px;
+  left: 50%;
+  z-index: 999;
+}
+th, td {
+  vertical-align: top;
+  padding: 2px 8px;
+  border-collapse: collapse;
+  border-right: solid 1px #eee;
+  border-left: solid 1px #eee;
+  text-align: left;
+}
+td pre {
+  display: inline-block;
+}
+td:first-child {
+  border-left: none;
+}
+td:last-child {
+  border-right: none;
+}
+tr:hover {
+  background-color: #f0f0f0;
+}
+</style></head><body><div class='centered'><table><div class='source-name-title'><pre>/Users/kevin.albertson/code/c-bootstrap/investigations/coverage-testing/main.c</pre></div><tr><td><pre>Line</pre></td><td><pre>Count</pre></td><td><pre>Source</pre></td></tr><tr><td class='line-number'><a name='L1' href='#L1'><pre>1</pre></a></td><td class='uncovered-line'></td><td class='code'><pre>#include &lt;math.h&gt;</pre></td></tr><tr><td class='line-number'><a name='L2' href='#L2'><pre>2</pre></a></td><td class='uncovered-line'></td><td class='code'><pre>#include &lt;stdio.h&gt;</pre></td></tr><tr><td class='line-number'><a name='L3' href='#L3'><pre>3</pre></a></td><td class='uncovered-line'></td><td class='code'><pre>#include &lt;limits.h&gt;</pre></td></tr><tr><td class='line-number'><a name='L4' href='#L4'><pre>4</pre></a></td><td class='uncovered-line'></td><td class='code'><pre></pre></td></tr><tr><td class='line-number'><a name='L5' href='#L5'><pre>5</pre></a></td><td class='uncovered-line'></td><td class='code'><pre>double dist(double x1, double y1, double x2, double y2)</pre></td></tr><tr><td class='line-number'><a name='L6' href='#L6'><pre>6</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>{</pre></td></tr><tr><td class='line-number'><a name='L7' href='#L7'><pre>7</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>    double xdiff = x1 - x2;</pre></td></tr><tr><td class='line-number'><a name='L8' href='#L8'><pre>8</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>    double ydiff = y2 - y1;</pre></td></tr><tr><td class='line-number'><a name='L9' href='#L9'><pre>9</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>    return sqrt(xdiff * xdiff + ydiff * ydiff);</pre></td></tr><tr><td class='line-number'><a name='L10' href='#L10'><pre>10</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>}</pre></td></tr><tr><td class='line-number'><a name='L11' href='#L11'><pre>11</pre></a></td><td class='uncovered-line'></td><td class='code'><pre></pre></td></tr><tr><td class='line-number'><a name='L12' href='#L12'><pre>12</pre></a></td><td class='uncovered-line'></td><td class='code'><pre>int main()</pre></td></tr><tr><td class='line-number'><a name='L13' href='#L13'><pre>13</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>{</pre></td></tr><tr><td class='line-number'><a name='L14' href='#L14'><pre>14</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>    printf(&quot;computing distance ... start\n&quot;);</pre></td></tr><tr><td class='line-number'><a name='L15' href='#L15'><pre>15</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>    double total = 0;</pre></td></tr><tr><td class='line-number'><a name='L16' href='#L16'><pre>16</pre></a></td><td class='covered-line'><pre>11</pre></td><td class='code'><pre>    for (int i = 0; i &lt; 10; i++)</pre></td></tr><tr><td class='line-number'><a name='L17' href='#L17'><pre>17</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>    {</pre></td></tr><tr><td class='line-number'><a name='L18' href='#L18'><pre>18</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>        total += dist(1.23, 4.56, 7.89, 0.12);</pre></td></tr><tr><td class='line-number'><a name='L19' href='#L19'><pre>19</pre></a></td><td class='covered-line'><pre>10</pre></td><td class='code'><pre>    }</pre></td></tr><tr><td class='line-number'><a name='L20' href='#L20'><pre>20</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>    printf(&quot;total: %f \n&quot;, total);</pre></td></tr><tr><td class='line-number'><a name='L21' href='#L21'><pre>21</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>    printf(&quot;computing distance: ... done\n&quot;);</pre></td></tr><tr><td class='line-number'><a name='L22' href='#L22'><pre>22</pre></a></td><td class='covered-line'><pre>1</pre></td><td class='code'><pre>}</pre></td></tr></table></div></body></html>
