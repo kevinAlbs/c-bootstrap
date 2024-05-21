@@ -1,6 +1,9 @@
 /*
-Sample output:
-% ./run.sh
+Runs three threads for 10 seconds. Each thread runs update operations in a loop.
+
+Sample output when running three mongos:
+
+% MONGOC_VERSION=1.25.4 ./run.sh
 mongoc_get_version=1.25.4
 Connection count before test   : 1
 Connection count during test   : 6
@@ -13,6 +16,22 @@ Connection count during test   : 6
 Connection count during test   : 6
 Connection count during test   : 6
 Connection count during test   : 6
+10 seconds passed. Stopping test
+Connection count after test    : 1
+
+% MONGOC_VERSION=1.16.2 ./run.sh
+mongoc_get_version=1.16.2
+Connection count before test   : 1
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
+Connection count during test   : 5
 10 seconds passed. Stopping test
 Connection count after test    : 1
 */
