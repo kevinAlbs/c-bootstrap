@@ -1,3 +1,22 @@
+/*
+Sample output:
+% ./run.sh
+mongoc_get_version=1.25.4
+Connection count before test   : 1
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+Connection count during test   : 6
+10 seconds passed. Stopping test
+Connection count after test    : 1
+*/
+
 #include <mongoc/mongoc.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,6 +121,12 @@ int main(int argc, char *argv[])
     BSON_ASSERT(0 == pthread_join(workers[0], NULL));
     BSON_ASSERT(0 == pthread_join(workers[1], NULL));
     BSON_ASSERT(0 == pthread_join(workers[2], NULL));
+
+    mongoc_client_pool_destroy(pool);
+
+    // Sleep for five seconds for server to update connection count.
+    // The interrupted monitoring connection appears to be reported for a short duration after closing.
+    sleep(5);
 
     printf("Connection count after test    : %" PRId32 "\n", get_current_connection_count());
 
