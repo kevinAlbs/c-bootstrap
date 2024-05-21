@@ -14,7 +14,7 @@ cmake --build cmake-build --target install
 A client can use this option to force polling monitoring:
 
 ```c
-mongoc_uri_t *uri = mongoc_uri_new("mongodb://localhost:27017,localhost:27018,localhost:27019/?maxPoolSize=64&serverMonitoringMode=poll");
+mongoc_uri_t *uri = mongoc_uri_new("mongodb://localhost:27017/?serverMonitoringMode=poll");
 mongoc_client_pool_t *pool = mongoc_client_pool_new(uri);
 ```
 
