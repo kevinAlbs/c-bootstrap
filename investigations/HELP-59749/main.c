@@ -41,11 +41,16 @@ Connection count after test    : 1
 #include <stdlib.h>
 #include <pthread.h>
 
-// `get_current_connection_count` returns the server reported connection count from the server on port 27017.
+// `get_current_connection_count` returns the server reported connection count from one mongos.
 static int32_t
 get_current_connection_count(void)
 {
-    mongoc_client_t *client = mongoc_client_new("mongodb://localhost:27017");
+    const char *mongos_uri = getenv("MONGOS_URI");
+    if (!mongos_uri)
+    {
+        mongos_uri = "mongodb://localhost:27017";
+    }
+    mongoc_client_t *client = mongoc_client_new(mongos_uri);
     bson_t *cmd = BCON_NEW("serverStatus", BCON_INT32(1));
     bson_t reply;
     bson_error_t error;
@@ -109,8 +114,14 @@ int main(int argc, char *argv[])
     printf("mongoc_get_version=%s\n", mongoc_get_version());
     printf("Connection count before test   : %" PRId32 "\n", get_current_connection_count());
 
+    const char *uri_str = getenv("MONGODB_URI");
+    if (!uri_str)
+    {
+        uri_str = "mongodb://localhost:27017/?maxPoolSize=64";
+    }
+
     // Create a client pool to multiple mongoses.
-    mongoc_uri_t *uri = mongoc_uri_new("mongodb://localhost:27017,localhost:27018,localhost:27019/?maxPoolSize=64");
+    mongoc_uri_t *uri = mongoc_uri_new(uri_str);
     mongoc_client_pool_t *pool = mongoc_client_pool_new(uri);
 
     // Start three threads running update operations in a loop.
@@ -150,6 +161,5 @@ int main(int argc, char *argv[])
     printf("Connection count after test    : %" PRId32 "\n", get_current_connection_count());
 
     mongoc_cleanup();
-
     return EXIT_SUCCESS;
 }
