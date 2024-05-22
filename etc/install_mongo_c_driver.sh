@@ -31,7 +31,7 @@ rm -rf $MONGO_C_DRIVER_SRCDIR
 mkdir -p $MONGO_C_DRIVER_SRCDIR
 
 cd $MONGO_C_DRIVER_SRCDIR
-git clone git@github.com:mongodb/mongo-c-driver.git
+git clone https://github.com/mongodb/mongo-c-driver.git
 cd mongo-c-driver
 git checkout $MONGO_C_DRIVER_GITREF
 mkdir cmake-build

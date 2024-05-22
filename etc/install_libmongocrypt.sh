@@ -32,7 +32,7 @@ rm -rf $LIBMONGOCRYPT_SRCDIR
 mkdir -p $LIBMONGOCRYPT_SRCDIR
 
 cd $LIBMONGOCRYPT_SRCDIR
-git clone git@github.com:$LIBMONGOCRYPT_REMOTE/libmongocrypt.git
+git clone https://github.com/$LIBMONGOCRYPT_REMOTE/libmongocrypt.git
 cd libmongocrypt
 git checkout $LIBMONGOCRYPT_GITREF
 mkdir cmake-build
