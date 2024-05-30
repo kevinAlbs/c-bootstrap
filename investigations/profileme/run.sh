@@ -1,1 +1,1 @@
-./cmake-build/main.out
+./cmake-build/profileme.out
