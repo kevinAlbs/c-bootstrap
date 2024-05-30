@@ -12,5 +12,4 @@ Configure and build the test runner:
 ./build.sh
 ```
 
-Use instruments to measure. Use `Time Profiler` to sample stack traces. `CPU Profiler` does not appear to include off-CPU network calls. Here is a sample result:
-
+Use Instruments to do a `Time Profile`. See the video: [Profile libmongoc with Instruments](https://youtu.be/Yh4-g9fNc44).
