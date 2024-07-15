@@ -1,4 +1,4 @@
-// Run with: node lookup.js
+// Example: node lookup-srv.js test1.test.build.10gen.cc
 const { Resolver } = require('dns');
 const dns = new Resolver();
 const hostname = process.argv[2];
