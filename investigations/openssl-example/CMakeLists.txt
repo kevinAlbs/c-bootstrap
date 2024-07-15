@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+project(openssl-example LANGUAGES C)
+find_package(OpenSSL REQUIRED)
+add_executable (main.out main.c)
+target_link_libraries(main.out OpenSSL::SSL)
