@@ -83,7 +83,7 @@ def main():
     failhalf = args.fail_half
     sleep_before_responding = args.sleep
     print("Starting nameserver...")
-    server = socketserver.ThreadingUDPServer(('', args.port), UDPRequestHandler)
+    server = socketserver.UDPServer(('', args.port), UDPRequestHandler)
     server.serve_forever()
 
 if __name__ == '__main__':
