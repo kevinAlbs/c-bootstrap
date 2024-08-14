@@ -1,0 +1,2665 @@
+<!-- kind:binary;verdict:compatible;affected:0;added:268;removed:0;type_problems_high:0;type_problems_medium:0;type_problems_low:0;interface_problems_high:0;interface_problems_medium:0;interface_problems_low:0;changed_constants:0;constant_changes_other:25;tool_version:2.3 -->
+<!-- kind:source;verdict:compatible;affected:0;added:269;removed:0;type_problems_high:0;type_problems_medium:0;type_problems_low:0;interface_problems_high:0;interface_problems_medium:0;interface_problems_low:0;changed_constants:0;constant_changes_other:55;tool_version:2.3 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="keywords" content="libbson, compatibility, API, ABI, report" />
+<meta name="description" content="API/ABI compatibility report for the libbson library between X and 1.27.5 versions" />
+<title>libbson: X to 1.27.5 compatibility report</title>
+<style type="text/css">
+body {
+    font-family:Arial, sans-serif;
+    background-color:White;
+    color:Black;
+}
+hr {
+    color:Black;
+    background-color:Black;
+    height:1px;
+    border:0;
+}
+h1 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.625em;
+}
+h2 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.25em;
+    white-space:nowrap;
+}
+span.section {
+    font-weight:bold;
+    cursor:pointer;
+    color:#003E69;
+    white-space:nowrap;
+    margin-left:0.3125em;
+}
+span.new_sign {
+    font-weight:bold;
+    margin-left:1.65em;
+    color:#003E69;
+}
+span.new_sign_lbl {
+    margin-left:3em;
+    font-size:1em;
+    color:Black;
+}
+span:hover.section {
+    color:#336699;
+}
+span.sect_aff {
+    cursor:pointer;
+    padding-left:1.55em;
+    font-size:0.875em;
+    color:#cc3300;
+}
+span.sect_info {
+    cursor:pointer;
+    padding-left:1.55em;
+    font-size:0.875em;
+    color:Black;
+}
+span.ext {
+    font-weight:normal;
+}
+span.h_name {
+    color:#cc3300;
+    font-size:0.875em;
+    font-weight:bold;
+}
+div.h_list, div.lib_list {
+    font-size:0.94em;
+    padding-left:0.4em;
+}
+span.ns {
+    color:#408080;
+    font-size:0.94em;
+}
+span.lib_name {
+    color:Green;
+    font-size:0.875em;
+    font-weight:bold;
+}
+span.iname {
+    font-weight:bold;
+    color:#003E69;
+    margin-left:0.3125em;
+}
+span.iname_b {
+    font-weight:bold;
+}
+span.iname_a {
+    color:#333333;
+    font-weight:bold;
+    font-size:0.94em;
+}
+span.sym_p {
+    font-weight:normal;
+    white-space:normal;
+}
+span.sym_pd {
+    white-space:normal;
+}
+span.sym_p span, span.sym_pd span {
+    white-space:nowrap;
+}
+div.affect {
+    padding-left:1em;
+    padding-bottom:10px;
+    font-size:0.87em;
+    font-style:italic;
+    line-height:0.9em;
+}
+div.affected {
+    padding-left:1.9em;
+    padding-top:10px;
+}
+table.ptable {
+    border-collapse:collapse;
+    border:1px outset black;
+    margin-left:0.95em;
+    margin-top:3px;
+    margin-bottom:3px;
+    width:56.25em;
+}
+table.ptable td {
+    border:1px solid gray;
+    padding:3px;
+    font-size:0.875em;
+    text-align:left;
+    vertical-align:top;
+    max-width:28em;
+    word-wrap:break-word;
+}
+table.ptable th.pn {
+    width:2%;
+}
+table.ptable th.chg {
+    width:47%;
+}
+table.vtable {
+    border-collapse:collapse;
+    border:1px outset black;
+    margin-left:1.9em;
+    margin-top:0.7em;
+}
+table.vtable td {
+    border:1px solid gray;
+    padding:3px;
+    font-size:0.875em;
+    vertical-align:top;
+    max-width:450px;
+    word-wrap:break-word;
+}
+table.ptable th, table.vtable th {
+    background-color:#eeeeee;
+    font-weight:bold;
+    color:#333333;
+    font-family:Verdana, Arial;
+    font-size:0.875em;
+    border:1px solid gray;
+    text-align:center;
+    vertical-align:top;
+    white-space:nowrap;
+    padding:3px;
+}
+table.summary {
+    border-collapse:collapse;
+    border:1px outset black;
+}
+table.summary th {
+    background-color:#eeeeee;
+    font-weight:normal;
+    text-align:left;
+    font-size:0.94em;
+    white-space:nowrap;
+    border:1px inset gray;
+    padding:3px;
+}
+table.summary td {
+    text-align:right;
+    white-space:nowrap;
+    border:1px inset gray;
+    padding:3px 5px 3px 10px;
+}
+span.mngl {
+    padding-left:1em;
+    font-size:0.875em;
+    cursor:text;
+    color:#444444;
+    font-weight:bold;
+}
+span.pleft {
+    padding-left:2.5em;
+}
+span.sym_ver {
+    color:#333333;
+    white-space:nowrap;
+    font-family:"DejaVu Sans Mono", Monospace;
+}
+span.attr {
+    color:#333333;
+    font-weight:normal;
+}
+span.color_p {
+    font-style:italic;
+    color:Brown;
+}
+span.p {
+    font-style:italic;
+}
+span.fp {
+    font-style:italic;
+    background-color:#DCDCDC;
+}
+span.ttype {
+    font-weight:normal;
+}
+span.nowrap {
+    white-space:nowrap;
+}
+span.value {
+    font-weight:bold;
+}
+.passed {
+    background-color:#CCFFCC;
+    font-weight:normal;
+}
+.warning {
+    background-color:#F4F4AF;
+    font-weight:normal;
+}
+.failed {
+    background-color:#FFCCCC;
+    font-weight:normal;
+}
+.new {
+    background-color:#C6DEFF;
+    font-weight:normal;
+}
+.compatible {
+    background-color:#CCFFCC;
+    font-weight:normal;
+}
+.almost_compatible {
+    background-color:#FFDAA3;
+    font-weight:normal;
+}
+.incompatible {
+    background-color:#FFCCCC;
+    font-weight:normal;
+}
+.gray {
+    background-color:#DCDCDC;
+    font-weight:normal;
+}
+.top_ref {
+    font-size:0.69em;
+}
+.footer {
+    font-size:0.75em;
+}
+
+.tabset {
+    float:left;
+}
+a.tab {
+    border:1px solid Black;
+    float:left;
+    margin:0px 5px -1px 0px;
+    padding:3px 5px 3px 5px;
+    position:relative;
+    font-size:0.875em;
+    background-color:#DDD;
+    text-decoration:none;
+    color:Black;
+}
+a.disabled:hover
+{
+    color:Black;
+    background:#EEE;
+}
+a.active:hover
+{
+    color:Black;
+    background:White;
+}
+a.active {
+    border-bottom-color:White;
+    background-color:White;
+}
+div.tab {
+    border-top:1px solid Black;
+    padding:0px;
+    width:100%;
+    clear:both;
+}
+</style>
+<script type="text/javascript" language="JavaScript">
+<!--
+function showContent(header, id)
+{
+    e = document.getElementById(id);
+    if(e.style.display == 'none')
+    {
+        e.style.display = 'block';
+        e.style.visibility = 'visible';
+        header.innerHTML = header.innerHTML.replace(/\[[^0-9 ]\]/gi,"[&minus;]");
+    }
+    else
+    {
+        e.style.display = 'none';
+        e.style.visibility = 'hidden';
+        header.innerHTML = header.innerHTML.replace(/\[[^0-9 ]\]/gi,"[+]");
+    }
+}
+function initTabs()
+{
+    var url = window.location.href;
+    if(url.indexOf('_Source_')!=-1 || url.indexOf('#Source')!=-1)
+    {
+        var tab1 = document.getElementById('BinaryID');
+        var tab2 = document.getElementById('SourceID');
+        tab1.className='tab disabled';
+        tab2.className='tab active';
+    }
+    var sets = document.getElementsByTagName('div');
+    for (var i = 0; i < sets.length; i++)
+    {
+        if (sets[i].className.indexOf('tabset') != -1)
+        {
+            var tabs = [];
+            var links = sets[i].getElementsByTagName('a');
+            for (var j = 0; j < links.length; j++)
+            {
+                if (links[j].className.indexOf('tab') != -1)
+                {
+                    tabs.push(links[j]);
+                    links[j].tabs = tabs;
+                    var tab = document.getElementById(links[j].href.substr(links[j].href.indexOf('#') + 1));
+                    //reset all tabs on start
+                    if (tab)
+                    {
+                        if (links[j].className.indexOf('active')!=-1) {
+                            tab.style.display = 'block';
+                        }
+                        else {
+                            tab.style.display = 'none';
+                        }
+                    }
+                    links[j].onclick = function()
+                    {
+                        var tab = document.getElementById(this.href.substr(this.href.indexOf('#') + 1));
+                        if (tab)
+                        {
+                            //reset all tabs before change
+                            for (var k = 0; k < this.tabs.length; k++)
+                            {
+                                document.getElementById(this.tabs[k].href.substr(this.tabs[k].href.indexOf('#') + 1)).style.display = 'none';
+                                this.tabs[k].className = this.tabs[k].className.replace('active', 'disabled');
+                            }
+                            this.className = 'tab active';
+                            tab.style.display = 'block';
+                            // window.location.hash = this.id.replace('ID', '');
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if(url.indexOf('#')!=-1) {
+        location.href=location.href;
+    }
+}
+if (window.addEventListener) window.addEventListener('load', initTabs, false);
+else if (window.attachEvent) window.attachEvent('onload', initTabs);
+-->
+</script>
+</head>
+<body><a name='Source'></a><a name='Binary'></a><a name='Top'></a><h1>API compatibility report for the <span style='color:Blue;'>libbson</span> library between <span style='color:Red;'>X</span> and <span style='color:Red;'>1.27.5</span> versions on <span style='color:Blue;'>aarch64</span></h1>
+
+            <br/>
+            <div class='tabset'>
+            <a id='BinaryID' href='#BinaryTab' class='tab active'>Binary<br/>Compatibility</a>
+            <a id='SourceID' href='#SourceTab' style='margin-left:3px' class='tab disabled'>Source<br/>Compatibility</a>
+            </div><div id='BinaryTab' class='tab'>
+<h2>Test Info</h2><hr/>
+<table class='summary'>
+<tr><th>Library Name</th><td>libbson</td></tr>
+<tr><th>Version #1</th><td>X</td></tr>
+<tr><th>Version #2</th><td>1.27.5</td></tr>
+<tr><th>Arch</th><td>aarch64</td></tr>
+<tr><th>GCC Version</th><td>11</td></tr>
+<tr><th>Subject</th><td width='150px'>Binary Compatibility</td></tr>
+</table>
+<h2>Test Results</h2><hr/>
+<table class='summary'><tr><th>Total Header Files</th><td><a href='#Headers' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Libraries</th><td><a href='#Libs' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Symbols / Types</th><td>1 / 1</td></tr>
+<tr><th>Compatibility</th>
+<td class='compatible'>100%</td>
+</tr>
+</table>
+<h2>Problem Summary</h2><hr/>
+<table class='summary'><tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr><tr><th>Added Symbols</th><td>-</td><td class='new'><a href='#Binary_Added' style='color:Blue;'>268</a></td></tr>
+<tr><th>Removed Symbols</th><td>High</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Data Types</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Symbols</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th>Problems with<br/>Constants</th><td>Low</td><td>0</td></tr>
+<tr><th>Other Changes<br/>in Constants</th><td>-</td><td class='passed'><a href='#Other_Binary_Changes_In_Constants' style='color:Blue;'>25</a></td></tr>
+</table>
+
+<a name='Binary_Added'></a><h2>Added Symbols <span class='new'>&nbsp;268&nbsp;</span></h2><hr/>
+<span class='h_name'>bcon.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bcon_append&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_append_ctx_t* <span class='color_p'>ctx</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx_init&#160;<span class='sym_p'><span>(&#160;bcon_append_ctx_t* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx_va&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_append_ctx_t* <span class='color_p'>ctx</span></span>, <span>va_list* <span class='color_p'>va</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx_init&#160;<span class='sym_p'><span>(&#160;bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx_va&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>, <span>va_list* <span class='color_p'>ap</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_new&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>unused</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_bcon_magic&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_bcone_magic&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-atomic.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">_bson_emul_atomic_int32_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>expect_value</span></span>, <span>int32_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>expect_value</span></span>, <span>int32_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_exchange&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_fetch_add&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>expect_value</span></span>, <span>int64_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>expect_value</span></span>, <span>int64_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_exchange&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_fetch_add&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>expect_value</span></span>, <span>int <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>expect_value</span></span>, <span>int <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_exchange&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_fetch_add&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_ptr_exchange&#160;<span class='sym_p'><span>(&#160;void*volatile* <span class='color_p'>val</span></span>, <span>void* <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_atomic_int64_add&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>p</span></span>, <span>int64_t <span class='color_p'>n</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_atomic_int_add&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>p</span></span>, <span>int32_t <span class='color_p'>n</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_memory_barrier&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_thrd_yield&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-clock.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_get_monotonic_time&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_gettimeofday&#160;<span class='sym_p'><span>(&#160;struct timeval* <span class='color_p'>tv</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-context.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_context_destroy&#160;<span class='sym_p'><span>(&#160;bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_context_get_default&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_context_new&#160;<span class='sym_p'><span>(&#160;enum bson_context_flags_t <span class='color_p'>flags</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-decimal128.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_decimal128_from_string&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>string</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_decimal128_from_string_w_len&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>string</span></span>, <span>int <span class='color_p'>len</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_decimal128_to_string&#160;<span class='sym_p'><span>(&#160;struct bson_decimal128_t const* <span class='color_p'>dec</span></span>, <span>char* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-error.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_set_error&#160;<span class='sym_p'><span>(&#160;bson_error_t* <span class='color_p'>error</span></span>, <span>uint32_t <span class='color_p'>domain</span></span>, <span>uint32_t <span class='color_p'>code</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strerror_r&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>err_code</span></span>, <span>char* <span class='color_p'>buf</span></span>, <span>size_t <span class='color_p'>buflen</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-iter.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_iter_array&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>array_len</span></span>, <span>uint8_t const** <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_binary&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>enum bson_subtype_t* <span class='color_p'>subtype</span></span>, <span>uint32_t* <span class='color_p'>binary_len</span></span>, <span>uint8_t const** <span class='color_p'>binary</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_code&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_codewscope&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>, <span>uint32_t* <span class='color_p'>scope_len</span></span>, <span>uint8_t const** <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_date_time&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_dbpointer&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>collection_len</span></span>, <span>char const** <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const** <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_decimal128&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_document&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>document_len</span></span>, <span>uint8_t const** <span class='color_p'>document</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_dup_utf8&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_case&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_descendant&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>dotkey</span></span>, <span>struct bson_iter_t* <span class='color_p'>descendant</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_w_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find_case&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find_w_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_from_data&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_from_data_at_offset&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>, <span>uint32_t <span class='color_p'>offset</span></span>, <span>uint32_t <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_int32&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_key&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_key_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_next&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_offset&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_oid&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_date_time&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_decimal128&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_int32&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_oid&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_oid_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_timestamp&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_recurse&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct bson_iter_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_regex&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>char const** <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_symbol&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_time_t&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_timestamp&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>timestamp</span></span>, <span>uint32_t* <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_timeval&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct timeval* <span class='color_p'>tv</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_type&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_utf8&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_value&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_visit_all&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_visitor_t const* <span class='color_p'>visitor</span></span>, <span>void* <span class='color_p'>data</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-json.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_json_data_reader_ingest&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_data_reader_new&#160;<span class='sym_p'><span>(&#160;bool <span class='color_p'>allow_multiple</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_destroy&#160;<span class='sym_p'><span>(&#160;bson_json_opts_t* <span class='color_p'>opts</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_new&#160;<span class='sym_p'><span>(&#160;enum bson_json_mode_t <span class='color_p'>mode</span></span>, <span>int32_t <span class='color_p'>max_len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_set_outermost_array&#160;<span class='sym_p'><span>(&#160;bson_json_opts_t* <span class='color_p'>opts</span></span>, <span>bool <span class='color_p'>is_outermost_array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_destroy&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>data</span></span>, <span>bson_json_reader_cb <span class='color_p'>cb</span></span>, <span>bson_json_destroy_cb <span class='color_p'>dcb</span></span>, <span>bool <span class='color_p'>allow_multiple</span></span>, <span>size_t <span class='color_p'>buf_size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new_from_fd&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>fd</span></span>, <span>bool <span class='color_p'>close_on_destroy</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new_from_file&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>filename</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_read&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>, <span>bson_t* <span class='color_p'>bson</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-keys.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_uint32_to_string&#160;<span class='sym_p'><span>(&#160;uint32_t <span class='color_p'>value</span></span>, <span>char const** <span class='color_p'>strptr</span></span>, <span>char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-md5.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_md5_append&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>uint32_t <span class='color_p'>nbytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_md5_finish&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>, <span>uint8_t* <span class='color_p'>digest</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_md5_init&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-memory.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_aligned_alloc&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>alignment</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_aligned_alloc0&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>alignment</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_free&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_malloc&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_malloc0&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_mem_restore_vtable&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_mem_set_vtable&#160;<span class='sym_p'><span>(&#160;bson_mem_vtable_t const* <span class='color_p'>vtable</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_realloc&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_realloc_ctx&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>, <span>void* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_zero_free&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-oid.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_oid_compare&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid1</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_copy&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>src</span></span>, <span>struct bson_oid_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_equal&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid1</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_get_time_t&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_hash&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_from_data&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_from_string&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_sequence&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_is_valid&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_to_string&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>, <span>char* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-reader.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_reader_destroy&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_data&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_fd&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>fd</span></span>, <span>bool <span class='color_p'>close_on_destroy</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_file&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>path</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_handle&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>handle</span></span>, <span>bson_reader_read_func_t <span class='color_p'>rf</span></span>, <span>bson_reader_destroy_func_t <span class='color_p'>df</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_read&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bool* <span class='color_p'>reached_eof</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_reset&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_set_destroy_func&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bson_reader_destroy_func_t <span class='color_p'>func</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_set_read_func&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bson_reader_read_func_t <span class='color_p'>func</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_tell&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-string.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_ascii_strtoll&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>char** <span class='color_p'>endptr</span></span>, <span>int <span class='color_p'>base</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_isspace&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>c</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_snprintf&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strcasecmp&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>s1</span></span>, <span>char const* <span class='color_p'>s2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strdup&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strdup_printf&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strdupv_printf&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>format</span></span>, <span>va_list <span class='color_p'>args</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strfreev&#160;<span class='sym_p'><span>(&#160;char** <span class='color_p'>strv</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_c&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_printf&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_unichar&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>bson_unichar_t <span class='color_p'>unichar</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_free&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>bool <span class='color_p'>free_segment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_new&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_truncate&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>uint32_t <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strncpy&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>src</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strndup&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>n_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strnlen&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>s</span></span>, <span>size_t <span class='color_p'>maxlen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_vsnprintf&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>va_list <span class='color_p'>ap</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-utf8.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_utf8_escape_for_json&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>, <span>ssize_t <span class='color_p'>utf8_len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_from_unichar&#160;<span class='sym_p'><span>(&#160;bson_unichar_t <span class='color_p'>unichar</span></span>, <span>char* <span class='color_p'>utf8</span></span>, <span>uint32_t* <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_get_char&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_next_char&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_validate&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>, <span>size_t <span class='color_p'>utf8_len</span></span>, <span>bool <span class='color_p'>allow_null</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-value.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_value_copy&#160;<span class='sym_p'><span>(&#160;bson_value_t const* <span class='color_p'>src</span></span>, <span>bson_value_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_value_destroy&#160;<span class='sym_p'><span>(&#160;bson_value_t* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-version-functions.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_check_version&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>required_major</span></span>, <span>int <span class='color_p'>required_minor</span></span>, <span>int <span class='color_p'>required_micro</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_get_major_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_get_micro_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_get_minor_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-writer.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_writer_begin&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>, <span>bson_t** <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_destroy&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_end&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_get_length&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_new&#160;<span class='sym_p'><span>(&#160;uint8_t** <span class='color_p'>buf</span></span>, <span>size_t* <span class='color_p'>buflen</span></span>, <span>size_t <span class='color_p'>offset</span></span>, <span>bson_realloc_func <span class='color_p'>realloc_func</span></span>, <span>void* <span class='color_p'>realloc_func_ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_rollback&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson.h</span>, <span class='lib_name'>libbson-1.0.so.0.0.0</span><br/>
+<span class="iname">bson_append_array&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t const* <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_builder_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_array_builder_t** <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_builder_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_array_builder_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_binary&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>enum bson_subtype_t <span class='color_p'>subtype</span></span>, <span>uint8_t const* <span class='color_p'>binary</span></span>, <span>uint32_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_bool&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_code&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>javascript</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_code_with_scope&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>javascript</span></span>, <span>bson_t const* <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_date_time&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_dbpointer&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_decimal128&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_double&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_int32&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_int64&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_iter&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_maxkey&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_minkey&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_now_utc&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_null&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_oid&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_regex&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_regex_w_len&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>int <span class='color_p'>regex_length</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_symbol&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_time_t&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>time_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_timestamp&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_timeval&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct timeval* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_undefined&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_utf8&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_value&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_value_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_canonical_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_relaxed_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t const* <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array_builder_begin&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_array_builder_t** <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array_builder_end&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_array_builder_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_binary&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>enum bson_subtype_t <span class='color_p'>subtype</span></span>, <span>uint8_t const* <span class='color_p'>binary</span></span>, <span>uint32_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_bool&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_code&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>javascript</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_code_with_scope&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>javascript</span></span>, <span>bson_t const* <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_date_time&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_dbpointer&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_decimal128&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document_begin&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document_end&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_double&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_int32&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_int64&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_iter&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_maxkey&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_minkey&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_now_utc&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_null&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_oid&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_regex&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_regex_w_len&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>int <span class='color_p'>regex_length</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_symbol&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_time_t&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>time_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_timestamp&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_timeval&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct timeval* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_undefined&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_utf8&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_value&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_value_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_build&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>out</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_destroy&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_new&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_as_canonical_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_json_with_opts&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>, <span>bson_json_opts_t const* <span class='color_p'>opts</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_relaxed_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_compare&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>bson_t const* <span class='color_p'>other</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_concat&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>dst</span></span>, <span>bson_t const* <span class='color_p'>src</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding_noinit&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding_noinit_va&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>va_list <span class='color_p'>args</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_count_keys&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_destroy&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_destroy_with_steal&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bool <span class='color_p'>steal</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_equal&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>bson_t const* <span class='color_p'>other</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_get_data&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_has_field&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init_from_json&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>data</span></span>, <span>ssize_t <span class='color_p'>len</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init_static&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_new_from_buffer&#160;<span class='sym_p'><span>(&#160;uint8_t** <span class='color_p'>buf</span></span>, <span>size_t* <span class='color_p'>buf_len</span></span>, <span>bson_realloc_func <span class='color_p'>realloc_func</span></span>, <span>void* <span class='color_p'>realloc_func_ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new_from_data&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new_from_json&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>ssize_t <span class='color_p'>len</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reinit&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reserve_buffer&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>uint32_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_sized_new&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_steal&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>dst</span></span>, <span>bson_t* <span class='color_p'>src</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_validate&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>enum bson_validate_flags_t <span class='color_p'>flags</span></span>, <span>size_t* <span class='color_p'>offset</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_validate_with_error&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>enum bson_validate_flags_t <span class='color_p'>flags</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<br/>
+<a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Other_Binary_Changes'></a><a name='Other_Binary_Changes_In_Constants'></a>
+<h2>Other Changes in Constants <span class='passed'>&nbsp;25&nbsp;</span></h2><hr/>
+<span class='h_name'>bcon.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_1')">
+<span class='ext'>[+]</span> BCON_STACK_MAX</span>
+<br/>
+<div id="c_1" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_STACK_MAX</b> with value <b>100</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-config.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_2')">
+<span class='ext'>[+]</span> BSON_BYTE_ORDER</span>
+<br/>
+<div id="c_2" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_BYTE_ORDER</b> with value <b>1234</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_3')">
+<span class='ext'>[+]</span> BSON_EXTRA_ALIGN</span>
+<br/>
+<div id="c_3" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_EXTRA_ALIGN</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_4')">
+<span class='ext'>[+]</span> BSON_HAVE_CLOCK_GETTIME</span>
+<br/>
+<div id="c_4" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_CLOCK_GETTIME</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_5')">
+<span class='ext'>[+]</span> BSON_HAVE_GMTIME_R</span>
+<br/>
+<div id="c_5" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_GMTIME_R</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_6')">
+<span class='ext'>[+]</span> BSON_HAVE_RAND_R</span>
+<br/>
+<div id="c_6" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_RAND_R</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_7')">
+<span class='ext'>[+]</span> BSON_HAVE_SNPRINTF</span>
+<br/>
+<div id="c_7" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_SNPRINTF</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_8')">
+<span class='ext'>[+]</span> BSON_HAVE_STRNLEN</span>
+<br/>
+<div id="c_8" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_STRNLEN</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_9')">
+<span class='ext'>[+]</span> BSON_HAVE_TIMESPEC</span>
+<br/>
+<div id="c_9" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_TIMESPEC</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_10')">
+<span class='ext'>[+]</span> BSON_OS</span>
+<br/>
+<div id="c_10" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_OS</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-decimal128.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_11')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_INF</span>
+<br/>
+<div id="c_11" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_INF</b> with value <b>&quot;Infinity&quot;</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_12')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_NAN</span>
+<br/>
+<div id="c_12" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_NAN</b> with value <b>&quot;NaN&quot;</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_13')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_STRING</span>
+<br/>
+<div id="c_13" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_STRING</b> with value <b>43</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-endian.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_14')">
+<span class='ext'>[+]</span> BSON_BIG_ENDIAN</span>
+<br/>
+<div id="c_14" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_BIG_ENDIAN</b> with value <b>4321</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_15')">
+<span class='ext'>[+]</span> BSON_LITTLE_ENDIAN</span>
+<br/>
+<div id="c_15" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_LITTLE_ENDIAN</b> with value <b>1234</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-error.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_16')">
+<span class='ext'>[+]</span> BSON_ERROR_INVALID</span>
+<br/>
+<div id="c_16" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_INVALID</b> with value <b>3</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_17')">
+<span class='ext'>[+]</span> BSON_ERROR_JSON</span>
+<br/>
+<div id="c_17" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_JSON</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_18')">
+<span class='ext'>[+]</span> BSON_ERROR_READER</span>
+<br/>
+<div id="c_18" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_READER</b> with value <b>2</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-json.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_19')">
+<span class='ext'>[+]</span> BSON_MAX_LEN_UNLIMITED</span>
+<br/>
+<div id="c_19" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAX_LEN_UNLIMITED</b> with value <b>-1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-macros.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_20')">
+<span class='ext'>[+]</span> BSON_END_DECLS</span>
+<br/>
+<div id="c_20" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_END_DECLS</b> with value <b>}</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_21')">
+<span class='ext'>[+]</span> BSON_WORD_SIZE</span>
+<br/>
+<div id="c_21" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_WORD_SIZE</b> with value <b>64</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-reader.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_22')">
+<span class='ext'>[+]</span> BSON_ERROR_READER_BADFD</span>
+<br/>
+<div id="c_22" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_READER_BADFD</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-types.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_23')">
+<span class='ext'>[+]</span> BSON_ERROR_BUFFER_SIZE</span>
+<br/>
+<div id="c_23" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_BUFFER_SIZE</b> with value <b>504</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_24')">
+<span class='ext'>[+]</span> BSON_INITIALIZER</span>
+<br/>
+<div id="c_24" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_INITIALIZER</b> with value <span class='value'>{ 3, 5, { 5 } }</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_25')">
+<span class='ext'>[+]</span> BSON_MAX_SIZE</span>
+<br/>
+<div id="c_25" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAX_SIZE</b> with value <span class='value'>((size_t) ((1U &lt;&lt; 31) - 1))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Headers'></a><h2>Header Files <span class='gray'>&nbsp;1&nbsp;</span></h2><hr/>
+<div class='h_list'>
+bson-version-functions.h<br/>
+</div>
+<br/><a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Libs'></a><h2>Libraries <span class='gray'>&nbsp;1&nbsp;</span></h2><hr/>
+<div class='lib_list'>
+stub.so<br/>
+</div>
+<br/><a class='top_ref' href='#Top'>to the top</a><br/>
+<br/><br/><br/></div><div id='SourceTab' class='tab'>
+<h2>Test Info</h2><hr/>
+<table class='summary'>
+<tr><th>Library Name</th><td>libbson</td></tr>
+<tr><th>Version #1</th><td>X</td></tr>
+<tr><th>Version #2</th><td>1.27.5</td></tr>
+<tr><th>Arch</th><td>aarch64</td></tr>
+<tr><th>Subject</th><td width='150px'>Source Compatibility</td></tr>
+</table>
+<h2>Test Results</h2><hr/>
+<table class='summary'><tr><th>Total Header Files</th><td><a href='#Headers' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Libraries</th><td><a href='#Libs' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Symbols / Types</th><td>1 / 1</td></tr>
+<tr><th>Compatibility</th>
+<td class='compatible'>100%</td>
+</tr>
+</table>
+<h2>Problem Summary</h2><hr/>
+<table class='summary'><tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr><tr><th>Added Symbols</th><td>-</td><td class='new'><a href='#Source_Added' style='color:Blue;'>269</a></td></tr>
+<tr><th>Removed Symbols</th><td>High</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Data Types</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Symbols</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th>Problems with<br/>Constants</th><td>Low</td><td>0</td></tr>
+<tr><th>Other Changes<br/>in Constants</th><td>-</td><td class='passed'><a href='#Other_Source_Changes_In_Constants' style='color:Blue;'>55</a></td></tr>
+</table>
+
+<a name='Source_Added'></a><h2>Added Symbols <span class='new'>&nbsp;269&nbsp;</span></h2><hr/>
+<span class='h_name'>bcon.h</span><br/>
+<span class="iname">bcon_append&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_append_ctx_t* <span class='color_p'>ctx</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx_init&#160;<span class='sym_p'><span>(&#160;bcon_append_ctx_t* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_append_ctx_va&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_append_ctx_t* <span class='color_p'>ctx</span></span>, <span>va_list* <span class='color_p'>va</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx_init&#160;<span class='sym_p'><span>(&#160;bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_ctx_va&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>, <span>va_list* <span class='color_p'>ap</span></span>&#160;)</span></span><br/>
+<span class="iname">bcon_extract_va&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bcon_extract_ctx_t* <span class='color_p'>ctx</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bcon_new&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>unused</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_bcon_magic&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_bcone_magic&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-atomic.h</span><br/>
+<span class="iname">_bson_emul_atomic_int32_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>expect_value</span></span>, <span>int32_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>expect_value</span></span>, <span>int32_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_exchange&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int32_fetch_add&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>val</span></span>, <span>int32_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>expect_value</span></span>, <span>int64_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>expect_value</span></span>, <span>int64_t <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_exchange&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int64_fetch_add&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>val</span></span>, <span>int64_t <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_compare_exchange_strong&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>expect_value</span></span>, <span>int <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_compare_exchange_weak&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>expect_value</span></span>, <span>int <span class='color_p'>new_value</span></span>, <span>enum bson_memory_order <span class='color_p'>p4</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_exchange&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_int_fetch_add&#160;<span class='sym_p'><span>(&#160;int volatile* <span class='color_p'>val</span></span>, <span>int <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">_bson_emul_atomic_ptr_exchange&#160;<span class='sym_p'><span>(&#160;void*volatile* <span class='color_p'>val</span></span>, <span>void* <span class='color_p'>v</span></span>, <span>enum bson_memory_order <span class='color_p'>p3</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_atomic_int64_add&#160;<span class='sym_p'><span>(&#160;int64_t volatile* <span class='color_p'>p</span></span>, <span>int64_t <span class='color_p'>n</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_atomic_int_add&#160;<span class='sym_p'><span>(&#160;int32_t volatile* <span class='color_p'>p</span></span>, <span>int32_t <span class='color_p'>n</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_memory_barrier&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_thrd_yield&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-clock.h</span><br/>
+<span class="iname">bson_get_monotonic_time&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_gettimeofday&#160;<span class='sym_p'><span>(&#160;struct timeval* <span class='color_p'>tv</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-context.h</span><br/>
+<span class="iname">bson_context_destroy&#160;<span class='sym_p'><span>(&#160;bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_context_get_default&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_context_new&#160;<span class='sym_p'><span>(&#160;enum bson_context_flags_t <span class='color_p'>flags</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-decimal128.h</span><br/>
+<span class="iname">bson_decimal128_from_string&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>string</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_decimal128_from_string_w_len&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>string</span></span>, <span>int <span class='color_p'>len</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_decimal128_to_string&#160;<span class='sym_p'><span>(&#160;struct bson_decimal128_t const* <span class='color_p'>dec</span></span>, <span>char* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-error.h</span><br/>
+<span class="iname">bson_set_error&#160;<span class='sym_p'><span>(&#160;bson_error_t* <span class='color_p'>error</span></span>, <span>uint32_t <span class='color_p'>domain</span></span>, <span>uint32_t <span class='color_p'>code</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strerror_r&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>err_code</span></span>, <span>char* <span class='color_p'>buf</span></span>, <span>size_t <span class='color_p'>buflen</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-iter.h</span><br/>
+<span class="iname">bson_iter_array&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>array_len</span></span>, <span>uint8_t const** <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_as_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_binary&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>enum bson_subtype_t* <span class='color_p'>subtype</span></span>, <span>uint32_t* <span class='color_p'>binary_len</span></span>, <span>uint8_t const** <span class='color_p'>binary</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_code&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_codewscope&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>, <span>uint32_t* <span class='color_p'>scope_len</span></span>, <span>uint8_t const** <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_date_time&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_dbpointer&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>collection_len</span></span>, <span>char const** <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const** <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_decimal128&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct bson_decimal128_t* <span class='color_p'>dec</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_document&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>document_len</span></span>, <span>uint8_t const** <span class='color_p'>document</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_dup_utf8&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_case&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_descendant&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>dotkey</span></span>, <span>struct bson_iter_t* <span class='color_p'>descendant</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_find_w_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find_case&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_find_w_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_from_data&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_init_from_data_at_offset&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>, <span>uint32_t <span class='color_p'>offset</span></span>, <span>uint32_t <span class='color_p'>keylen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_int32&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_key&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_key_len&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_next&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_offset&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_oid&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_bool&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_date_time&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_decimal128&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_double&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_int32&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_int64&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_oid&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_oid_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_overwrite_timestamp&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_recurse&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct bson_iter_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_regex&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>char const** <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_symbol&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_time_t&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_timestamp&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>timestamp</span></span>, <span>uint32_t* <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_timeval&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>struct timeval* <span class='color_p'>tv</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_type&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_utf8&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t const* <span class='color_p'>iter</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_value&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_iter_visit_all&#160;<span class='sym_p'><span>(&#160;struct bson_iter_t* <span class='color_p'>iter</span></span>, <span>struct bson_visitor_t const* <span class='color_p'>visitor</span></span>, <span>void* <span class='color_p'>data</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-json.h</span><br/>
+<span class="iname">bson_json_data_reader_ingest&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_data_reader_new&#160;<span class='sym_p'><span>(&#160;bool <span class='color_p'>allow_multiple</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_destroy&#160;<span class='sym_p'><span>(&#160;bson_json_opts_t* <span class='color_p'>opts</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_new&#160;<span class='sym_p'><span>(&#160;enum bson_json_mode_t <span class='color_p'>mode</span></span>, <span>int32_t <span class='color_p'>max_len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_opts_set_outermost_array&#160;<span class='sym_p'><span>(&#160;bson_json_opts_t* <span class='color_p'>opts</span></span>, <span>bool <span class='color_p'>is_outermost_array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_destroy&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>data</span></span>, <span>bson_json_reader_cb <span class='color_p'>cb</span></span>, <span>bson_json_destroy_cb <span class='color_p'>dcb</span></span>, <span>bool <span class='color_p'>allow_multiple</span></span>, <span>size_t <span class='color_p'>buf_size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new_from_fd&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>fd</span></span>, <span>bool <span class='color_p'>close_on_destroy</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_new_from_file&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>filename</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_json_reader_read&#160;<span class='sym_p'><span>(&#160;bson_json_reader_t* <span class='color_p'>reader</span></span>, <span>bson_t* <span class='color_p'>bson</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-keys.h</span><br/>
+<span class="iname">bson_uint32_to_string&#160;<span class='sym_p'><span>(&#160;uint32_t <span class='color_p'>value</span></span>, <span>char const** <span class='color_p'>strptr</span></span>, <span>char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-md5.h</span><br/>
+<span class="iname">bson_md5_append&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>uint32_t <span class='color_p'>nbytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_md5_finish&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>, <span>uint8_t* <span class='color_p'>digest</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_md5_init&#160;<span class='sym_p'><span>(&#160;struct bson_md5_t* <span class='color_p'>pms</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-memory.h</span><br/>
+<span class="iname">bson_aligned_alloc&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>alignment</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_aligned_alloc0&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>alignment</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_free&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_malloc&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_malloc0&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_mem_restore_vtable&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_mem_set_vtable&#160;<span class='sym_p'><span>(&#160;bson_mem_vtable_t const* <span class='color_p'>vtable</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_realloc&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_realloc_ctx&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>num_bytes</span></span>, <span>void* <span class='color_p'>ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_zero_free&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>mem</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-oid.h</span><br/>
+<span class="iname">bson_oid_compare&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid1</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_copy&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>src</span></span>, <span>struct bson_oid_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_equal&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid1</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_get_time_t&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_hash&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_from_data&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_from_string&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_init_sequence&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t* <span class='color_p'>oid</span></span>, <span>bson_context_t* <span class='color_p'>context</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_is_valid&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_oid_to_string&#160;<span class='sym_p'><span>(&#160;struct bson_oid_t const* <span class='color_p'>oid</span></span>, <span>char* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-reader.h</span><br/>
+<span class="iname">bson_reader_destroy&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_data&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_fd&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>fd</span></span>, <span>bool <span class='color_p'>close_on_destroy</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_file&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>path</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_new_from_handle&#160;<span class='sym_p'><span>(&#160;void* <span class='color_p'>handle</span></span>, <span>bson_reader_read_func_t <span class='color_p'>rf</span></span>, <span>bson_reader_destroy_func_t <span class='color_p'>df</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_read&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bool* <span class='color_p'>reached_eof</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_reset&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_set_destroy_func&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bson_reader_destroy_func_t <span class='color_p'>func</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_set_read_func&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>, <span>bson_reader_read_func_t <span class='color_p'>func</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reader_tell&#160;<span class='sym_p'><span>(&#160;struct bson_reader_t* <span class='color_p'>reader</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-string.h</span><br/>
+<span class="iname">bson_ascii_strtoll&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>char** <span class='color_p'>endptr</span></span>, <span>int <span class='color_p'>base</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_isspace&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>c</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_snprintf&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strcasecmp&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>s1</span></span>, <span>char const* <span class='color_p'>s2</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strdup&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strdup_printf&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_strdupv_printf&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>format</span></span>, <span>va_list <span class='color_p'>args</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strfreev&#160;<span class='sym_p'><span>(&#160;char** <span class='color_p'>strv</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_c&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_printf&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_string_append_unichar&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>bson_unichar_t <span class='color_p'>unichar</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_free&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>bool <span class='color_p'>free_segment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_new&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_string_truncate&#160;<span class='sym_p'><span>(&#160;struct bson_string_t* <span class='color_p'>string</span></span>, <span>uint32_t <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strncpy&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>src</span></span>, <span>size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strndup&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>n_bytes</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_strnlen&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>s</span></span>, <span>size_t <span class='color_p'>maxlen</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_vsnprintf&#160;<span class='sym_p'><span>(&#160;char* <span class='color_p'>str</span></span>, <span>size_t <span class='color_p'>size</span></span>, <span>char const* <span class='color_p'>format</span></span>, <span>va_list <span class='color_p'>ap</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-utf8.h</span><br/>
+<span class="iname">bson_utf8_escape_for_json&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>, <span>ssize_t <span class='color_p'>utf8_len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_from_unichar&#160;<span class='sym_p'><span>(&#160;bson_unichar_t <span class='color_p'>unichar</span></span>, <span>char* <span class='color_p'>utf8</span></span>, <span>uint32_t* <span class='color_p'>len</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_get_char&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_next_char&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_utf8_validate&#160;<span class='sym_p'><span>(&#160;char const* <span class='color_p'>utf8</span></span>, <span>size_t <span class='color_p'>utf8_len</span></span>, <span>bool <span class='color_p'>allow_null</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-value.h</span><br/>
+<span class="iname">bson_value_copy&#160;<span class='sym_p'><span>(&#160;bson_value_t const* <span class='color_p'>src</span></span>, <span>bson_value_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_value_destroy&#160;<span class='sym_p'><span>(&#160;bson_value_t* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-version-functions.h</span><br/>
+<span class="iname">bson_check_version&#160;<span class='sym_p'><span>(&#160;int <span class='color_p'>required_major</span></span>, <span>int <span class='color_p'>required_minor</span></span>, <span>int <span class='color_p'>required_micro</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_get_major_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_get_micro_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_get_minor_version&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson-writer.h</span><br/>
+<span class="iname">bson_writer_begin&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>, <span>bson_t** <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_destroy&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_end&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_get_length&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_new&#160;<span class='sym_p'><span>(&#160;uint8_t** <span class='color_p'>buf</span></span>, <span>size_t* <span class='color_p'>buflen</span></span>, <span>size_t <span class='color_p'>offset</span></span>, <span>bson_realloc_func <span class='color_p'>realloc_func</span></span>, <span>void* <span class='color_p'>realloc_func_ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_writer_rollback&#160;<span class='sym_p'><span>(&#160;bson_writer_t* <span class='color_p'>writer</span></span>&#160;)</span></span><br/>
+<br/>
+<span class='h_name'>bson.h</span><br/>
+<span class="iname">bson_append_array&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t const* <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_builder_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_array_builder_t** <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_builder_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_array_builder_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_array_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_binary&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>enum bson_subtype_t <span class='color_p'>subtype</span></span>, <span>uint8_t const* <span class='color_p'>binary</span></span>, <span>uint32_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_bool&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_code&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>javascript</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_code_with_scope&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>javascript</span></span>, <span>bson_t const* <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_date_time&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_dbpointer&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_decimal128&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document_begin&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_document_end&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_double&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_int32&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_int64&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_iter&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_maxkey&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_minkey&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_now_utc&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_null&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_oid&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_regex&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_regex_w_len&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>int <span class='color_p'>regex_length</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_symbol&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_time_t&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>time_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_timestamp&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_timeval&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>struct timeval* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_undefined&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_utf8&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_append_value&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>, <span>int <span class='color_p'>key_length</span></span>, <span>bson_value_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_canonical_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_as_relaxed_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t const* <span class='color_p'>array</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array_builder_begin&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_array_builder_t** <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_array_builder_end&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_array_builder_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_binary&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>enum bson_subtype_t <span class='color_p'>subtype</span></span>, <span>uint8_t const* <span class='color_p'>binary</span></span>, <span>uint32_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_bool&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bool <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_code&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>javascript</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_code_with_scope&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>javascript</span></span>, <span>bson_t const* <span class='color_p'>scope</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_date_time&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_dbpointer&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>collection</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_decimal128&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_decimal128_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document_begin&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_document_end&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>child</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_double&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>double <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_int32&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int32_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_int64&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>int64_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_iter&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_iter_t const* <span class='color_p'>iter</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_maxkey&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_minkey&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_now_utc&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_null&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_oid&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct bson_oid_t const* <span class='color_p'>oid</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_regex&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_regex_w_len&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>regex</span></span>, <span>int <span class='color_p'>regex_length</span></span>, <span>char const* <span class='color_p'>options</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_symbol&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_time_t&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>time_t <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_timestamp&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>uint32_t <span class='color_p'>timestamp</span></span>, <span>uint32_t <span class='color_p'>increment</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_timeval&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>struct timeval* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_undefined&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_utf8&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>char const* <span class='color_p'>value</span></span>, <span>int <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_append_value&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_value_t const* <span class='color_p'>value</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_build&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>, <span>bson_t* <span class='color_p'>out</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_destroy&#160;<span class='sym_p'><span>(&#160;bson_array_builder_t* <span class='color_p'>bab</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_array_builder_new&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_as_canonical_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_json_with_opts&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>, <span>bson_json_opts_t const* <span class='color_p'>opts</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_as_relaxed_extended_json&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>size_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_compare&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>bson_t const* <span class='color_p'>other</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_concat&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>dst</span></span>, <span>bson_t const* <span class='color_p'>src</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding_noinit&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>...</span>&#160;)</span></span><br/>
+<span class="iname">bson_copy_to_excluding_noinit_va&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>src</span></span>, <span>bson_t* <span class='color_p'>dst</span></span>, <span>char const* <span class='color_p'>first_exclude</span></span>, <span>va_list <span class='color_p'>args</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_count_keys&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_destroy&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_destroy_with_steal&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>bool <span class='color_p'>steal</span></span>, <span>uint32_t* <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_equal&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>bson_t const* <span class='color_p'>other</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_get_data&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_has_field&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>key</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init_from_json&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>char const* <span class='color_p'>data</span></span>, <span>ssize_t <span class='color_p'>len</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_init_static&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>, <span>uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new&#160;<span class='sym_p'>(&#160;)</span></span><br/>
+<span class="iname">bson_new_from_buffer&#160;<span class='sym_p'><span>(&#160;uint8_t** <span class='color_p'>buf</span></span>, <span>size_t* <span class='color_p'>buf_len</span></span>, <span>bson_realloc_func <span class='color_p'>realloc_func</span></span>, <span>void* <span class='color_p'>realloc_func_ctx</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new_from_data&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>size_t <span class='color_p'>length</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_new_from_json&#160;<span class='sym_p'><span>(&#160;uint8_t const* <span class='color_p'>data</span></span>, <span>ssize_t <span class='color_p'>len</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reinit&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>b</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_reserve_buffer&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>bson</span></span>, <span>uint32_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_sized_new&#160;<span class='sym_p'><span>(&#160;size_t <span class='color_p'>size</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_steal&#160;<span class='sym_p'><span>(&#160;bson_t* <span class='color_p'>dst</span></span>, <span>bson_t* <span class='color_p'>src</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_validate&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>enum bson_validate_flags_t <span class='color_p'>flags</span></span>, <span>size_t* <span class='color_p'>offset</span></span>&#160;)</span></span><br/>
+<span class="iname">bson_validate_with_error&#160;<span class='sym_p'><span>(&#160;bson_t const* <span class='color_p'>bson</span></span>, <span>enum bson_validate_flags_t <span class='color_p'>flags</span></span>, <span>bson_error_t* <span class='color_p'>error</span></span>&#160;)</span></span><br/>
+<br/>
+<a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Other_Source_Changes'></a><a name='Other_Source_Changes_In_Constants'></a>
+<h2>Other Changes in Constants <span class='passed'>&nbsp;55&nbsp;</span></h2><hr/>
+<span class='h_name'>bcon.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_26')">
+<span class='ext'>[+]</span> BCON_MAGIC</span>
+<br/>
+<div id="c_26" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_MAGIC</b> with value <span class='value'>bson_bcon_magic ()</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_27')">
+<span class='ext'>[+]</span> BCON_MAXKEY</span>
+<br/>
+<div id="c_27" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_MAXKEY</b> with value <span class='value'>BCON_MAGIC, BCON_TYPE_MAXKEY</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_28')">
+<span class='ext'>[+]</span> BCON_MINKEY</span>
+<br/>
+<div id="c_28" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_MINKEY</b> with value <span class='value'>BCON_MAGIC, BCON_TYPE_MINKEY</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_29')">
+<span class='ext'>[+]</span> BCON_NULL</span>
+<br/>
+<div id="c_29" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_NULL</b> with value <span class='value'>BCON_MAGIC, BCON_TYPE_NULL</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_30')">
+<span class='ext'>[+]</span> BCON_STACK_MAX</span>
+<br/>
+<div id="c_30" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_STACK_MAX</b> with value <b>100</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_31')">
+<span class='ext'>[+]</span> BCON_UNDEFINED</span>
+<br/>
+<div id="c_31" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCON_UNDEFINED</b> with value <span class='value'>BCON_MAGIC, BCON_TYPE_UNDEFINED</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_32')">
+<span class='ext'>[+]</span> BCONE_MAGIC</span>
+<br/>
+<div id="c_32" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCONE_MAGIC</b> with value <span class='value'>bson_bcone_magic ()</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_33')">
+<span class='ext'>[+]</span> BCONE_MAXKEY</span>
+<br/>
+<div id="c_33" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCONE_MAXKEY</b> with value <span class='value'>BCONE_MAGIC, BCON_TYPE_MAXKEY</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_34')">
+<span class='ext'>[+]</span> BCONE_MINKEY</span>
+<br/>
+<div id="c_34" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCONE_MINKEY</b> with value <span class='value'>BCONE_MAGIC, BCON_TYPE_MINKEY</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_35')">
+<span class='ext'>[+]</span> BCONE_NULL</span>
+<br/>
+<div id="c_35" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCONE_NULL</b> with value <span class='value'>BCONE_MAGIC, BCON_TYPE_NULL</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_36')">
+<span class='ext'>[+]</span> BCONE_UNDEFINED</span>
+<br/>
+<div id="c_36" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BCONE_UNDEFINED</b> with value <span class='value'>BCONE_MAGIC, BCON_TYPE_UNDEFINED</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-atomic.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_37')">
+<span class='ext'>[+]</span> DECL_ATOMIC_INTEGRAL_INT32</span>
+<br/>
+<div id="c_37" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>DECL_ATOMIC_INTEGRAL_INT32</b> with value <b>int32_t</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-compat.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_38')">
+<span class='ext'>[+]</span> SSIZE_MIN</span>
+<br/>
+<div id="c_38" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>SSIZE_MIN</b> with value <span class='value'>BSON_NUMERIC_LIMITS_MIN_SIGNED (ssize_t, SSIZE_MAX)</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-config.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_39')">
+<span class='ext'>[+]</span> BSON_BYTE_ORDER</span>
+<br/>
+<div id="c_39" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_BYTE_ORDER</b> with value <b>1234</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_40')">
+<span class='ext'>[+]</span> BSON_EXTRA_ALIGN</span>
+<br/>
+<div id="c_40" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_EXTRA_ALIGN</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_41')">
+<span class='ext'>[+]</span> BSON_HAVE_CLOCK_GETTIME</span>
+<br/>
+<div id="c_41" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_CLOCK_GETTIME</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_42')">
+<span class='ext'>[+]</span> BSON_HAVE_GMTIME_R</span>
+<br/>
+<div id="c_42" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_GMTIME_R</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_43')">
+<span class='ext'>[+]</span> BSON_HAVE_RAND_R</span>
+<br/>
+<div id="c_43" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_RAND_R</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_44')">
+<span class='ext'>[+]</span> BSON_HAVE_SNPRINTF</span>
+<br/>
+<div id="c_44" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_SNPRINTF</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_45')">
+<span class='ext'>[+]</span> BSON_HAVE_STRNLEN</span>
+<br/>
+<div id="c_45" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_STRNLEN</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_46')">
+<span class='ext'>[+]</span> BSON_HAVE_TIMESPEC</span>
+<br/>
+<div id="c_46" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_HAVE_TIMESPEC</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_47')">
+<span class='ext'>[+]</span> BSON_OS</span>
+<br/>
+<div id="c_47" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_OS</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-decimal128.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_48')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_INF</span>
+<br/>
+<div id="c_48" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_INF</b> with value <b>&quot;Infinity&quot;</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_49')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_NAN</span>
+<br/>
+<div id="c_49" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_NAN</b> with value <b>&quot;NaN&quot;</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_50')">
+<span class='ext'>[+]</span> BSON_DECIMAL128_STRING</span>
+<br/>
+<div id="c_50" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_DECIMAL128_STRING</b> with value <b>43</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-endian.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_51')">
+<span class='ext'>[+]</span> BSON_BIG_ENDIAN</span>
+<br/>
+<div id="c_51" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_BIG_ENDIAN</b> with value <b>4321</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_52')">
+<span class='ext'>[+]</span> BSON_LITTLE_ENDIAN</span>
+<br/>
+<div id="c_52" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_LITTLE_ENDIAN</b> with value <b>1234</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-error.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_53')">
+<span class='ext'>[+]</span> BSON_ERROR_INVALID</span>
+<br/>
+<div id="c_53" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_INVALID</b> with value <b>3</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_54')">
+<span class='ext'>[+]</span> BSON_ERROR_JSON</span>
+<br/>
+<div id="c_54" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_JSON</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_55')">
+<span class='ext'>[+]</span> BSON_ERROR_READER</span>
+<br/>
+<div id="c_55" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_READER</b> with value <b>2</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-json.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_56')">
+<span class='ext'>[+]</span> BSON_MAX_LEN_UNLIMITED</span>
+<br/>
+<div id="c_56" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAX_LEN_UNLIMITED</b> with value <b>-1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-macros.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_57')">
+<span class='ext'>[+]</span> BSON_ALIGN_OF_PTR</span>
+<br/>
+<div id="c_57" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ALIGN_OF_PTR</b> with value <span class='value'>(BSON_ALIGNOF (void *))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_58')">
+<span class='ext'>[+]</span> BSON_BEGIN_DECLS</span>
+<br/>
+<div id="c_58" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_BEGIN_DECLS</b> with value <span class='value'>extern &quot;C&quot; {</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_59')">
+<span class='ext'>[+]</span> BSON_END_DECLS</span>
+<br/>
+<div id="c_59" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_END_DECLS</b> with value <b>}</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_60')">
+<span class='ext'>[+]</span> BSON_FUNC</span>
+<br/>
+<div id="c_60" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_FUNC</b> with value <b>__func__</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_61')">
+<span class='ext'>[+]</span> BSON_GNUC_DEPRECATED</span>
+<br/>
+<div id="c_61" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_GNUC_DEPRECATED</b> with value <span class='value'>__attribute__ ((__deprecated__))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_62')">
+<span class='ext'>[+]</span> BSON_GNUC_INTERNAL</span>
+<br/>
+<div id="c_62" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_GNUC_INTERNAL</b> with value <span class='value'>__attribute__ ((visibility (&quot;hidden&quot;)))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_63')">
+<span class='ext'>[+]</span> BSON_GNUC_NULL_TERMINATED</span>
+<br/>
+<div id="c_63" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_GNUC_NULL_TERMINATED</b> with value <span class='value'>__attribute__ ((sentinel))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_64')">
+<span class='ext'>[+]</span> BSON_GNUC_PURE</span>
+<br/>
+<div id="c_64" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_GNUC_PURE</b> with value <span class='value'>__attribute__ ((pure))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_65')">
+<span class='ext'>[+]</span> BSON_GNUC_WARN_UNUSED_RESULT</span>
+<br/>
+<div id="c_65" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_GNUC_WARN_UNUSED_RESULT</b> with value <span class='value'>__attribute__ ((warn_unused_result))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_66')">
+<span class='ext'>[+]</span> BSON_INLINE</span>
+<br/>
+<div id="c_66" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_INLINE</b> with value <b>__inline__</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_67')">
+<span class='ext'>[+]</span> BSON_MAYBE_UNUSED</span>
+<br/>
+<div id="c_67" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAYBE_UNUSED</b> with value <span class='value'>__attribute__ ((unused))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_68')">
+<span class='ext'>[+]</span> BSON_TYPEOF</span>
+<br/>
+<div id="c_68" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_TYPEOF</b> with value <b>typeof</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_69')">
+<span class='ext'>[+]</span> BSON_WORD_SIZE</span>
+<br/>
+<div id="c_69" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_WORD_SIZE</b> with value <b>64</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-reader.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_70')">
+<span class='ext'>[+]</span> BSON_ERROR_READER_BADFD</span>
+<br/>
+<div id="c_70" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_READER_BADFD</b> with value <b>1</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-types.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_71')">
+<span class='ext'>[+]</span> BSON_ERROR_BUFFER_SIZE</span>
+<br/>
+<div id="c_71" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_ERROR_BUFFER_SIZE</b> with value <b>504</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_72')">
+<span class='ext'>[+]</span> BSON_INITIALIZER</span>
+<br/>
+<div id="c_72" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_INITIALIZER</b> with value <span class='value'>{ 3, 5, { 5 } }</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson-version.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_73')">
+<span class='ext'>[+]</span> BSON_MAJOR_VERSION</span>
+<br/>
+<div id="c_73" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAJOR_VERSION</b> with value <b>(1)</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_74')">
+<span class='ext'>[+]</span> BSON_MICRO_VERSION</span>
+<br/>
+<div id="c_74" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MICRO_VERSION</b> with value <b>(5)</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_75')">
+<span class='ext'>[+]</span> BSON_MINOR_VERSION</span>
+<br/>
+<div id="c_75" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MINOR_VERSION</b> with value <b>(27)</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_76')">
+<span class='ext'>[+]</span> BSON_PRERELEASE_VERSION</span>
+<br/>
+<div id="c_76" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_PRERELEASE_VERSION</b> with value <b>()</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_77')">
+<span class='ext'>[+]</span> BSON_VERSION</span>
+<br/>
+<div id="c_77" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_VERSION</b> with value <b>(1.27.5)</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_78')">
+<span class='ext'>[+]</span> BSON_VERSION_HEX</span>
+<br/>
+<div id="c_78" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_VERSION_HEX</b> with value <span class='value'>(BSON_MAJOR_VERSION &lt;&lt; 24 | BSON_MINOR_VERSION &lt;&lt; 16 | BSON_MICRO_VERSION &lt;&lt; 8)</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<span class="section" onclick="javascript:showContent(this, 'c_79')">
+<span class='ext'>[+]</span> BSON_VERSION_S</span>
+<br/>
+<div id="c_79" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_VERSION_S</b> with value <b>&quot;1.27.5&quot;</b> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<span class='h_name'>bson.h</span><br/>
+<span class="section" onclick="javascript:showContent(this, 'c_80')">
+<span class='ext'>[+]</span> BSON_MAX_SIZE</span>
+<br/>
+<div id="c_80" style="display:none;">
+<table class='ptable'>
+<tr>
+<th class='pn'></th>
+<th class='chg'>Change</th>
+<th>Effect</th>
+</tr>
+<tr>
+<th>1</th>
+<td>The constant <b>BSON_MAX_SIZE</b> with value <span class='value'>((size_t) ((1U &lt;&lt; 31) - 1))</span> has been added.</td>
+<td>No effect.</td>
+</tr>
+</table>
+<br/>
+</div>
+
+<br/>
+<a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Headers'></a><h2>Header Files <span class='gray'>&nbsp;1&nbsp;</span></h2><hr/>
+<div class='h_list'>
+bson-version-functions.h<br/>
+</div>
+<br/><a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Libs'></a><h2>Libraries <span class='gray'>&nbsp;1&nbsp;</span></h2><hr/>
+<div class='lib_list'>
+stub.so<br/>
+</div>
+<br/><a class='top_ref' href='#Top'>to the top</a><br/>
+<br/><br/><br/></div><hr/>
+<div class='footer' align='right'><i>Generated by <a href='https://github.com/lvc/abi-compliance-checker'>ABI Compliance Checker</a> 2.3 &#160;</i>
+</div>
+<br/>
+
+</body></html>
