@@ -1,5 +1,10 @@
 # C Driver Q&A
 
+## Q19: Why does "Failed to buffer 4 bytes" get logged only for pooled clients?
+
+Application connections create buffered streams via `mongoc_client_default_stream_initiator`.
+A failed read on a buffered stream [logs a warning](https://github.com/mongodb/mongo-c-driver/blob/fc243b90046371f09d8f50547bf3e7f25846d406/src/libmongoc/src/mongoc/mongoc-stream-buffered.c#L242).
+
 ## Q18: When is it preferable to create a ticket, rather than submit a PR?
 A:
 
