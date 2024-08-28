@@ -2,7 +2,7 @@
 
 `libdep.so` is built with `bson1.h` (128-byte aligned).
 
-`dep` defines a struct:
+`libdep.so` defines a struct:
 
 ```c
 typedef struct
@@ -12,9 +12,11 @@ typedef struct
 } dep_t;
 ```
 
-`app` is built with `bson2.h` (default aligned). `app` depends on `dep`.
+`app.out` is built with `bson2.h` (default aligned).
 
-`app` has a different data layout for `dep_t` than `libdep.so`.
+`app.out` depends on `libdep.so`.
+
+`app.out` has a different data layout for `dep_t` than `libdep.so`.
 
 To observe, run:
 
@@ -25,7 +27,7 @@ docker run --rm -it bson-incompatibility
 
 Produces output like:
 ```
-app built with dep_t::bson offset: 4
-dep built with dep_t::bson offset: 128
-Error: expected 123, but got: -168456232
+app has dep_t::bson at offset: 4
+dep has dep_t::bson at offset: 128
+Error: expected 123, but got: -842047528
 ```

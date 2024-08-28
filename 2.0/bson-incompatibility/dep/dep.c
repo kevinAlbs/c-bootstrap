@@ -5,6 +5,6 @@
 int dep_fn(dep_t *d)
 {
    size_t offset = (size_t)(&d->bson) - (size_t)(d);
-   printf("dep built with dep_t::bson offset: %zu\n", offset);
+   printf("dep has dep_t::bson at offset: %zu\n", offset);
    return d->bson.placeholder;
 }

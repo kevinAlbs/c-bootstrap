@@ -9,7 +9,7 @@ int main(void)
    d.bson.placeholder = 123;
 
    size_t offset = (size_t)(&d.bson) - (size_t)(&d);
-   printf("app built with dep_t::bson offset: %zu\n", offset);
+   printf("app has dep_t::bson at offset: %zu\n", offset);
    int got = dep_fn(&d);
    if (got != 123)
    {
