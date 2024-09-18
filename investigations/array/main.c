@@ -6,15 +6,17 @@ int main()
     mongoc_init();
 
     // Build query vector array.
+    bson_error_t error;
     bson_t query_vector;
     {
-        bson_array_builder_t *builder = bson_array_builder_new();
-        bson_array_builder_append_double(builder, 1.0);
-        bson_array_builder_append_double(builder, 2.0);
-        // And more...
-
-        bson_array_builder_build(builder, &query_vector);
-        bson_array_builder_destroy(builder);
+        const char *as_json = BSON_STR([
+            1.0, 2.0, 3.0 /* and more */
+        ]);
+        if (!bson_init_from_json(&query_vector, as_json, -1, &error))
+        {
+            printf("failed to build query vector: %s\n", error.message);
+            return 1;
+        }
     }
 
     // clang-format off
@@ -25,7 +27,7 @@ int main()
                 "$vectorSearch", "{", 
                     "index", BCON_UTF8("vector_index"), 
                     "path", BCON_UTF8("plot_embedding"), 
-                    "query_vector", BCON_ARRAY(&query_vector),
+                    "query_vector", BCON_ARRAY (&query_vector),
                     "numCandidates", BCON_INT32(150), 
                     "limiti", BCON_INT32(10), 
                 "}", 
