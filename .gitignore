@@ -2,6 +2,7 @@
 performance/long_runner
 *.out
 install/*
+amongoc/install/*
 tmp/*
 cmake-build
 .vscode
