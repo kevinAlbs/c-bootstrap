@@ -1,5 +1,53 @@
 # C Q&A
 
+# Q12: How to make a macro map function?
+
+A:
+```c
+#define PICK4(A1, A2, A3, A4, ...) A4
+#define MAP1(fn, A1) fn(A1)
+#define MAP2(fn, A1, A2) fn(A1) fn(A2)
+#define MAP3(fn, A1, A2, A3) fn(A1) fn(A2) fn(A3)
+#define MAP(fn, ...) PICK4(__VA_ARGS__, MAP3, MAP2, MAP1)(fn, __VA_ARGS__)
+#define FN(a) #a
+MAP(FN, A, B, C)
+```
+
+# Q11: How to make a modifiable string literal?
+A:
+
+See 6.5.2.5p13:
+
+```c
+(char []){"/tmp/fileXXXXXX"}
+```
+
+# Q10: What is the difference between a "variable length array" and "flexible array member"?
+A:
+
+```c
+int vla[count]; // count is a variable
+```
+
+vs.
+
+```c
+typedef struct
+{
+    int x;
+    char more[];
+} flexible;
+
+size_t n = 10;
+flexible *f = malloc(sizeof(flexible) + sizeof(char[n]));
+f->x = 123;
+strlcpy(f->more, "foo bar", n);
+```
+
+
+# Q9: What is the difference between a "designated initializer" and "compound literal"?
+A:
+
 # Q8: Are fields not referenced in designated initializers zero-initialized?
 Example:
 
