@@ -1,10 +1,29 @@
-: "${INSTALL_PREFIX:?"Set to destination path prefix for C driver installs"}"
-: "${COMMIT:?"Set to commit of C driver to install"}"
+set -o errexit
+set -o xtrace
 
+GITREF=callcount.0eeff0a44
+rm -rf cmake-build-$GITREF
 cmake \
-    -DCMAKE_PREFIX_PATH="$HOME/code/tasks/mongo-c-driver-HELP-69502/.install-0eeff0a44-callcount" \
+    -DCMAKE_PREFIX_PATH="$HOME/mongo-c-driver-$GITREF" \
     -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
     -S./ \
-    -B./cmake-build
+    -B./cmake-build-$GITREF
+cmake --build cmake-build-$GITREF --target run-workload
 
-cmake --build cmake-build --target run-workload
+GITREF=callcount.ded9ae5e9
+rm -rf cmake-build-$GITREF
+cmake \
+    -DCMAKE_PREFIX_PATH="$HOME/mongo-c-driver-$GITREF" \
+    -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+    -S./ \
+    -B./cmake-build-$GITREF
+cmake --build cmake-build-$GITREF --target run-workload
+
+GITREF=callcount.1.29.0
+rm -rf cmake-build-$GITREF
+cmake \
+    -DCMAKE_PREFIX_PATH="$HOME/mongo-c-driver-$GITREF" \
+    -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+    -S./ \
+    -B./cmake-build-$GITREF
+cmake --build cmake-build-$GITREF --target run-workload

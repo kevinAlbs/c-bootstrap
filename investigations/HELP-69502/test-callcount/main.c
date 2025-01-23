@@ -1,6 +1,5 @@
 // Repeatedly runs `find` commands with a client pool to "db.coll".
 // Configure with environment variables:
-//  THREAD_COUNT to set a thread count. Defaults to 10.
 //  MONGODB_URI to set a URI. Defaults to mongodb://localhost:27017
 
 #include <mongoc/mongoc.h>
@@ -29,9 +28,9 @@ int main(int argc, char *argv[])
         abort();
     }
 
+    // Set a short heartbeat to produce more topology updates:
     mongoc_uri_set_option_as_int32(uri, MONGOC_URI_HEARTBEATFREQUENCYMS, 500);
 
-    // Set a short heartbeat:
     mongoc_client_pool_t *pool = mongoc_client_pool_new(uri);
 
     // Drop collection.
@@ -43,7 +42,7 @@ int main(int argc, char *argv[])
         mongoc_client_pool_push(pool, client);
     }
 
-    size_t num_finds = 10;
+    size_t num_finds = 5000;
     printf("Call count of mongoc_server_description_new_copy: %zu\n", get_mongoc_server_description_new_copy_callcount());
     printf("Running %zu finds...\n", num_finds);
 
