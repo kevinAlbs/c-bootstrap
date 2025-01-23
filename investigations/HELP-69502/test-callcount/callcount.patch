@@ -1,0 +1,41 @@
+diff --git a/src/libmongoc/src/mongoc/mongoc-server-description.c b/src/libmongoc/src/mongoc/mongoc-server-description.c
+index 540b27a4c..8c1d4ca90 100644
+--- a/src/libmongoc/src/mongoc/mongoc-server-description.c
++++ b/src/libmongoc/src/mongoc/mongoc-server-description.c
+@@ -789,6 +789,13 @@ failure:
+    EXIT;
+ }
+ 
++static size_t mongoc_server_description_new_copy_callcount = 0;
++
++MONGOC_EXPORT (size_t)
++get_mongoc_server_description_new_copy_callcount (void)
++{
++   return mongoc_server_description_new_copy_callcount;
++}
+ /*
+  *-------------------------------------------------------------------------
+  *
+@@ -846,6 +853,8 @@ mongoc_server_description_new_copy (
+    copy->generation = description->generation;
+    copy->_generation_map_ =
+       mongoc_generation_map_copy (mc_tpl_sd_generation_map_const (description));
++
++   mongoc_server_description_new_copy_callcount++;
+    return copy;
+ }
+ 
+diff --git a/src/libmongoc/src/mongoc/mongoc-server-description.h b/src/libmongoc/src/mongoc/mongoc-server-description.h
+index 79ab4af64..9900e0735 100644
+--- a/src/libmongoc/src/mongoc/mongoc-server-description.h
++++ b/src/libmongoc/src/mongoc/mongoc-server-description.h
+@@ -36,6 +36,9 @@ MONGOC_EXPORT (mongoc_server_description_t *)
+ mongoc_server_description_new_copy (
+    const mongoc_server_description_t *description) BSON_GNUC_WARN_UNUSED_RESULT;
+ 
++MONGOC_EXPORT (size_t)
++get_mongoc_server_description_new_copy_callcount (void);
++
+ MONGOC_EXPORT (uint32_t)
+ mongoc_server_description_id (const mongoc_server_description_t *description);
+ 
