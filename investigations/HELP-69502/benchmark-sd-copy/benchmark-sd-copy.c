@@ -15,8 +15,11 @@ UBENCH_EX(mongoc_server_description_new_copy, sdcopy)
 
     UBENCH_DO_BENCHMARK()
     {
-        mongoc_server_description_t *sd_copy = mongoc_server_description_new_copy(sd);
-        mongoc_server_description_destroy(sd_copy);
+        for (size_t i = 0; i < 120; i++)
+        {
+            mongoc_server_description_t *sd_copy = mongoc_server_description_new_copy(sd);
+            mongoc_server_description_destroy(sd_copy);
+        }
     }
 
     mongoc_server_description_destroy(sd);
