@@ -1,18 +1,15 @@
-: "${INSTALL_PREFIX:?"Set to destination path prefix for C driver installs"}"
+set -o errexit
 
-COMMIT="ded9ae5e9f2897a283305175aae8e1bbf4021c36"
+GITREF="ded9ae5e9-callcount"
 cmake \
-    -DCMAKE_PREFIX_PATH="$INSTALL_PREFIX/mongo-c-driver-$COMMIT" \
-    -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+    -DCMAKE_PREFIX_PATH="$HOME/mongo-c-driver-$GITREF" \
     -S./ \
-    -B./cmake-build-$COMMIT
-cmake --build "cmake-build-$COMMIT" --target all
+    -B./cmake-build-$GITREF
+cmake --build "cmake-build-$GITREF" --target all
 
-
-COMMIT="0eeff0a44ea08a789ce01560ec1e9947b405828d"
+GITREF="fastcopy"
 cmake \
-    -DCMAKE_PREFIX_PATH="$INSTALL_PREFIX/mongo-c-driver-$COMMIT" \
-    -DCMAKE_BUILD_TYPE="RelWithDebInfo" \
+    -DCMAKE_PREFIX_PATH="$HOME/mongo-c-driver-$GITREF" \
     -S./ \
-    -B./cmake-build-$COMMIT
-cmake --build "cmake-build-$COMMIT" --target all
+    -B./cmake-build-$GITREF
+cmake --build "cmake-build-$GITREF" --target all
