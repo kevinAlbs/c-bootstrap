@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     }
     uri = mongoc_uri_new(uri_str);
     const mongoc_host_list_t *hosts = mongoc_uri_get_hosts(uri);
-    int nhosts = 0;
+    size_t nhosts = 0;
     while (hosts != NULL)
     {
         hosts = hosts->next;
@@ -121,6 +121,21 @@ int main(int argc, char *argv[])
         int64_t start_time;
 
         mongoc_client_t *client = mongoc_client_pool_pop(pool);
+
+        // Warm up connections.
+        {
+            bson_t *ping = BCON_NEW("ping", BCON_INT32(1));
+            for (size_t serverid = 1; serverid < nhosts + 1; serverid++)
+            {
+                if (!mongoc_client_command_simple_with_server_id(client, "db", ping, NULL, serverid, NULL, &error))
+                {
+                    MONGOC_ERROR("failed to ping server: %s\n", error.message);
+                    abort();
+                }
+            }
+            bson_destroy(ping);
+        }
+
         mongoc_collection_t *coll = mongoc_client_get_collection(client, "db", "coll");
 
         start_time = bson_get_monotonic_time();
