@@ -7,6 +7,49 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+typedef struct
+{
+    int n_heartbeat_failed;
+    int n_server_changed;
+    int n_server_closed;
+    int n_command_failed;
+} counts_t;
+
+void heartbeat_failed(const mongoc_apm_server_heartbeat_failed_t *event)
+{
+    counts_t *counts = mongoc_apm_server_heartbeat_failed_get_context(event);
+    counts->n_heartbeat_failed++;
+}
+
+void server_changed(const mongoc_apm_server_changed_t *event)
+{
+    counts_t *counts = mongoc_apm_server_changed_get_context(event);
+    counts->n_server_changed++;
+}
+
+void server_closed(const mongoc_apm_server_closed_t *event)
+{
+    counts_t *counts = mongoc_apm_server_closed_get_context(event);
+    counts->n_server_closed++;
+}
+
+void command_failed(const mongoc_apm_command_failed_t *event)
+{
+    counts_t *counts = mongoc_apm_command_failed_get_context(event);
+    counts->n_command_failed++;
+}
+
+int cmpi64(const void *a, const void *b)
+{
+    int64_t int_a = *(int64_t *)a;
+    int64_t int_b = *(int64_t *)b;
+
+    if (int_a < int_b)
+        return -1;
+    if (int_a > int_b)
+        return 1;
+    return 0;
+}
 int main(int argc, char *argv[])
 {
     mongoc_uri_t *uri = NULL;
@@ -19,8 +62,15 @@ int main(int argc, char *argv[])
         printf("Using default URI. Use MONGODB_URI environment variable to configure.\n");
         uri_str = "mongodb://localhost:27017";
     }
-    printf("Using URI: %s\n", uri_str);
     uri = mongoc_uri_new(uri_str);
+    const mongoc_host_list_t *hosts = mongoc_uri_get_hosts(uri);
+    int nhosts = 0;
+    while (hosts != NULL)
+    {
+        hosts = hosts->next;
+        nhosts++;
+    }
+    printf("Using URI with %d hosts\n", nhosts);
 
     if (!uri)
     {
@@ -33,6 +83,19 @@ int main(int argc, char *argv[])
 
     mongoc_client_pool_t *pool = mongoc_client_pool_new(uri);
 
+    counts_t counts = {0};
+
+    {
+        mongoc_apm_callbacks_t *cbs = mongoc_apm_callbacks_new();
+        cbs = mongoc_apm_callbacks_new();
+        mongoc_apm_set_server_heartbeat_failed_cb(cbs, heartbeat_failed);
+        mongoc_apm_set_server_changed_cb(cbs, server_changed);
+        mongoc_apm_set_command_failed_cb(cbs, command_failed);
+        mongoc_apm_set_server_closed_cb(cbs, server_closed);
+        mongoc_client_pool_set_apm_callbacks(pool, cbs, &counts);
+        mongoc_apm_callbacks_destroy(cbs);
+    }
+
     // Drop collection.
     {
         mongoc_client_t *client = mongoc_client_pool_pop(pool);
@@ -42,12 +105,16 @@ int main(int argc, char *argv[])
         mongoc_client_pool_push(pool, client);
     }
 
-    size_t num_finds = 5000;
-    printf("Call count of mongoc_server_description_new_copy: %zu\n", get_mongoc_server_description_new_copy_callcount());
-    printf("Running %zu finds...\n", num_finds);
+    size_t n_trials = 5;
+    int64_t results[n_trials];
+    size_t num_finds = 1000;
+    // printf("Call count of mongoc_server_description_new_copy: %zu\n", get_mongoc_server_description_new_copy_callcount());
 
     // Do many finds.
+    for (size_t i = 0; i < n_trials; i++)
     {
+        printf(".");
+        fflush(stdout);
         bson_t filter = BSON_INITIALIZER;
         int64_t opcount = 0;
         bson_error_t error;
@@ -57,7 +124,6 @@ int main(int argc, char *argv[])
         mongoc_collection_t *coll = mongoc_client_get_collection(client, "db", "coll");
 
         start_time = bson_get_monotonic_time();
-        mongoc_server_description_new_copy(NULL);
         while (true)
         {
             mongoc_cursor_t *cursor;
@@ -79,13 +145,8 @@ int main(int argc, char *argv[])
 
             if (opcount >= num_finds)
             {
-                // Check time, estimate ops/sec.
                 int64_t current_time = bson_get_monotonic_time();
-                double ops_per_sec = (double)opcount / (((double)(current_time - start_time)) / (1000 * 1000));
-                double total_time = (double)(current_time - start_time) / (1000 * 1000);
-
-                printf("ops/sec   : %g\n", ops_per_sec);
-                printf("total time: %g seconds\n", total_time);
+                results[i] = current_time - start_time;
                 break;
             }
         }
@@ -95,8 +156,20 @@ int main(int argc, char *argv[])
         mongoc_client_pool_push(pool, client);
     }
 
-    printf("Running %zu finds... done\n", num_finds);
-    printf("Call count of mongoc_server_description_new_copy: %zu\n", get_mongoc_server_description_new_copy_callcount());
+    qsort(results, n_trials, sizeof(int64_t), cmpi64);
+    int64_t median_time = results[n_trials / 2];
+
+    // Check time, estimate ops/sec.
+    double total_time = (double)median_time / (1000.0 * 1000);
+    double ops_per_sec = (double)num_finds / total_time;
+    printf("\n");
+    printf("median time: %g seconds\n", total_time);
+    printf("ops/sec    : %g\n", ops_per_sec);
+    // printf("Call count of mongoc_server_description_new_copy: %zu\n", get_mongoc_server_description_new_copy_callcount());
+    printf("server change events: %d\n", counts.n_server_changed);
+    printf("heartbeat failed events: %d\n", counts.n_heartbeat_failed);
+    printf("command failed events: %d\n", counts.n_command_failed);
+    printf("server closed events: %d\n", counts.n_server_closed);
 
     mongoc_client_pool_destroy(pool);
     mongoc_uri_destroy(uri);
