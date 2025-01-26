@@ -78,9 +78,6 @@ int main(int argc, char *argv[])
         abort();
     }
 
-    // Set a short heartbeat to produce more topology updates:
-    mongoc_uri_set_option_as_int32(uri, MONGOC_URI_HEARTBEATFREQUENCYMS, 500);
-
     mongoc_client_pool_t *pool = mongoc_client_pool_new(uri);
 
     counts_t counts = {0};
