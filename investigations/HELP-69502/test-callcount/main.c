@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
         hosts = hosts->next;
         nhosts++;
     }
-    printf("Using URI with %d hosts\n", nhosts);
+    printf("Using URI with %zu hosts\n", nhosts);
 
     if (!uri)
     {
