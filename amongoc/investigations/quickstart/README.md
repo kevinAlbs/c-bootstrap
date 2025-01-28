@@ -1,6 +1,8 @@
-# Quick start
+# mongo-c-driver-async Quick Start
 
-The following are steps using vc-pkg to install mongo-c-driver-async and build a test client. These steps were run on Debian 12.
+The following steps use vcpkg to install mongo-c-driver-async, build a test application, and connect to a local MongoDB server.
+
+Steps were run on Debian 12.
 
 Install vcpkg (if not already installed):
 ```bash
@@ -23,22 +25,30 @@ cmake --build _build --parallel
 cmake --install _build --prefix "$AMONGOC_INSTALL"
 ```
 
-Start a local MongoDB server:
+Build this test application:
 ```bash
-./mongod
-```
-
-Build this test client application:
-```bash
-# cd to this directory.
+# Run from this directory.
 cmake -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake \
       -DCMAKE_PREFIX_PATH=$AMONGOC_INSTALL \
       -Bcmake-build
 cmake --build cmake-build --target hello-amongoc
 ```
 
+Start a local MongoDB server:
+```bash
+cd $HOME
+# Get download links from: https://www.mongodb.com/try/download/community
+wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-debian12-8.0.4.tgz
+tar -xf mongodb-linux-x86_64-debian12-8.0.4.tgz
+rm mongodb-linux-x86_64-debian12-8.0.4.tgz
+# Start server
+mkdir mongodb-data
+./mongodb-linux-x86_64-debian12-8.0.4/bin/mongod --dbpath ./mongodb-data
+```
 
-Run this application
+Run test application
 ```bash
 ./cmake-build/hello-amongoc
 ```
+
+Expect to see `Successfully connected!`.
