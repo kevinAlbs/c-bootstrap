@@ -59,6 +59,18 @@ static BSON_INLINE void set_command_monitors (mongoc_apm_callbacks_t *cbs, bool 
     }
 }
 
+
+static BSON_INLINE void
+set_command_monitors_on_client (mongoc_client_t *client)
+{
+   mongoc_apm_callbacks_t *cbs = mongoc_apm_callbacks_new ();
+   mongoc_apm_set_command_started_cb (cbs, command_started);
+   mongoc_apm_set_command_failed_cb (cbs, command_failed);
+   mongoc_apm_set_command_succeeded_cb (cbs, command_succeeded);
+   mongoc_client_set_apm_callbacks (client, cbs, NULL);
+   mongoc_apm_callbacks_destroy (cbs);
+}
+
 static BSON_INLINE void
 server_changed (const mongoc_apm_server_changed_t *event)
 {
