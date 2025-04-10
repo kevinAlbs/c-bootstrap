@@ -6,6 +6,8 @@ if [[ "$(basename $(pwd))" != "c-bootstrap" ]]; then
     exit 1
 fi
 
+: "${LIBMONGOCRYPT_GITREF:?}"
+
 LIBBSON_INSTALL_PREFIX=${LIBBSON_INSTALL_PREFIX:-$(pwd)/install/libbson-master}
 export LIBMONGOCRYPT_EXTRA_CMAKE_OPTIONS=${LIBMONGOCRYPT_EXTRA_CMAKE_OPTIONS}
 export LIBMONGOCRYPT_SUFFIX=${LIBMONGOCRYPT_SUFFIX}
