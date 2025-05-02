@@ -1,4 +1,5 @@
 # Create encrypted PKCS#8 private key with password "foobar".
+# Use `-v2 des3` and `-v2prf hmacWithSHA1` to avoid errSecUnknownFormat from Secure Transport.
 openssl pkcs8 -topk8 \
     -in certs/server/mongodb-test-server.key \
     -out certs/server/mongodb-test-server-encrypted-pkcs8.key \
