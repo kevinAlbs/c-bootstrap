@@ -161,7 +161,7 @@ A: POSIX.1-2008 plus the XSI extension and BSD-derived definitions. See https://
 ## Q11: How many connections are expected?
 A:
 
-[Connection Pooling](https://mongoc.org/libmongoc/current/connection-pooling.html) describes the two modes of connection handling (singled-threaded and pooled). Here is more information about expected connection counts:
+[Connection Pooling](https://www.mongodb.com/docs/languages/c/c-driver/current/libmongoc/guides/connection-pooling/) describes the two modes of connection handling (singled-threaded and pooled). Here is more information about expected connection counts:
 
 A single-threaded `mongoc_client_t` creates one connection per server. These connections are used both for monitoring and operations.
 
@@ -171,14 +171,15 @@ Configuring `maxPoolSize` can be done in the URI. See [mongoc_uri_t](https://mon
 
 In Python
 ```python
-servers = 60  # How many mongos servers
+servers = 3  # Number of servers. (e.g. number of mongos).
 maxPoolSize = 100  # Default `maxPoolSize` in C driver
-monitoring = 2 # Number of monitoring connections per server for a single `mongoc_client_pool_t`
-pools = 3  # Number of `mongoc_client_pool_t` per app
-apps = 1  # Number of application instances
-total = servers * (monitoring + maxPoolSize) * pools * apps
+monitoring = 2 # Number of monitoring connections per server per `mongoc_client_pool_t`. 2 for server 4.4+.
+pools = 3  # Number of `mongoc_client_pool_t`
+total = servers * (monitoring + maxPoolSize) * pools
 print(f"maximum total connections = {total}")
 ```
+
+See also: https://knowledge.corp.mongodb.com/article/000021413
 
 ## Q10: What version of the C driver is packaged on platform X?
 A: See https://repology.org/project/mongo-c-driver/versions
