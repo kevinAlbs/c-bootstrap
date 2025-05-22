@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/hex"
 	"fmt"
 	"log"
 	"time"
@@ -33,17 +32,11 @@ func main() {
 	database := client.Database("testdb")        // Replace with your database name
 	collection := database.Collection("testcol") // Replace with your collection name
 
-	// Hex encoding of { "_id": "a\xFF\b"}
-	got, err := hex.DecodeString("12000000025f6964000400000061ff080000")
-	if err != nil {
-		log.Fatalf("Failed to decode: %v", err)
-	}
-
 	// Insert the raw document into the collection
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	result, err := collection.InsertOne(ctx, bson.Raw(got))
+	result, err := collection.InsertOne(ctx, bson.D{{"bad", "\xFF"}})
 	if err != nil {
 		log.Fatalf("Failed to insert document: %v", err)
 	}
