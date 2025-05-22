@@ -33,9 +33,6 @@ func main() {
 	collection := database.Collection("testcol") // Replace with your collection name
 
 	// Insert the raw document into the collection
-	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
 	result, err := collection.InsertOne(ctx, bson.D{{"bad", "\xFF"}})
 	if err != nil {
 		log.Fatalf("Failed to insert document: %v", err)
