@@ -1,1 +1,1 @@
-./cmake-build/post "foo"
+./cmake-build/post "\xFF"
