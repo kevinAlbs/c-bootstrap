@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+project(C6017 LANGUAGES C)
+find_package(mongoc REQUIRED)
+add_executable (post main.c)
+target_link_libraries(post mongoc::shared)

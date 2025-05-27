@@ -32,7 +32,7 @@ func main() {
 	database := client.Database("testdb")        // Replace with your database name
 	collection := database.Collection("testcol") // Replace with your collection name
 
-	// Insert the raw document into the collection
+	// Insert the document into the collection
 	result, err := collection.InsertOne(ctx, bson.D{{"bad", "\xFF"}})
 	if err != nil {
 		log.Fatalf("Failed to insert document: %v", err)

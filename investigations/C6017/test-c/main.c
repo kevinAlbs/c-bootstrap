@@ -1,5 +1,5 @@
 #include <mongoc/mongoc.h>
-#include "../../util/assertions.h"
+#include "../../../util/assertions.h"
 
 int main()
 {
@@ -9,6 +9,16 @@ int main()
     mongoc_collection_t *coll = mongoc_client_get_collection(client, "db", "coll");
     mongoc_collection_drop(coll, NULL);
     bson_error_t error;
+
+    {
+        bson_t to_insert = BSON_INITIALIZER;
+        BSON_APPEND_UTF8 (&to_insert, "bad", "\xFF");
+        bool ok = mongoc_collection_insert_one (coll, &to_insert, NULL, NULL, &error); // No error
+        ASSERT (ok); // No error.
+        char *as_json = bson_as_canonical_extended_json (&to_insert, NULL);
+        ASSERT (!as_json); // Error.
+    }
+
 
     printf ("Insert invalid UTF-8 string ... ");
     {
