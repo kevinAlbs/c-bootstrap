@@ -1,3 +1,10 @@
+// To build and run with libmongoc 1.30:
+//
+//   clang -o main.out main.c $(pkg-config --libs --cflags libmongoc-1.0)
+//   MONGODB_URI="mongodb+srv://..." ./main.out
+//
+//
+
 #include <mongoc/mongoc.h>
 
 static void
