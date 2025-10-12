@@ -39,10 +39,10 @@ Running the `/client_side_encryption/*` tests in `test-libmongoc` requires addit
 The C driver requires `libmongocrypt` to enable In-Use Encryption. Install libmongocrypt:
 
 ```sh
-# Install version 1.8.1
-git clone git@github.com:mongodb/libmongocrypt.git --branch 1.8.1
+# Install version 1.15.2
+git clone git@github.com:mongodb/libmongocrypt.git --branch 1.15.2
 cd libmongocrypt
-cmake -DCMAKE_INSTALL_PREFIX=/Users/kevin.albertson/install/libmongocrypt-1.8.1 -S. -Bcmake-build
+cmake -DCMAKE_INSTALL_PREFIX=/Users/kevin.albertson/install/libmongocrypt-1.15.2 -S. -Bcmake-build
 cmake --build cmake-build --target install
 ```
 
@@ -50,7 +50,7 @@ Configure the C driver with `-DENABLE_CLIENT_SIDE_ENCRYPTION=ON` to require `lib
 ```
 cd mongo-c-driver
 cmake \
-    -DCMAKE_PREFIX_PATH=/Users/kevin.albertson/install/libmongocrypt-1.8.1 \
+    -DCMAKE_PREFIX_PATH=/Users/kevin.albertson/install/libmongocrypt-1.15.2 \
     -DENABLE_CLIENT_SIDE_ENCRYPTION=ON \
     -S. -Bcmake-build
 ```
@@ -63,56 +63,50 @@ cmake --build cmake-build --target test-libmongoc -- -j16
 
 ### Set Environment Variables
 
-Tests require credentials to AWS, GCP, and Azure test instances. These credentials are sensitive. Copy them from the C driver Evergreen Project Variables page: https://spruce.mongodb.com/project/mongo-c-driver/settings/variables. The variables start with `client_side_encryption_*`. To make setting the environment variables easy, I suggest creating a `kms_providers.json` file in a local directory. Here is the redacted contents of my `~/.csfle/kms_provider.json`:
-
-```json
-{
-    "aws": {
-        "accessKeyId": "(sensitive - copy from Evergreen Project Variables)",
-        "secretAccessKey": "(sensitive - copy from Evergreen Project Variables)"
-    },
-    "azure": {
-        "tenantId": "(sensitive - copy from Evergreen Project Variables)",
-        "clientId": "(sensitive - copy from Evergreen Project Variables)",
-        "clientSecret": "(sensitive - copy from Evergreen Project Variables)"
-    },
-    "gcp": {
-        "email": "(sensitive - copy from Evergreen Project Variables)",
-        "privateKey": "(sensitive - copy from Evergreen Project Variables)"
-    }
-}
-```
-
-Set environment variables from the kms_providers.json with a script:
+Tests require credentials to AWS, GCP, and Azure test instances. Credentials are stored in AWS Secrets Manager under `drivers/csfle`. The following script exports variables expected by the C driver:
 
 ```sh
 #!/bin/bash
-export AWS_ACCESS_KEY_ID=$(cat ~/.csfle/kms_providers.json | jq .aws.accessKeyId -r)
-export AWS_SECRET_ACCESS_KEY=$(cat ~/.csfle/kms_providers.json | jq .aws.secretAccessKey -r)
 
-# Set DRIVERS_TOOLS to a local checkout of: https://github.com/mongodb-labs/drivers-evergreen-tools
-DRIVERS_TOOLS=~/code/drivers-evergreen-tools
-# set-temp-creds.sh requires boto3 installed. Create a virtual environment and install with: `pip install boto3`.
-. ${DRIVERS_TOOLS}/.evergreen/csfle/set-temp-creds.sh
+# Set environment variables for testing the C driver with QE/CSFLE.
+DRIVERS_TOOLS="$HOME/code/drivers-evergreen-tools"
+if [ ! -d "$DRIVERS_TOOLS" ]; then
+    echo "Could not find drivers-evergreen-tools at $DRIVERS_TOOLS."
+    echo "Set DRIVERS_TOOLS to a local checkout of: https://github.com/mongodb-labs/drivers-evergreen-tools"
+    exit 1
+fi
 
-# Export variables for testing the C driver.
-export MONGOC_TEST_AWS_TEMP_SECRET_ACCESS_KEY="$CSFLE_AWS_TEMP_ACCESS_KEY_ID"
-export MONGOC_TEST_AWS_TEMP_ACCESS_KEY_ID="$CSFLE_AWS_TEMP_SECRET_ACCESS_KEY"
-export MONGOC_TEST_AWS_TEMP_SESSION_TOKEN="$CSFLE_AWS_TEMP_SESSION_TOKEN"
-export MONGOC_TEST_AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-export MONGOC_TEST_AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-export MONGOC_TEST_AZURE_TENANT_ID=$(cat ~/.csfle/kms_providers.json | jq .azure.tenantId -r)
-export MONGOC_TEST_AZURE_CLIENT_ID=$(cat ~/.csfle/kms_providers.json | jq .azure.clientId -r)
-export MONGOC_TEST_AZURE_CLIENT_SECRET=$(cat ~/.csfle/kms_providers.json | jq .azure.clientSecret -r)
-export MONGOC_TEST_GCP_EMAIL=$(cat ~/.csfle/kms_providers.json | jq .gcp.email -r)
-export MONGOC_TEST_GCP_PRIVATEKEY=$(cat ~/.csfle/kms_providers.json | jq .gcp.privateKey -r)
-export MONGOC_TEST_CSFLE_TLS_CA_FILE="$DRIVERS_TOOLS/.evergreen/x509gen/ca.pem"
-export MONGOC_TEST_CSFLE_TLS_CERTIFICATE_KEY_FILE="$DRIVERS_TOOLS/.evergreen/x509gen/client.pem"
+# Get secrets from AWS Secrets Manager.
+if [ -z "$AWS_PROFILE" ]; then
+    echo "Set AWS_PROFILE to a profile that can access the secrets in AWS Secrets Manager."
+    echo "See https://wiki.corp.mongodb.com/display/DRIVERS/Using+AWS+Secrets+Manager+to+Store+Testing+Secrets"
+    exit 1
+fi
+export AWS_PROFILE
+
+"$DRIVERS_TOOLS"/.evergreen/csfle/setup-secrets.sh drivers/csfle # Writes to secrets-export.sh
+. secrets-export.sh
+
+# Rename for C driver test runner:
+export MONGOC_TEST_AWS_ACCESS_KEY_ID=$FLE_AWS_KEY
+export MONGOC_TEST_AWS_SECRET_ACCESS_KEY=$FLE_AWS_SECRET
+export MONGOC_TEST_AZURE_TENANT_ID=$FLE_AZURE_CLIENTID
+export MONGOC_TEST_AZURE_CLIENT_ID=$FLE_AZURE_TENANTID
+export MONGOC_TEST_AZURE_CLIENT_SECRET=$FLE_AZURE_CLIENTSECRET
+export MONGOC_TEST_GCP_EMAIL=$FLE_GCP_EMAIL
+export MONGOC_TEST_GCP_PRIVATEKEY=$FLE_GCP_PRIVATEKEY
+export MONGOC_TEST_CSFLE_TLS_CA_FILE=$CSFLE_TLS_CA_FILE
+export MONGOC_TEST_CSFLE_TLS_CERTIFICATE_KEY_FILE=$CSFLE_TLS_CLIENT_CERT_FILE
+export MONGOC_TEST_AWS_TEMP_SECRET_ACCESS_KEY=$CSFLE_AWS_TEMP_SECRET_ACCESS_KEY
+export MONGOC_TEST_AWS_TEMP_ACCESS_KEY_ID=$CSFLE_AWS_TEMP_ACCESS_KEY_ID
+export MONGOC_TEST_AWS_TEMP_SESSION_TOKEN=$CSFLE_AWS_TEMP_SESSION_TOKEN
 ```
+
+A few tests (not most) require local mock servers to test KMS scenarios. If needed, search the [specification test README](https://github.com/mongodb/specifications/tree/ace53b165f2ab83e8385de15fbda9346befc0ea7/source/client-side-encryption/tests#setup-3) for `python` invocations.
 
 If libmongocrypt was installed to a non-standard directory (as shown above), the runtime loader needs to be informed where to find the libmongocrypt shared library. On macOS: set `DYLD_LIBRARY_PATH` to the installed `lib` directory:
 ```sh
-export DYLD_LIBRARY_PATH="/Users/kevin.albertson/install/libmongocrypt-1.8.1/lib" 
+export DYLD_LIBRARY_PATH="/Users/kevin.albertson/install/libmongocrypt-1.15.1/lib" 
 ```
 On Linux, set `LD_LIBRARY_PATH` to the path of libmongocrypt.so.
 
@@ -121,7 +115,7 @@ Testing with `crypt_shared` is [recommended in the specifications](https://githu
 Download `crypt_shared` from the "Crypt Shared" links of https://www.mongodb.com/download-center/enterprise/releases
 Export the variable of the path to `crypt_shared`. Example:
 ```sh
-export MONGOC_TEST_CRYPT_SHARED_LIB_PATH=/Users/kevin.albertson/bin/mongodl/crypt_shared/7.0.0-rc0/lib/mongo_crypt_v1.dylib
+export MONGOC_TEST_CRYPT_SHARED_LIB_PATH=/Users/kevin.albertson/bin/mongodl/crypt_shared/8.0.0/lib/mongo_crypt_v1.dylib
 ```
 
 ### Test
