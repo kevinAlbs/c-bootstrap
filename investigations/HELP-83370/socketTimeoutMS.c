@@ -39,8 +39,16 @@ slow_pipeline (void)
          {"$match" : {}},
          {
             "$project" : {
-               "output" :
-                  {"$function" : {"body" : "function() { sleep(1000); return \"foo\"; }", "args" : [], "lang" : "js"}}
+               "output" : {
+                  "$cond" : {
+                     "if" : {"$gt" : [ "$x", 1 ]},
+                     "then" : {
+                        "$function" :
+                           {"body" : "function() { sleep(1000); return \"foo\"; }", "args" : [], "lang" : "js"}
+                     },
+                     "else" : "fast"
+                  }
+               }
             }
          }
       ]
@@ -56,30 +64,42 @@ main ()
 
    mongoc_init ();
 
-   mongoc_client_t *client = mongoc_client_new ("mongodb://localhost:27777");
+   mongoc_client_t *client = mongoc_client_new ("mongodb://localhost:27777/?socketTimeoutMS=1000");
 
    // Insert three documents into a collection:
    mongoc_collection_t *coll = mongoc_client_get_collection (client, "testdb", "testcoll");
    {
       mongoc_collection_drop (coll, NULL);
-      bson_t *doc = BCON_NEW ("x", "y");
-      mongoc_collection_insert_one (coll, doc, NULL, NULL, NULL);
-      mongoc_collection_insert_one (coll, doc, NULL, NULL, NULL);
-      mongoc_collection_insert_one (coll, doc, NULL, NULL, NULL);
-      bson_destroy (doc);
+      bson_t *one = BCON_NEW ("x", BCON_INT32(1));
+      bson_t *two = BCON_NEW ("x", BCON_INT32(2));
+      bson_t *three = BCON_NEW ("x", BCON_INT32(3));
+      mongoc_collection_insert_one (coll, one, NULL, NULL, NULL);
+      mongoc_collection_insert_one (coll, two, NULL, NULL, NULL);
+      mongoc_collection_insert_one (coll, three, NULL, NULL, NULL);
+      bson_destroy (three);
+      bson_destroy (two);
+      bson_destroy (one);
    }
 
-   bson_t *pipeline = slow_pipeline (); // Forces 1 second processing per document.
+   bson_t *pipeline = slow_pipeline (); // Forces 1 second processing per document after first.
    bson_t *opts = BCON_NEW (
         "maxTimeMS", BCON_INT32 (1500), // Set max aggregate time of 1.5s
         "batchSize", BCON_INT32 (1)     // To trigger getMore calls.
    );
 
    mongoc_cursor_t *cursor = mongoc_collection_aggregate (coll, MONGOC_QUERY_NONE, pipeline, opts, NULL);
-   ITERATE_ONCE (cursor); // Sends 'aggregate' ... OK
-   ITERATE_ONCE (cursor); // Sends 'getMore' ... OK (but hits timeout)
-   ITERATE_ONCE (cursor); // Cursor error: operation exceeded time limit
+   ITERATE_ONCE (cursor); // 1st fast ... OK.
+   int64_t cursor_id = mongoc_cursor_get_id (cursor); // Save established cursor ID.
+   ITERATE_ONCE (cursor); // 2nd slow ... "socket error or timeout".
+   // Send killCursors to clean-up server cursor:
+   bson_t *cmd = BCON_NEW (
+      "killCursors", BCON_UTF8 ("testdb.testcoll"),
+      "cursors", "[", BCON_INT64 (cursor_id), "]"
+   );
+   ASSERT (mongoc_client_command_simple (client, "admin", cmd, NULL, NULL, NULL));
+   printf ("Sent killCursors for cursor ID %" PRId64 "\n", cursor_id);
 
+   bson_destroy (cmd);
    bson_destroy (opts);
    mongoc_cursor_destroy (cursor);
    mongoc_collection_destroy (coll);
