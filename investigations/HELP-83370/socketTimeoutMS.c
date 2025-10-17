@@ -1,4 +1,4 @@
-// Q: Does `maxTimeMS` on `aggregate` apply to the total of all operations, or each individual operation? A: Total.
+// Example of using socketTimeoutMS and killCursors to kill a cursor after a timeout.
 
 #include <mongoc/mongoc.h>
 
@@ -83,7 +83,6 @@ main ()
 
    bson_t *pipeline = slow_pipeline (); // Forces 1 second processing per document after first.
    bson_t *opts = BCON_NEW (
-        "maxTimeMS", BCON_INT32 (1500), // Set max aggregate time of 1.5s
         "batchSize", BCON_INT32 (1)     // To trigger getMore calls.
    );
 
