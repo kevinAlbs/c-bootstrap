@@ -19,25 +19,28 @@ mkdir -p investigations/$PROJECT_NAME
 pushd investigations/$PROJECT_NAME
 
 cat <<EOF > CMakeLists.txt
-cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project($PROJECT_NAME LANGUAGES C)
-find_package(mongoc-1.0 REQUIRED)
+find_package(mongoc REQUIRED)
 add_executable (main.out main.c)
-target_link_libraries(main.out mongo::mongoc_shared)
+target_link_libraries(main.out mongoc::shared)
 EOF
 
 cat <<EOF > configure.sh
 cmake \\
-    -DCMAKE_PREFIX_PATH=../../install/mongo-c-driver-1.23.2 \\
+    -DCMAKE_PREFIX_PATH=../../install/mongo-c-driver-2.0.2 \\
     -DCMAKE_BUILD_TYPE="Debug" \\
     -DCMAKE_C_COMPILER="/opt/homebrew/opt/llvm/bin/clang" \\
     -DCMAKE_C_COMPILER_LAUNCHER="ccache" \\
     -DCMAKE_C_FLAGS="-fsanitize=address" \\
+    -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \\
     -S./ \\
     -B./cmake-build
 EOF
 
 chmod u+x configure.sh
+
+cp "$HOME"/code/mongo-c-driver/.clangd .
 
 cat <<EOF > build.sh
 cmake --build cmake-build --target main.out
@@ -55,16 +58,11 @@ cat <<EOF > main.c
 #include <mongoc/mongoc.h>
 
 int main () {
-    mongoc_client_t *client;
-    char *uristr;
-
-    uristr = getenv ("MONGODB_URI");
-    if (!uristr) {
-        uristr = "mongodb://localhost:27017";
-    }
     mongoc_init ();
 
-    MONGOC_DEBUG ("mongoc_get_version=%s", mongoc_get_version ());
+    printf ("libmongoc version: %s\n", mongoc_get_version ());
+    char *uristr = getenv ("MONGODB_URI") ? getenv ("MONGODB_URI") : "mongodb://localhost:27017";
+    mongoc_client_t *client = mongoc_client_new (uristr);
     client = mongoc_client_new (uristr);
 
     /* TODO */
