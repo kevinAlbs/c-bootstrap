@@ -6,7 +6,9 @@ A tool to check for BSON arrays with invalid keys. Quoting https://bsonspec.org/
 
 **This is not a supported MongoDB product**
 
-To build, first install the MongoDB C driver. On macOS this can be done with `brew install mongo-c-driver`:
+## Usage
+
+Then build the `print-invalid-arrays` tool with:
 
 ```bash
 cmake -B build

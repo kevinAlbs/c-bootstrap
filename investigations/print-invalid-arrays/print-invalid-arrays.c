@@ -1,4 +1,4 @@
-#include <mongoc/mongoc.h>
+#include <bson/bson.h>
 
 #define FAILF(fmt, ...)                                                        \
   if (1) {                                                                     \
@@ -129,8 +129,6 @@ void visit(visitor_state_t *state, bson_iter_t iter) {
 }
 
 int main(int argc, char *argv[]) {
-  mongoc_init();
-
   if (argc != 2) {
     FAILF("Usage: %s <file>.bson", argv[0]);
   }
@@ -161,6 +159,4 @@ int main(int argc, char *argv[]) {
   }
 
   bson_reader_destroy(reader);
-
-  mongoc_cleanup();
 }

@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 project(print-invalid-arrays LANGUAGES C)
-find_package(mongoc REQUIRED)
+# Disable non-essential C driver functionality:
+set(ENABLE_TESTS OFF)
+set(BUILD_TESTING OFF)
+set(ENABLE_MONGOC OFF)
+set(ENABLE_SHARED OFF)
+add_subdirectory(mongo-c-driver-2.2.1)
 add_executable (print-invalid-arrays print-invalid-arrays.c)
-target_link_libraries(print-invalid-arrays mongoc::static)
+target_link_libraries(print-invalid-arrays bson_static)
