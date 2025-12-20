@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+project(print-invalid-arrays LANGUAGES C)
+find_package(mongoc REQUIRED)
+add_executable (print-invalid-arrays print-invalid-arrays.c)
+target_link_libraries(print-invalid-arrays mongoc::static)
