@@ -27,8 +27,8 @@ TMPDIR=$(pwd)/tmp
 
 . ./etc/find_os.sh
 # Get latest cmake using C driver scripts.
-. $HOME/code/mongo-c-driver/.evergreen/scripts/find-cmake-latest.sh
-CMAKE=$(find_cmake_latest)
+# . $HOME/code/mongo-c-driver/.evergreen/scripts/find-cmake-latest.sh
+CMAKE=cmake
 
 if [[ $OS == "WINDOWS" ]]; then
     MONGO_C_DRIVER_INSTALL_PREFIX=$(cygpath -w $MONGO_C_DRIVER_INSTALL_PREFIX)
