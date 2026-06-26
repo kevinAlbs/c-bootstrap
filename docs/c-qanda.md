@@ -1,5 +1,35 @@
 # C Q&A
 
+# Q13: What does the handshake look like?
+```
+{
+    "t": {
+        "$date": "2026-04-13T11:02:08.696-04:00"
+    },
+    "s": "I",
+    "c": "ACCESS",
+    "id": 10483900,
+    "ctx": "conn19278",
+    "msg": "Connection not authenticating",
+    "attr": {
+        "client": "127.0.0.1:49954",
+        "doc": {
+            "driver": {
+                "name": "mongoc",
+                "version": "2.3.0-pre"
+            },
+            "os": {
+                "type": "Darwin",
+                "name": "macOS",
+                "version": "25.4.0",
+                "architecture": "arm64"
+            },
+            "platform": "cfg=0x0523de0061 posix=200112 stdc=199901 CC=clang 21.0.0 (clang-2100.0.123.102) CXX=AppleClang 21.0.0.21000099 CFLAGS=\"\" LDFLAGS=\"\""
+        }
+    }
+}
+```
+
 # Q12: How to make a macro map function?
 
 A:
