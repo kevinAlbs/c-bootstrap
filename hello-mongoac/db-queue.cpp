@@ -138,6 +138,14 @@ int main(void) {
   }
 
   worker.join();
+
+  // Drive the client's background tasks (endSessions, in-flight killCursors)
+  // to completion before its handles are destroyed at scope exit.
+  client.shutdown(error);
+  if (!error.ok()) {
+    fprintf(stderr, "client shutdown failed: %s\n", error.message());
+  }
+
   printf("shutting down\n");
   return EXIT_SUCCESS;
 }
