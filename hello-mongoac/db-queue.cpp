@@ -4,10 +4,10 @@
 //   - the main thread blocks awaiting requests (await_request).
 //   - a worker thread drives the runtime and reports results.
 
+#include "db-requests.hpp"
 #include "mongoac.hpp"
 
-#include "db-requests.hpp"
-
+#include <chrono>
 #include <condition_variable>
 #include <cstdio>
 #include <cstdlib>
@@ -17,13 +17,13 @@
 
 namespace {
 
-// InFlight represents one in-flight operation.
+// InFlight represents one in-flight task.
 struct InFlight {
   Request req;
   mongoac::Future fut;
 };
 
-// handle_result handles the result of a completed operation.
+// handle_result handles the result of a completed task.
 void handle_result(const Request &req, const mongoac::Future &fut,
                    mongoac::Error &err) {
   if (req.op == Op::Insert) {
@@ -60,22 +60,24 @@ int main(void) {
   // Start from a clean collection so the reported counts are deterministic.
   runtime.blockOn(coll.drop(error), error);
 
-  // In-flight operations, handed from the main thread to the worker thread.
+  // In-flight tasks, handed from the main thread to the worker thread.
   std::vector<InFlight> inflight;
   std::mutex mtx;
   std::condition_variable cv; // Signals the worker when work arrives / on stop.
   bool shutdown_requested = false;
 
   // Worker thread: drive the runtime and report completions until shutdown is
-  // requested and all in-flight operations have drained.
+  // requested and all in-flight tasks have drained.
   std::thread worker([&] {
     mongoac::Error err; // The worker's own error, not shared with main.
     while (true) {
-      // Copy handles to in-flight operations:
+      // Copy handles to in-flight tasks:
       std::vector<const mongoac_future_t *> pending;
       {
         std::unique_lock<std::mutex> lock(mtx);
-        cv.wait(lock, [&] { return !inflight.empty() || shutdown_requested; });
+        // Wake on new work, shutdown, or after 10ms to drive background tasks
+        cv.wait_for(lock, std::chrono::milliseconds(10),
+                    [&] { return !inflight.empty() || shutdown_requested; });
         if (inflight.empty() && shutdown_requested) {
           return;
         }
@@ -84,10 +86,17 @@ int main(void) {
         }
       }
 
-      // Wait until at least one in-flight operation completes:
-      runtime.blockOnAnyWithTimeout(pending, 100, err);
+      // Drive pending futures and background tasks:
+      if (!pending.empty()) {
+        // Use a 10ms timeout to avoid starving incoming requests.
+        runtime.blockOnAnyWithTimeout(pending, 10, err);
+      } else {
+        // Drive background tasks (e.g. `killCursors` on cursor destroy):
+        runtime.makeProgress();
+      }
 
-      // Handle results of completed operations:
+      // Move completed tasks to handle results:
+      std::vector<InFlight> completed;
       {
         std::lock_guard<std::mutex> lock(mtx);
         for (size_t i = 0; i < inflight.size();) {
@@ -95,16 +104,21 @@ int main(void) {
             ++i;
             continue;
           }
-          handle_result(inflight[i].req, inflight[i].fut, err);
+          completed.push_back(std::move(inflight[i]));
           inflight.erase(inflight.begin() + i);
         }
+      }
+
+      // Handle results outside of lock:
+      for (const InFlight &op : completed) {
+        handle_result(op.req, op.fut, err);
       }
     }
   });
 
-  // Main thread: await each request and kick off its operation asynchronously.
+  // Main thread: await each request and kick off its task asynchronously.
   while (true) {
-    Request req = await_request(); // May block.
+    Request req = await_request(); // Blocks.
     if (req.op == Op::Shutdown) {
       {
         std::lock_guard<std::mutex> lock(mtx);

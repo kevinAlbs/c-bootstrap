@@ -93,6 +93,11 @@ class Runtime {
 public:
   explicit Runtime(mongoac_runtime_t *p) : p_(p) {}
 
+  // Drive the runtime one turn, advancing any runnable tasks -- including
+  // background tasks with no FutureT (e.g. killCursors on cursor destroy,
+  // endSessions on client destroy). Returns immediately; does not park.
+  bool makeProgress() const { return mongoac_runtime_make_progress(p_); }
+
   // Drive the runtime, parking (no spin) until `future` resolves.
   void blockOn(const Future &future, Error &e) const {
     mongoac_runtime_block_on(p_, future.get(), e.raw());
