@@ -52,7 +52,7 @@ int main(void) {
       "?readPreference=primary&retryWrites=true&retryReads=true"
       "&serverSelectionTryOnce=false&serverSelectionTimeoutMS=3000"
       "&connectTimeoutMS=1000&socketTimeoutMS=2000"
-      "&socketCheckIntervalMS=1000";
+      "&heartbeatFrequencyMS=2000&socketCheckIntervalMS=1000";
 
   mongoc_client_t *client = mongoc_client_new(uristr);
 
