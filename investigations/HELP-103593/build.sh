@@ -1,1 +1,1 @@
-cmake --build cmake-build --target main.out
+cmake --build cmake-build --target help103593.out
